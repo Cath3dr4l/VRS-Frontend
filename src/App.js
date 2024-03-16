@@ -1,8 +1,8 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "./App.css";
-import SignUpPage from "./components/signUpPage";
-import LoginPage from "./components/loginPage";
+import Signup from "./pages/Signup";
+import Login from "./pages/Login";
 import HomePage from "./components/homePage";
 
 const App = () => {
@@ -11,8 +11,8 @@ const App = () => {
       <div>
         <Routes>
           <Route exact path="/" element={<HomePage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/signup" element={<SignUpPage />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
         </Routes>
       </div>
     </Router>

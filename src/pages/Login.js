@@ -1,41 +1,24 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import { useLogin } from "../hooks/useLogin";
 import "../App.css";
 
-const LoginPage = () => {
+const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState(null);
+  const { login, error, isLoading } = useLogin();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
-    const response = await fetch(`http://localhost:9000/api/customers/query?user=${username}`,{
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
 
-    const data = await response.json();
-    if (!response.ok) {
-      setError(data.error);
-    }
-    if (response.ok) {
-      if (data.password !== password) {
-        setError("Password is incorrect");
-        return;
-      }
-      setUsername("");
-      setPassword("");
-      console.log("Log in successful!");
-    }
+    await login(username, password);
   };
 
   return (
     <div className="m-5-auto text-center">
       <h2>Sign in to us</h2>
       <form className="customer-form" onSubmit={handleSubmit}>
-      <h3>Log In</h3>
+        <h3>Log In</h3>
         <p>
           <label>Username:</label>
           <input
@@ -56,7 +39,7 @@ const LoginPage = () => {
           />
         </p>
         <br />
-        <button id="sub_btn" type="submit">
+        <button id="sub_btn" type="submit" disabled={isLoading}>
           Sign In
         </button>
         {error && <div className="error">{error}</div>}
@@ -70,4 +53,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default Login;
