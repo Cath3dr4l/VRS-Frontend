@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useLogin } from "../hooks/useLogin";
 import "../App.css";
@@ -7,11 +7,15 @@ const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const { login, error, isLoading } = useLogin();
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    await login(username, password);
+    const success = await login(username, password);
+    if (success) {
+      navigate("/");
+    }
   };
 
   return (

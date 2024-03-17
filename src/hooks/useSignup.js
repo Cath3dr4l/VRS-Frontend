@@ -37,6 +37,7 @@ export const useSignup = () => {
 
       setIsLoading(false);
     }
+    return response.ok;
   };
 
   return { signup, isLoading, error };

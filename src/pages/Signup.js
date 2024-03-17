@@ -1,9 +1,11 @@
 import React from "react";
 import { useState } from "react";
 import { useSignup } from "../hooks/useSignup";
+import { useNavigate, Link } from "react-router-dom";
 import "../App.css";
 
 const Signup = () => {
+  const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
@@ -15,7 +17,17 @@ const Signup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    await signup(username, password, name, email, phone, address);
+    const success = await signup(
+      username,
+      password,
+      name,
+      email,
+      phone,
+      address
+    );
+    if (success) {
+      navigate("/");
+    }
   };
 
   return (
@@ -88,6 +100,11 @@ const Signup = () => {
         </button>
         {error && <div className="error">{error}</div>}
       </form>
+      <footer>
+        <p>
+          Already have an account? <Link to="/login">Log in</Link>.
+        </p>
+      </footer>
     </div>
   );
 };

@@ -33,6 +33,7 @@ export const useLogin = () => {
 
       setIsLoading(false);
     }
+    return response.ok;
   };
 
   return { login, isLoading, error };
