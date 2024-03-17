@@ -7,6 +7,8 @@ import "../App.css";
 import InfiniteListComponent from "./infiniteList";
 import { v4 as uuidv4 } from "uuid";
 
+import SearchBar from "./searchBar";
+
 const HomePage = () => {
   const createItems = (length = 100) =>
     Array.from({ length }).map(() => uuidv4());
@@ -55,6 +57,8 @@ const HomePage = () => {
         canLoadMore={true}
         next={next}
       />
+
+      <SearchBar isLoading={isLoading} canLoadMore={true} next={next} />
     </div>
   );
 };

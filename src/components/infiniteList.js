@@ -32,8 +32,19 @@ const InfiniteListComponent = ({ isLoading, items, canLoadMore, next }) => {
       }}
     >
       {items.map((item) => (
-        <div style={{ backgroundColor: "white" }} key={item}>
-          {item}
+        <div style={{ backgroundColor: "white", padding: 4 }} key={item.id}>
+          <div
+            style={{
+              display: "flex",
+              FlexDirection: "column",
+              overflowX: "auto",
+              overflowY: "auto",
+            }}
+          >
+            <div>{item.name}</div>
+            <div>{item.email}</div>
+            <div>{item.phone}</div>
+          </div>
         </div>
       ))}
       {isLoading && <div>Loading...</div>}
