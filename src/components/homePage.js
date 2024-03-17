@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 import "../App.css";
@@ -8,6 +8,7 @@ import InfiniteListComponent from "./infiniteList";
 import { v4 as uuidv4 } from "uuid";
 
 import SearchBar from "./searchBar";
+import CardComponent from "./cardComponent";
 
 const HomePage = () => {
   const createItems = (length = 100) =>
@@ -18,6 +19,18 @@ const HomePage = () => {
 
   const loadMore = async (length = 100) =>
     new Promise((res) => setTimeout(() => res(createItems(length)), 500));
+
+  const [videos, setVideos] = useState(null);
+
+  useEffect(() => {
+    const getVideos = async () => {
+      const resp = await fetch("/api/videos", { method: "GET" });
+      const data = await resp.json();
+      // console.log(data[0]);
+      setVideos(data);
+    };
+    getVideos();
+  }, []);
 
   const next = async (direction) => {
     try {
@@ -59,6 +72,17 @@ const HomePage = () => {
       />
 
       <SearchBar isLoading={isLoading} canLoadMore={true} next={next} />
+      <div
+        className="cards"
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          flexWrap: "wrap",
+          justifyContent: "space-evenly",
+        }}
+      >
+        {videos && videos.map((item) => <CardComponent item={item} />)}
+      </div>
     </div>
   );
 };

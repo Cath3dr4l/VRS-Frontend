@@ -1,5 +1,6 @@
 import React from "react";
 import useInfiniteScroll from "react-easy-infinite-scroll-hook";
+// import CardComponent from "./cardComponent";
 
 const InfiniteListComponent = ({ isLoading, items, canLoadMore, next }) => {
   // TypeScript example:
@@ -46,6 +47,7 @@ const InfiniteListComponent = ({ isLoading, items, canLoadMore, next }) => {
             <div>{item.phone}</div>
           </div>
         </div>
+        // <CardComponent item={item} />
       ))}
       {isLoading && <div>Loading...</div>}
     </div>
