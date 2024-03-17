@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 
 import "../App.css";
 // import BackgroundImage from "../images/bg.png";
-// import CardComponent from "./cardComponent";
 import InfiniteListComponent from "./infiniteList";
 import { v4 as uuidv4 } from "uuid";
 
@@ -23,13 +22,12 @@ const HomePage = () => {
   const [videos, setVideos] = useState(null);
 
   useEffect(() => {
-    const getVideos = async () => {
-      const resp = await fetch("/api/videos", { method: "GET" });
-      const data = await resp.json();
-      // console.log(data[0]);
+    const fetchVideos = async () => {
+      const response = await fetch("/api/videos", { method: "GET" });
+      const data = await response.json();
       setVideos(data);
     };
-    getVideos();
+    fetchVideos();
   }, []);
 
   const next = async (direction) => {
@@ -38,7 +36,7 @@ const HomePage = () => {
       const newData = await loadMore();
 
       setData((prev) =>
-        direction === "right" ? [...newData, ...prev] : [...prev, ...newData],
+        direction === "right" ? [...newData, ...prev] : [...prev, ...newData]
       );
     } finally {
       setIsLoading(false);
