@@ -1,5 +1,6 @@
 import React from "react";
 import useInfiniteScroll from "react-easy-infinite-scroll-hook";
+// import CardComponent from "./cardComponent";
 
 const InfiniteListComponent = ({ isLoading, items, canLoadMore, next }) => {
   // TypeScript example:
@@ -32,9 +33,21 @@ const InfiniteListComponent = ({ isLoading, items, canLoadMore, next }) => {
       }}
     >
       {items.map((item) => (
-        <div style={{ backgroundColor: "white" }} key={item}>
-          {item}
+        <div style={{ backgroundColor: "white", padding: 4 }} key={item.id}>
+          <div
+            style={{
+              display: "flex",
+              FlexDirection: "column",
+              overflowX: "auto",
+              overflowY: "auto",
+            }}
+          >
+            <div>{item.name}</div>
+            <div>{item.email}</div>
+            <div>{item.phone}</div>
+          </div>
         </div>
+        // <CardComponent item={item} />
       ))}
       {isLoading && <div>Loading...</div>}
     </div>
