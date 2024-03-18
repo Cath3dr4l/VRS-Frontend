@@ -57,9 +57,12 @@ const HomePage = () => {
   }, []);
 
   return (
-    <div style={HeaderStyle}>
+    <div className="py-[90px]">
+
+      <h2 className="font-semibold">All Movies</h2>
 
       <InfiniteListComponent
+        style={{scrollbars : 'false'}}
         isLoading={isLoading}
         items={data}
         canLoadMore={canLoadMore}
@@ -86,16 +89,8 @@ const HomePage = () => {
       >
         {videos && videos.map((item) => <CardComponent item={item} />)}
       </div> */}
-    </div>
+      </div>
   );
 };
 
 export default HomePage;
-
-const HeaderStyle = {
-  width: "100%",
-  height: "100vh",
-  backgroundPosition: "center",
-  backgroundRepeat: "no-repeat",
-  backgroundSize: "cover",
-};
