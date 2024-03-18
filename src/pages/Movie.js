@@ -1,6 +1,7 @@
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useCartContext } from "../hooks/useCartContext";
+import { useAuthContext } from "../hooks/useAuthContext";
 
 const Movie = () => {
   const { id } = useParams();
@@ -30,6 +31,9 @@ const Movie = () => {
     decreaseItemQuantity,
     removeItem,
   } = useCartContext();
+
+  const { customer } = useAuthContext();
+  const navigate = useNavigate();
   const quantity = getItemQuantity(id);
   return (
     <div style={{ color: "white " }}>
@@ -54,6 +58,10 @@ const Movie = () => {
           <button
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
             onClick={() => {
+              if (!customer) {
+                navigate("/login");
+                return;
+              }
               increaseItemQuantity(id);
             }}
           >

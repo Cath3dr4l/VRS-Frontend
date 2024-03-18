@@ -1,10 +1,10 @@
 import { createContext } from "react";
-import { useState } from "react";
+import { useLocalStorage } from "../hooks/useLocalStorage";
 
 export const CartContext = createContext();
 
 export const CartContextProvider = ({ children }) => {
-  const [cartItems, setCartItems] = useState([]);
+  const [cartItems, setCartItems] = useLocalStorage("videodog-cart", []);
 
   const cartQuantity = cartItems.reduce((sum, item) => sum + item.quantity, 0);
   const getItemQuantity = (id) => {

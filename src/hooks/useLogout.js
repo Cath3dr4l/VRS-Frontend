@@ -5,6 +5,7 @@ export const useLogout = () => {
   const logout = () => {
     // remove user from storage
     localStorage.removeItem("customer");
+    localStorage.removeItem("videodog-cart");
 
     // update the auth context
     dispatch({ type: "LOGOUT" });
