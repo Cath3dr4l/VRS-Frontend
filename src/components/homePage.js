@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { useLogout } from "../hooks/useLogout";
 import { useAuthContext } from "../hooks/useAuthContext";
 // import "../App.css";
 // import BackgroundImage from "../images/bg.png";
@@ -32,7 +31,7 @@ const HomePage = () => {
       setTimeout(() => {
         const newData = videos.slice(last, last + length);
         resolve(newData);
-      }, 5000);
+      }, 1000);
     });
   };
 
@@ -57,39 +56,8 @@ const HomePage = () => {
     fetchVideos();
   }, []);
 
-  // Log Out
-  const { logout } = useLogout();
-  const handleClick = () => {
-    logout();
-  };
-
   return (
     <div style={HeaderStyle}>
-      <div className="buttons text-center">
-        {!customer && (
-          <div className="logged-out">
-            <Link to="/login">
-              <button className="primary-button">log in</button>
-            </Link>
-            <Link to="/signup">
-              <button className="primary-button" id="reg_btn">
-                <span>register </span>
-              </button>
-            </Link>
-          </div>
-        )}
-
-        {customer && (
-          <div className="logged-in">
-            <Link to="/profile">
-              <button className="primary-button">profile</button>
-            </Link>
-            <button className="primary-button" onClick={handleClick}>
-              Logout
-            </button>
-          </div>
-        )}
-      </div>
 
       <InfiniteListComponent
         isLoading={isLoading}
