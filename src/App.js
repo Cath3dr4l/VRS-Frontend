@@ -6,7 +6,6 @@ import {
   Navigate,
 } from "react-router-dom";
 import { useAuthContext } from "./hooks/useAuthContext";
-// import "./App.css";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import Movie from "./pages/Movie";
@@ -14,6 +13,8 @@ import Cart from "./pages/Cart";
 import Profile from "./pages/Profile";
 import HomePage from "./components/homePage";
 import Navbar from "./components/Navbar";
+import PrivateRoutes from "./utils/PrivateRoutes";
+
 const App = () => {
   const { customer } = useAuthContext();
   return (
@@ -34,14 +35,10 @@ const App = () => {
             element={!customer ? <Signup /> : <Navigate to="/" />}
           />
           <Route path="/movie/:id" element={<Movie />} />
-          <Route
-            path="/cart"
-            element={customer ? <Cart /> : <Navigate to="/"></Navigate>}
-          />
-          <Route
-            path="/profile"
-            element={customer ? <Profile /> : <Navigate to="/"></Navigate>}
-          />
+          <Route element={<PrivateRoutes />}>
+            <Route path="/profile" exact element={<Profile />} />
+            <Route path="/cart" exact element={<Cart />} />
+          </Route>
         </Routes>
       </div>
     </Router>
