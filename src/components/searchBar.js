@@ -2,9 +2,15 @@ import React, { useState } from "react";
 import InfiniteListComponent from "./infiniteList";
 import { data } from "./MOCK_DATA";
 
-const SearchBar = ({ isLoading, canLoadMore, next }) => {
+const SearchBar = ({
+  isLoading,
+  items,
+  canLoadMore,
+  next,
+  renderComponent,
+}) => {
   const [query, setQuery] = useState("");
-  const keys = ["name", "email", "phone"];
+  const keys = ["name"];
 
   const search = (data) => {
     return data.filter((row) =>
@@ -24,6 +30,7 @@ const SearchBar = ({ isLoading, canLoadMore, next }) => {
         isLoading={isLoading}
         canLoadMore={canLoadMore}
         next={next}
+        renderComponent={renderComponent}
       />
     </div>
   );
