@@ -5,22 +5,12 @@ import { useAuthContext } from "../hooks/useAuthContext";
 // import "../App.css";
 // import BackgroundImage from "../images/bg.png";
 import InfiniteListComponent from "./infiniteList";
-import { v4 as uuidv4 } from "uuid";
 
 import SearchBar from "./searchBar";
 import CardComponent from "./cardComponent";
 
 const HomePage = () => {
   const { customer } = useAuthContext();
-
-  const createItems = (length = 100) =>
-    Array.from({ length }).map(() => uuidv4());
-
-  const [data, setData] = useState(createItems());
-  const [isLoading, setIsLoading] = useState(false);
-
-  const loadMore = async (length = 100) =>
-    new Promise((res) => setTimeout(() => res(createItems(length)), 500));
 
   // Fetch Movies
   const [videos, setVideos] = useState(null);
@@ -33,29 +23,48 @@ const HomePage = () => {
     fetchVideos();
   }, []);
 
+  const [data, setData] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [canLoadMore, setCanLoadMore] = useState({ right: true });
+
+  const fetchMoreVideos = async (last, length = 25) => {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        const newData = videos.slice(last, last + length);
+        resolve(newData);
+      }, 5000);
+    });
+  };
+
+  const next = async () => {
+    const last = data.length;
+    setIsLoading(true);
+    const newData = await fetchMoreVideos(last);
+    setData((prev) => [...prev, ...newData]);
+    setIsLoading(false);
+    if (data.length === videos.length) {
+      setCanLoadMore({ right: false });
+    }
+  };
+
+  useEffect(() => {
+    const fetchVideos = async () => {
+      const response = await fetch("/api/videos", { method: "GET" });
+      const data = await response.json();
+      setVideos(data);
+      setData(data.slice(0, 25)); // Store the first 25 videos in data
+    };
+    fetchVideos();
+  }, []);
+
   // Log Out
   const { logout } = useLogout();
   const handleClick = () => {
     logout();
   };
 
-  const next = async (direction) => {
-    try {
-      setIsLoading(true);
-      const newData = await loadMore();
-
-      setData((prev) =>
-        direction === "right" ? [...newData, ...prev] : [...prev, ...newData]
-      );
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
   return (
     <div style={HeaderStyle}>
-      <h1 className="main-title text-center">login / register page</h1>
-      <p className="main-para text-center">join us now and don't waste time</p>
       <div className="buttons text-center">
         {!customer && (
           <div className="logged-out">
@@ -82,19 +91,23 @@ const HomePage = () => {
         )}
       </div>
 
-      <div className="m-5-auto text-center">
-        <h2>Welcome to our website</h2>
-        <h5>Explore our services</h5>
-      </div>
       <InfiniteListComponent
+        isLoading={isLoading}
+        items={data}
+        canLoadMore={canLoadMore}
+        next={next}
+        renderComponent={(item) => <CardComponent item={item} key={item.id} />}
+      />
+
+      <SearchBar
         isLoading={isLoading}
         items={data}
         canLoadMore={true}
         next={next}
+        renderComponent={(item) => <CardComponent item={item} key={item.id} />}
+        setData={setData}
       />
-
-      <SearchBar isLoading={isLoading} canLoadMore={true} next={next} />
-      <div
+      {/* <div
         className="cards"
         style={{
           display: "flex",
@@ -104,7 +117,7 @@ const HomePage = () => {
         }}
       >
         {videos && videos.map((item) => <CardComponent item={item} />)}
-      </div>
+      </div> */}
     </div>
   );
 };
