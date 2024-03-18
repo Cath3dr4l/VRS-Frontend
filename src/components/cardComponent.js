@@ -4,13 +4,15 @@ import { Link } from "react-router-dom";
 
 const CardComponent = ({ item }) => {
   return (
-    <Link to={`/movie/${item._id}`}>
+    <Link to={`/movie/${item._id}`} style={{ textDecoration: "none" }}>
       <Card
         style={{
           width: "200px",
           boxShadow: "0 4px 8px 0 rgba(0,0,0,0.2)",
           backdropFilter: "blur(10px)",
           margin: "5px",
+          backgroundColor: "white",
+          borderRadius: "7px",
         }}
       >
         <Card.Img
@@ -23,13 +25,21 @@ const CardComponent = ({ item }) => {
           alt="Poster"
         />
         <Card.Body style={{ padding: "10px" }}>
-          <Card.Title style={{ fontSize: "20px", textAlign: "center" }}>
+          <Card.Title
+            style={{
+              color: "black",
+              fontSize: "20px",
+              textAlign: "center",
+              textOverflow: "ellipsis",
+              overflow: "hidden",
+              whiteSpace: "nowrap",
+            }}
+          >
             {item.name}
           </Card.Title>
           {/* <Card.Text style={{ textAlign: "justify" }}>
           {item.summary_text}
         </Card.Text> */}
-          <Button variant="primary">Go somewhere</Button>
         </Card.Body>
       </Card>
     </Link>

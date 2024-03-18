@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-
+import { useLogout } from "../hooks/useLogout";
+import { useAuthContext } from "../hooks/useAuthContext";
 import "../App.css";
 // import BackgroundImage from "../images/bg.png";
 import InfiniteListComponent from "./infiniteList";
@@ -10,6 +11,8 @@ import SearchBar from "./searchBar";
 import CardComponent from "./cardComponent";
 
 const HomePage = () => {
+  const { customer } = useAuthContext();
+
   const createItems = (length = 100) =>
     Array.from({ length }).map(() => uuidv4());
 
@@ -19,8 +22,8 @@ const HomePage = () => {
   const loadMore = async (length = 100) =>
     new Promise((res) => setTimeout(() => res(createItems(length)), 500));
 
+  // Fetch Movies
   const [videos, setVideos] = useState(null);
-
   useEffect(() => {
     const fetchVideos = async () => {
       const response = await fetch("/api/videos", { method: "GET" });
@@ -29,6 +32,12 @@ const HomePage = () => {
     };
     fetchVideos();
   }, []);
+
+  // Log Out
+  const { logout } = useLogout();
+  const handleClick = () => {
+    logout();
+  };
 
   const next = async (direction) => {
     try {
@@ -48,14 +57,29 @@ const HomePage = () => {
       <h1 className="main-title text-center">login / register page</h1>
       <p className="main-para text-center">join us now and don't waste time</p>
       <div className="buttons text-center">
-        <Link to="/login">
-          <button className="primary-button">log in</button>
-        </Link>
-        <Link to="/signup">
-          <button className="primary-button" id="reg_btn">
-            <span>register </span>
-          </button>
-        </Link>
+        {!customer && (
+          <div className="logged-out">
+            <Link to="/login">
+              <button className="primary-button">log in</button>
+            </Link>
+            <Link to="/signup">
+              <button className="primary-button" id="reg_btn">
+                <span>register </span>
+              </button>
+            </Link>
+          </div>
+        )}
+
+        {customer && (
+          <div className="logged-in">
+            <Link to="/profile">
+              <button className="primary-button">profile</button>
+            </Link>
+            <button className="primary-button" onClick={handleClick}>
+              Logout
+            </button>
+          </div>
+        )}
       </div>
 
       <div className="m-5-auto text-center">
