@@ -6,25 +6,22 @@ import {
   Navigate,
 } from "react-router-dom";
 import { useAuthContext } from "./hooks/useAuthContext";
-import "./App.css";
+// import "./App.css";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import Movie from "./pages/Movie";
 import Cart from "./pages/Cart";
 import Profile from "./pages/Profile";
 import HomePage from "./components/homePage";
-import LeftNavbar from "./components/LeftNavbar";
-import Header from "./components/Header";
+import Navbar from "./components/Navbar";
 const App = () => {
   const { customer } = useAuthContext();
   return (
     <Router>
       <div>
-        <Header />
+        <Navbar />
       </div>
-      <div className="flex flex-row h-[calc(100%-56px)]">
-        <LeftNavbar />
-      </div>
+
       <div>
         <Routes>
           <Route exact path="/" element={<HomePage />} />
