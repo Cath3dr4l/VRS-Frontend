@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useCart } from "../hooks/useCart";
+import { useCartContext } from "../hooks/useCartContext";
 
 const Cart = () => {};
 

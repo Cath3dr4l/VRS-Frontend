@@ -1,19 +1,6 @@
 import { Link, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
-
-const styles = {
-  button: {
-    backgroundColor: "blue",
-    border: "none",
-    color: "white",
-    height: "50px",
-    textAlign: "center",
-    textDecoration: "none",
-    display: "inline-block",
-    fontSize: "16px",
-    margin: "4px 2px",
-  },
-};
+import { useCartContext } from "../hooks/useCartContext";
 
 const Movie = () => {
   const { id } = useParams();
@@ -37,6 +24,13 @@ const Movie = () => {
     fetchMovie();
   }, [id]);
 
+  const {
+    getItemQuantity,
+    increaseItemQuantity,
+    decreaseItemQuantity,
+    removeItem,
+  } = useCartContext();
+  const quantity = getItemQuantity(id);
   return (
     <div style={{ color: "white " }}>
       <h2>Movie</h2>
@@ -54,9 +48,53 @@ const Movie = () => {
           </div>
         )}
         {error && <div className="error">{error}</div>}
-        <button style={styles.button} id="order_btn" type="Add to Cart">
-          Add to Cart
-        </button>
+      </div>
+      <div className="mt-auto">
+        {quantity === 0 ? (
+          <button
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+            onClick={() => {
+              increaseItemQuantity(id);
+            }}
+          >
+            + Add To Cart
+          </button>
+        ) : (
+          <div className="flex items-center flex-col" style={{ gap: ".5rem" }}>
+            <div
+              className="flex justify-center items-center"
+              style={{ gap: ".5rem" }}
+            >
+              <button
+                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                onClick={() => {
+                  decreaseItemQuantity(id);
+                }}
+              >
+                -
+              </button>
+              <div>
+                <span className="text-4x1">{quantity}</span> in cart
+              </div>
+              <button
+                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                onClick={() => {
+                  increaseItemQuantity(id);
+                }}
+              >
+                +
+              </button>
+            </div>
+            <button
+              className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+              onClick={() => {
+                removeItem(id);
+              }}
+            >
+              Remove
+            </button>
+          </div>
+        )}
       </div>
       <p>
         <Link to="/">Go back to the homepage</Link>
