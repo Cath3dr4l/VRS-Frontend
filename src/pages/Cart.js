@@ -7,8 +7,13 @@ const Cart = () => {
   const [profile, setProfile] = useState(null);
   const [movies, setMovies] = useState(null);
   const [error, setError] = useState(null);
-  const { cartItems, increaseItemQuantity, decreaseItemQuantity, removeItem } =
-    useCartContext();
+  const {
+    cartItems,
+    increaseItemQuantity,
+    decreaseItemQuantity,
+    removeItem,
+    clearCart,
+  } = useCartContext();
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -44,6 +49,30 @@ const Cart = () => {
       fetchMovies();
     }
   }, [customer]);
+
+  const handleCreateOrder = () => {
+    cartItems.forEach(async (item) => {
+      const response = await fetch("/api/customers/neworder", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${customer.token}`,
+        },
+        body: JSON.stringify({
+          videoId: item.id,
+          quantity: item.quantity,
+        }),
+      });
+      const data = await response.json();
+      if (!response.ok) {
+        setError(data.error);
+      }
+      if (response.ok) {
+        setError(null);
+      }
+    });
+    clearCart();
+  };
 
   return (
     <div>
@@ -98,7 +127,17 @@ const Cart = () => {
             );
           })}
       </div>
-      {cartItems.length === 0 && <div>Your cart is empty</div>}
+      {cartItems.length === 0 ? (
+        <div>Your cart is empty</div>
+      ) : (
+        <button
+          onClick={handleCreateOrder}
+          className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+        >
+          Order
+        </button>
+      )}
+
       {error && <div className="error">{error}</div>}
     </div>
   );
