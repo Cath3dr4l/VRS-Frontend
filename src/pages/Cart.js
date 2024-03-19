@@ -11,6 +11,7 @@ const Cart = () => {
     cartItems,
     increaseItemQuantity,
     decreaseItemQuantity,
+    setDuration,
     removeItem,
     clearCart,
   } = useCartContext();
@@ -61,6 +62,7 @@ const Cart = () => {
         body: JSON.stringify({
           videoId: item.id,
           quantity: item.quantity,
+          duration: item.duration,
         }),
       });
       const data = await response.json();
@@ -122,6 +124,25 @@ const Cart = () => {
                   >
                     Remove
                   </button>
+                  <div>
+                    <label htmlFor="rentDuration" className="mr-2">
+                      Rent Duration:
+                    </label>
+                    <select
+                      id="rentDuration"
+                      onChange={(e) =>
+                        setDuration(item.id, Number(e.target.value))
+                      }
+                      defaultValue={item.duration}
+                      className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-black rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                    >
+                      <option value="1">1 Week</option>
+                      <option value="2">2 Weeks</option>
+                      <option value="3">3 Weeks</option>
+                      <option value="4">4 Weeks</option>
+                      <option value="100">Buy Movie</option>
+                    </select>
+                  </div>
                 </div>
               </div>
             );

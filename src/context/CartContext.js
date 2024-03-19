@@ -43,6 +43,22 @@ export const CartContextProvider = ({ children }) => {
     });
   };
 
+  const setDuration = (id, duration) => {
+    setCartItems((currItems) => {
+      return currItems.map((item) => {
+        if (item.id === id) {
+          return { ...item, duration };
+        } else {
+          return item;
+        }
+      });
+    });
+  };
+
+  const getDuration = (id) => {
+    return cartItems.find((item) => item.id === id)?.duration || 1;
+  };
+
   const removeItem = (id) => {
     setCartItems((currItems) => currItems.filter((item) => item.id !== id));
   };
@@ -57,6 +73,8 @@ export const CartContextProvider = ({ children }) => {
         getItemQuantity,
         increaseItemQuantity,
         decreaseItemQuantity,
+        setDuration,
+        getDuration,
         removeItem,
         clearCart,
         cartItems,

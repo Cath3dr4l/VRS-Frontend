@@ -30,6 +30,8 @@ const Movie = () => {
     increaseItemQuantity,
     decreaseItemQuantity,
     removeItem,
+    setDuration,
+    getDuration,
   } = useCartContext();
 
   const { customer } = useAuthContext();
@@ -93,6 +95,24 @@ const Movie = () => {
                 +
               </button>
             </div>
+            <div>
+              <label htmlFor="rentDuration" className="mr-2">
+                Rent Duration:
+              </label>
+              <select
+                id="rentDuration"
+                defaultValue={getDuration(id)}
+                onChange={(e) => setDuration(id, Number(e.target.value))}
+                className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-black rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              >
+                <option value="1">1 Week</option>
+                <option value="2">2 Weeks</option>
+                <option value="3">3 Weeks</option>
+                <option value="4">4 Weeks</option>
+                <option value="100">Buy Movie</option>
+              </select>
+            </div>
+
             <button
               className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
               onClick={() => {
