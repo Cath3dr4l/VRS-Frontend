@@ -18,12 +18,13 @@ const InfiniteListComponent = ({
     <div
       ref={ref}
       style={{
+        px: -4,
         height: 500,
         overflowX: "auto",
         overflowY: "auto",
-        border: "1px solid white",
         display: "flex",
         flexDirection: "row",
+        scrollbarWidth: "none",
       }}
     >
       {items.map((item) => renderComponent(item))}

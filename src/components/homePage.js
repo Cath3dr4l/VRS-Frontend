@@ -57,9 +57,9 @@ const HomePage = () => {
   }, []);
 
   return (
-    <div className="py-[90px]">
+    <div className="px-4">
 
-      <h2 className="font-semibold">All Movies</h2>
+      <h1 className="font-semibold text-text">All Movies</h1>
 
       <InfiniteListComponent
         style={{scrollbars : 'false'}}

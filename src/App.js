@@ -22,8 +22,8 @@ const App = () => {
       <div>
         <Navbar />
       </div>
-
-      <div>
+      
+      <div className="py-20">
         <Routes>
           <Route exact path="/" element={<HomePage />} />
           <Route
