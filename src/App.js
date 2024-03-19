@@ -22,7 +22,7 @@ const App = () => {
       <div>
         <Navbar />
       </div>
-      
+
       <div className="py-20">
         <Routes>
           <Route exact path="/" element={<HomePage />} />
@@ -35,7 +35,11 @@ const App = () => {
             element={!customer ? <Signup /> : <Navigate to="/" />}
           />
           <Route path="/movie/:id" element={<Movie />} />
-          <Route element={<PrivateRoutes />}>
+          <Route
+            element={
+              <PrivateRoutes userType="customer" redirectPath="/login" />
+            }
+          >
             <Route path="/profile" exact element={<Profile />} />
             <Route path="/cart" exact element={<Cart />} />
           </Route>
