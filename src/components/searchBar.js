@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import InfiniteListComponent from "./infiniteList";
-import { data } from "./MOCK_DATA";
 
 const SearchBar = ({
   isLoading,
@@ -26,7 +25,7 @@ const SearchBar = ({
         onChange={(e) => setQuery(e.target.value)}
       />
       <InfiniteListComponent
-        items={search(data)}
+        items={search(items)}
         isLoading={isLoading}
         canLoadMore={canLoadMore}
         next={next}

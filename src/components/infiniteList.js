@@ -24,6 +24,7 @@ const InfiniteListComponent = ({
         border: "1px solid white",
         display: "flex",
         flexDirection: "row",
+        scrollbarWidth: "none",
       }}
     >
       {items.map((item) => renderComponent(item))}
