@@ -23,7 +23,7 @@ const App = () => {
         <Navbar />
       </div>
 
-      <div className="py-20">
+      <div>
         <Routes>
           <Route exact path="/" element={<HomePage />} />
           <Route

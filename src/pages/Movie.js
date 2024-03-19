@@ -39,18 +39,21 @@ const Movie = () => {
   const quantity = getItemQuantity(id);
   return (
     <div style={{ color: "white " }}>
-      <h2>Movie</h2>
-      <div className="movie-details">
+      <div>
         {movie && (
-          <div>
-            <img
-              style={{ width: "400px" }}
-              src={movie.poster_url}
-              alt="Poster"
-            />
-            <h3>{movie.name}</h3>
+          <div className="w-full h-[750px] flow-root">
+            <div className="w-[50%] float-left">
+            <h1 classname="font-semibold text-text text-3xl">{movie.name}</h1>
             <p>{movie.summary_text}</p>
             <p>{movie.rating}</p>
+            </div>
+            <div className="w-[50%] h-full float-right">
+              <div className="absolute right-0 w-[50%] h-full bg-gradient-to-r from-background "></div>
+              <img className="w-full h-full object-cover"
+                src={movie.poster_url}
+                alt="Poster"
+              />
+            </div>
           </div>
         )}
         {error && <div className="error">{error}</div>}

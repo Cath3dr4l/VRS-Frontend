@@ -13,7 +13,7 @@ const HomePage = () => {
   const { customer } = useAuthContext();
 
   return (
-    <div>
+    <div className="py-20">
       <RowComponent title="All Movies" videosPath="api/videos" />
       <RowComponent title="Action" videosPath="api/videos/genre/action" />
       <RowComponent title="Sci-Fi" videosPath="api/videos/genre/sci-fi" />
