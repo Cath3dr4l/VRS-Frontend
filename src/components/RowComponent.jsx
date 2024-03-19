@@ -1,12 +1,11 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from "react";
 import InfiniteListComponent from "./infiniteList";
-import CardComponent from './cardComponent';
+import CardComponent from "./cardComponent";
 
-const RowComponent = ({title, videosPath}) => {
-
+const RowComponent = ({ title, videosPath }) => {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [canLoadMore, setCanLoadMore] = useState({ right: true });  
+  const [canLoadMore, setCanLoadMore] = useState({ right: true });
 
   // Fetch Movies
   const [videos, setVideos] = useState([]);
@@ -14,8 +13,8 @@ const RowComponent = ({title, videosPath}) => {
     const fetchVideos = async () => {
       const response = await fetch(videosPath, { method: "GET" });
       const json = await response.json();
-        setVideos(json);
-        setData(json.slice(0, 25)); // Store the first 25 videos in data
+      setVideos(json);
+      setData(json.slice(0, 25)); // Store the first 25 videos in data
     };
     fetchVideos();
   }, []);
@@ -28,7 +27,7 @@ const RowComponent = ({title, videosPath}) => {
       }, 1000);
     });
   };
-    
+
   const next = async () => {
     const last = data.length;
     console.log(last);
@@ -41,20 +40,19 @@ const RowComponent = ({title, videosPath}) => {
     }
   };
 
-
   return (
     <div>
-        <h1 className='text-text font-semibold md:text-2xl p-4'>{title}</h1>
-        <InfiniteListComponent
-        style={{scrollbars : 'false'}}
+      <h1 className="text-text p-4 font-semibold md:text-2xl">{title}</h1>
+      <InfiniteListComponent
+        style={{ scrollbars: "false" }}
         isLoading={isLoading}
         items={data}
         canLoadMore={canLoadMore}
         next={next}
         renderComponent={(item) => <CardComponent item={item} key={item.id} />}
-        />
-    </div> 
-  )
-}
+      />
+    </div>
+  );
+};
 
-export default RowComponent
+export default RowComponent;

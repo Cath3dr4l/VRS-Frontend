@@ -12,22 +12,22 @@ const Navbar = () => {
   };
 
   return (
-    <div className="flex  items-center justify-between p-4 z-[100] w-full absolute">
+    <div className="absolute  z-[100] flex w-full items-center justify-between p-4">
       <Link to="/">
-        <h1 className="text-3xl font-bold font-poppins cursor-pointer text-white">
+        <h1 className="font-poppins cursor-pointer text-3xl font-bold text-white">
           VIDEODOG
         </h1>
       </Link>
       {customer ? (
         <div>
           <Link to="/cart">
-            <button className="text-white pr-4 cursor-pointer">Cart</button>
+            <button className="cursor-pointer pr-4 text-white">Cart</button>
           </Link>
           <Link to="/profile">
-            <button className="text-white pr-4 cursor-pointer">Profile</button>
+            <button className="cursor-pointer pr-4 text-white">Profile</button>
           </Link>
           <button
-            className="bg-primary px-6 py-2 rounded cursor-pointer text-white"
+            className="bg-primary cursor-pointer rounded px-6 py-2 text-white"
             onClick={handleClick}
           >
             Log Out
@@ -36,10 +36,10 @@ const Navbar = () => {
       ) : (
         <div>
           <Link to="/signup">
-            <button className="text-white pr-4 cursor-pointer">Sign Up</button>
+            <button className="cursor-pointer pr-4 text-white">Sign Up</button>
           </Link>
           <Link to="/login">
-            <button className="bg-primary px-6 py-2 rounded cursor-pointer text-white">
+            <button className="bg-primary cursor-pointer rounded px-6 py-2 text-white">
               Log In
             </button>
           </Link>

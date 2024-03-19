@@ -14,11 +14,10 @@ const HomePage = () => {
 
   return (
     <div>
-
-      <RowComponent title="All Movies" videosPath="api/videos"/>
-      <RowComponent title="Action" videosPath="api/videos/genre/action"/>
-      <RowComponent title="Sci-Fi" videosPath="api/videos/genre/sci-fi"/>
-      <RowComponent title="Drama" videosPath="api/videos/genre/drama"/>
+      <RowComponent title="All Movies" videosPath="api/videos" />
+      <RowComponent title="Action" videosPath="api/videos/genre/action" />
+      <RowComponent title="Sci-Fi" videosPath="api/videos/genre/sci-fi" />
+      <RowComponent title="Drama" videosPath="api/videos/genre/drama" />
 
       {/* <SearchBar
         isLoading={isLoading}
@@ -28,7 +27,6 @@ const HomePage = () => {
         renderComponent={(item) => <CardComponent item={item} key={item.id} />}
         setData={setData}
       /> */}
-
     </div>
   );
 };
