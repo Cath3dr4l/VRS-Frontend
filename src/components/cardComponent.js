@@ -4,12 +4,12 @@ import { Link } from "react-router-dom";
 
 const CardComponent = ({ item }) => {
   return (
-    <Link to={`/movie/${item._id}`} style={{ textDecoration: "none" }}>
+    <Link to={`/movie/${item._id}`} style={{ textDecoration: "none"}}>
       <Card
         style={{
           width: "200px",
-          boxShadow: "0 4px 8px 0 rgba(0,0,0,0.2)",
-          backdropFilter: "blur(10px)",
+          // boxShadow: "0 4px 8px 0 rgba(0,0,0,0.2)",
+          // backdropFilter: "blur(10px)",
           margin: "5px",
           backgroundColor: "white",
           borderRadius: "7px",
@@ -37,9 +37,6 @@ const CardComponent = ({ item }) => {
           >
             {item.name}
           </Card.Title>
-          {/* <Card.Text style={{ textAlign: "justify" }}>
-          {item.summary_text}
-        </Card.Text> */}
         </Card.Body>
       </Card>
     </Link>
