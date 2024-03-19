@@ -9,12 +9,13 @@ const RowComponent = ({title, videosPath}) => {
   const [canLoadMore, setCanLoadMore] = useState({ right: true });  
 
   // Fetch Movies
-  const [videos, setVideos] = useState(null);
+  const [videos, setVideos] = useState([]);
   useEffect(() => {
     const fetchVideos = async () => {
       const response = await fetch(videosPath, { method: "GET" });
-      const data = await response.json();
-      setVideos(data);
+      const json = await response.json();
+        setVideos(json);
+        setData(json.slice(0, 25)); // Store the first 25 videos in data
     };
     fetchVideos();
   }, []);
@@ -30,6 +31,7 @@ const RowComponent = ({title, videosPath}) => {
     
   const next = async () => {
     const last = data.length;
+    console.log(last);
     setIsLoading(true);
     const newData = await fetchMoreVideos(last);
     setData((prev) => [...prev, ...newData]);
@@ -39,15 +41,6 @@ const RowComponent = ({title, videosPath}) => {
     }
   };
 
-    useEffect(() => {
-        const fetchVideos = async () => {
-          const response = await fetch("/api/videos", { method: "GET" });
-          const data = await response.json();
-          setVideos(data);
-          setData(data.slice(0, 25)); // Store the first 25 videos in data
-        };
-        fetchVideos();
-      }, []);
 
   return (
     <div>

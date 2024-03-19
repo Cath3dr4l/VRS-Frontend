@@ -16,8 +16,9 @@ const HomePage = () => {
     <div>
 
       <RowComponent title="All Movies" videosPath="api/videos"/>
-      <RowComponent title="Action" videosPath="api/videos"/>
-      <RowComponent title="Horror" videosPath="api/videos"/>
+      <RowComponent title="Action" videosPath="api/videos/genre/action"/>
+      <RowComponent title="Sci-Fi" videosPath="api/videos/genre/sci-fi"/>
+      <RowComponent title="Drama" videosPath="api/videos/genre/drama"/>
 
       {/* <SearchBar
         isLoading={isLoading}

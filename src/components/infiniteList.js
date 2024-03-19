@@ -17,8 +17,8 @@ const InfiniteListComponent = ({
   });
 
   return (
-    <div className="relative flex items-center group">
-      <FaAngleDoubleLeft className="absolute left-0 top-1/2 transform -translate-y-1/2 text-3xl text-white group-hover:text-primary cursor-pointer" onClick={() => ref.current.scrollBy(-300, 0)} />
+    <div className="relative items-center group">
+      <FaAngleDoubleLeft className="bg-gradient-to-r from-black h-[350px] absolute left-0 top-1/2 transform -translate-y-1/2 text-3xl z-10 text-white/90 opacity-80 hover:opacity-100 hidden group-hover:block cursor-pointer" onClick={() => ref.current.scrollBy(-300, 0)} />
       <div
         ref={ref}
         style={{
@@ -35,7 +35,7 @@ const InfiniteListComponent = ({
         {items.map((item) => renderComponent(item))}
         {isLoading && <div>Loading...</div>}
       </div>
-      <FaAngleDoubleRight className="absolute right-0 top-1/2 transform -translate-y-1/2 text-3xl text-white group-hover:text-primary cursor-pointer" onClick={() => ref.current.scrollBy(300, 0)} />
+      <FaAngleDoubleRight className="bg-gradient-to-l from-black h-[350px] absolute right-0 top-1/2 transform -translate-y-1/2 text-3xl z-10 text-white/90 opacity-80 hover:opacity-100 hidden group-hover:block cursor-pointer" onClick={() => ref.current.scrollBy(300, 0)} />
     </div>
   );
 };

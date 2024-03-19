@@ -19,6 +19,8 @@ const CardComponent = ({ item }) => {
           style={{
             width: "200px",
             height: "300px",
+            overflow: "hidden",
+            // borderRadius: "7px",
           }}
           variant="top"
           src={item.poster_url}
