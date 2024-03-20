@@ -53,7 +53,7 @@ const Cart = () => {
 
   const handleCreateOrder = () => {
     cartItems.forEach(async (item) => {
-      const response = await fetch("/api/customers/neworder", {
+      const response = await fetch("/api/customers/order", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

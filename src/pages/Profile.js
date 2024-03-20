@@ -9,6 +9,7 @@ const Profile = () => {
   useEffect(() => {
     const fetchProfile = async () => {
       const response = await fetch("/api/customers/profile", {
+        method: "GET",
         headers: {
           Authorization: `Bearer ${customer.token}`,
         },
