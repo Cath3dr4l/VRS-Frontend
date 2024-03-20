@@ -23,7 +23,7 @@ const SearchBar = ({ videosPath }) => {
 
   const search = (data, query) => {
     return data.filter((row) =>
-      keys.some((key) => row[key].toLowerCase().includes(query.toLowerCase())),
+      keys.some((key) => row[key].toLowerCase().includes(query.toLowerCase()))
     );
   };
 
@@ -65,7 +65,7 @@ const SearchBar = ({ videosPath }) => {
       />
 
       {data.length === 0 && isSearching && (
-        <p style={{ color: "white" }}>Maa chuda</p>
+        <p style={{ color: "white" }}>No Movies Found</p>
       )}
 
       {isSearching && (
