@@ -1,12 +1,51 @@
 import { createContext } from "react";
 import { useLocalStorage } from "../hooks/useLocalStorage";
+import { useAuthContext } from "../hooks/useAuthContext";
+import { useEffect } from "react";
 
 export const CartContext = createContext();
 
 export const CartContextProvider = ({ children }) => {
   const [cartItems, setCartItems] = useLocalStorage("videodog-cart", []);
+  const { customer } = useAuthContext();
 
   const cartQuantity = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+
+  useEffect(() => {
+    const fetchCart = async () => {
+      const response = await fetch("/api/customers/cart", {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${customer.token}`,
+        },
+      });
+      const data = await response.json();
+      if (response.ok) {
+        setCartItems(data);
+      }
+    };
+
+    if (customer) {
+      fetchCart();
+    }
+  }, [customer]);
+
+  useEffect(() => {
+    const updateCart = async () => {
+      const response = await fetch("/api/customers/cart", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${customer.token}`,
+        },
+        body: JSON.stringify({ cart: cartItems }),
+      });
+    };
+    if (customer) {
+      updateCart();
+    }
+  }, [cartItems]);
+
   const getItemQuantity = (id) => {
     return cartItems.find((item) => item.id === id)?.quantity || 0;
   };
