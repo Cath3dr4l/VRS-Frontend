@@ -1,15 +1,21 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useLogout } from "../hooks/useLogout";
 import { useAuthContext } from "../hooks/useAuthContext";
 
 const Navbar = () => {
   const { customer } = useAuthContext();
+  const location = useLocation();
+
   // Log Out
   const { logout } = useLogout();
   const handleClick = () => {
     logout();
   };
+
+  if (location.pathname.startsWith("/management")) {
+    return <div>you dont get css </div>;
+  }
 
   return (
     <div className="bg-background/80 w-screen items-center justify-between flow-root p-4">

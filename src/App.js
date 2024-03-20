@@ -43,6 +43,7 @@ const App = () => {
             <Route path="/profile" exact element={<Profile />} />
             <Route path="/cart" exact element={<Cart />} />
           </Route>
+          <Route path="/management" />
         </Routes>
       </div>
     </Router>
