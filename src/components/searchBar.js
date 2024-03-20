@@ -64,6 +64,10 @@ const SearchBar = ({ videosPath }) => {
         }}
       />
 
+      {data.length === 0 && isSearching && (
+        <p style={{ color: "white" }}>Maa chuda</p>
+      )}
+
       {isSearching && (
         <InfiniteListComponent
           style={{ scrollbars: "false" }}
