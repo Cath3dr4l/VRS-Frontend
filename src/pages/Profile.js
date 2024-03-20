@@ -4,6 +4,7 @@ import { useAuthContext } from "../hooks/useAuthContext";
 const Profile = () => {
   const { customer } = useAuthContext();
   const [profile, setProfile] = useState(null);
+  const [orders, setOrders] = useState([]);
   const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -24,8 +25,26 @@ const Profile = () => {
       }
     };
 
+    const fetchOrders = async () => {
+      const response = await fetch("/api/customers/order", {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${customer.token}`,
+        },
+      });
+      const data = await response.json();
+      if (!response.ok) {
+        setError(data.error);
+      }
+      if (response.ok) {
+        setOrders(data);
+        console.log(data);
+        setError(null);
+      }
+    };
     if (customer) {
       fetchProfile();
+      fetchOrders();
     }
   }, [customer]);
 
@@ -40,6 +59,20 @@ const Profile = () => {
             <p>{profile.phone}</p>
           </div>
         )}
+      </div>
+      <h2>Orders</h2>
+      <div className="orders">
+        {orders &&
+          orders.map((order) => (
+            <div key={order._id}>
+              <p>{order.video.name}</p>
+              <p>Qty: {order.quantity}</p>
+              <p>Status: {order.status}</p>
+              {order.status !== "bought" && (
+                <p>Rented for: {order.duration} weeks</p>
+              )}
+            </div>
+          ))}
       </div>
       {error && <div className="error">{error}</div>}
     </div>
