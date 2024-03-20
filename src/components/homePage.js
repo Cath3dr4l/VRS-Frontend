@@ -12,21 +12,16 @@ import RowComponent from "./RowComponent";
 const HomePage = () => {
   const { customer } = useAuthContext();
 
+  const [isSearching, setIsSearching] = useState(false);
+
   return (
     <div className="py-20">
+      <SearchBar videosPath="api/videos" />
+
       <RowComponent title="All Movies" videosPath="api/videos" />
       <RowComponent title="Action" videosPath="api/videos/genre/action" />
       <RowComponent title="Sci-Fi" videosPath="api/videos/genre/sci-fi" />
       <RowComponent title="Drama" videosPath="api/videos/genre/drama" />
-
-      {/* <SearchBar
-        isLoading={isLoading}
-        items={data}
-        canLoadMore={true}
-        next={next}
-        renderComponent={(item) => <CardComponent item={item} key={item.id} />}
-        setData={setData}
-      /> */}
     </div>
   );
 };
