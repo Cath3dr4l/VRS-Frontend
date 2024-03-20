@@ -3,24 +3,26 @@ import { Outlet, Navigate } from "react-router-dom";
 import { useAuthContext } from "../hooks/useAuthContext";
 
 const PrivateRoutes = (props) => {
+  const { userType, redirectPath } = props;
   const [isAuthenticated, setIsAuthenticated] = useState(true);
-  const { dispatch } = useAuthContext();
-
+  const { dispatch: dispatchCustomer } = useAuthContext();
   useEffect(() => {
     const checkAuth = async () => {
-      const user = JSON.parse(localStorage.getItem(props.userType));
+      const user = JSON.parse(localStorage.getItem(userType));
       if (!user) {
         return setIsAuthenticated(false);
       }
-      const response = await fetch(`/api/${props.userType}s/auth`, {
+      const response = await fetch(`/api/${userType}s/auth`, {
         headers: {
           Authorization: `Bearer ${user.token}`,
         },
       });
       const data = await response.json();
       if (data.error) {
-        localStorage.removeItem(props.userType);
-        dispatch({ type: "LOGOUT" });
+        switch (userType) {
+          case "customer":
+            dispatchCustomer({ type: "LOGOUT" });
+        }
         return setIsAuthenticated(false);
       } else {
         setIsAuthenticated(true);
@@ -30,7 +32,7 @@ const PrivateRoutes = (props) => {
     checkAuth();
   }, []);
 
-  return isAuthenticated ? <Outlet /> : <Navigate to={props.redirectPath} />;
+  return isAuthenticated ? <Outlet /> : <Navigate to={redirectPath} />;
 };
 
 export default PrivateRoutes;
