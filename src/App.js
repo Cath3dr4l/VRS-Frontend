@@ -19,7 +19,7 @@ const App = () => {
   const { customer } = useAuthContext();
   return (
     <Router>
-      <div>
+      <div className="z-[100] fixed">
         <Navbar />
       </div>
 

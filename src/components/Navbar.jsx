@@ -12,14 +12,14 @@ const Navbar = () => {
   };
 
   return (
-    <div className="absolute  z-[100] flex w-full items-center justify-between p-4">
+    <div className="bg-background/80 w-screen items-center justify-between flow-root p-4">
       <Link to="/">
-        <h1 className="font-poppins cursor-pointer text-3xl font-bold text-white">
+        <h1 className="font-poppins cursor-pointer float-left text-3xl font-bold text-white">
           VIDEODOG
         </h1>
       </Link>
       {customer ? (
-        <div>
+        <div className="float-right mx-2">
           <Link to="/cart">
             <button className="cursor-pointer pr-4 text-white">Cart</button>
           </Link>
@@ -34,7 +34,7 @@ const Navbar = () => {
           </button>
         </div>
       ) : (
-        <div>
+        <div className="float-right mx-2">
           <Link to="/signup">
             <button className="cursor-pointer pr-4 text-white">Sign Up</button>
           </Link>

@@ -24,11 +24,10 @@ const InfiniteListComponent = ({
           behavior: 'smooth'
         })}
       />
-      <div
+      <div className="w-full"
         ref={ref}
         style={{
           px: -4,
-          width: "100vw", // Set width to screen width
           overflowX: "auto",
           overflowY: "auto",
           display: "flex",
