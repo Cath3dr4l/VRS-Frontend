@@ -8,6 +8,7 @@ const SearchBar = ({ videosPath }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [canLoadMore, setCanLoadMore] = useState({ right: true });
   const [data, setData] = useState([]);
+  const [filteredData, setFilteredData] = useState([]);
 
   useEffect(() => {
     const fetchVideos = async () => {
@@ -17,6 +18,7 @@ const SearchBar = ({ videosPath }) => {
       setData(json.slice(0, 25)); // Store the first 25 videos in data
     };
     fetchVideos();
+    setFilteredData(videos);
   }, []);
 
   const keys = ["name"];
@@ -30,7 +32,7 @@ const SearchBar = ({ videosPath }) => {
   const fetchMoreVideos = async (last, length = 25) => {
     return new Promise((resolve) => {
       setTimeout(() => {
-        const newData = videos.slice(last, last + length);
+        const newData = filteredData.slice(last, last + length);
         resolve(newData);
       }, 1000);
     });
@@ -43,10 +45,18 @@ const SearchBar = ({ videosPath }) => {
     const newData = await fetchMoreVideos(last);
     setData((prev) => [...prev, ...newData]);
     setIsLoading(false);
-    if (data.length === videos.length) {
+    if (data.length === filteredData.length) {
       setCanLoadMore({ right: false });
     }
   };
+
+  useEffect(() => {
+    setData(filteredData.slice(0,25));
+    if(data.length === filteredData.length) {
+      setCanLoadMore({right: false});
+    }
+  }
+  ,[filteredData])
 
   return (
     <div>
@@ -60,7 +70,7 @@ const SearchBar = ({ videosPath }) => {
           if (e.target.value.length === 0) {
             setIsSearching(false);
           }
-          setData(search(videos, e.target.value));
+          setFilteredData(search(videos, e.target.value));
         }}
       />
 
