@@ -68,6 +68,7 @@ const Profile = () => {
               <p>{order.video.name}</p>
               <p>Qty: {order.quantity}</p>
               <p>Status: {order.status}</p>
+              <p>Price: {order.price}</p>
               {order.status !== "bought" && (
                 <p>Rented for: {order.duration} weeks</p>
               )}

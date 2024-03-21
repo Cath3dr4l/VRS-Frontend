@@ -53,7 +53,7 @@ export const CartContextProvider = ({ children }) => {
   const increaseItemQuantity = (id) => {
     setCartItems((currItems) => {
       if (currItems.find((item) => item.id === id) == null) {
-        return [...currItems, { id, quantity: 1 }];
+        return [...currItems, { id, quantity: 1, duration: 1 }];
       } else {
         return currItems.map((item) => {
           if (item.id === id) {

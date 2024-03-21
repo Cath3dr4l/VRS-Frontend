@@ -51,6 +51,21 @@ const Cart = () => {
     }
   }, [customer]);
 
+  const calculatePrice = (item) => {
+    if (!movies) return 0;
+    const movie = movies.find((movie) => movie._id === item.id);
+    if (!movie) return 0;
+    if (item.duration === 100) {
+      return movie.buy_price * item.quantity;
+    }
+    return movie.rent_price * item.quantity * item.duration;
+  };
+
+  const totalCartPrice = () => {
+    return cartItems.reduce((sum, item) => {
+      return sum + calculatePrice(item);
+    }, 0);
+  };
   const handleCreateOrder = () => {
     cartItems.forEach(async (item) => {
       const response = await fetch("/api/customers/order", {
@@ -60,7 +75,7 @@ const Cart = () => {
           Authorization: `Bearer ${customer.token}`,
         },
         body: JSON.stringify({
-          videoId: item.id,
+          videoID: item.id,
           quantity: item.quantity,
           duration: item.duration,
         }),
@@ -98,7 +113,6 @@ const Cart = () => {
               >
                 <div>
                   <h3>{movie.name}</h3>
-                  <p>Quantity: {item.quantity}</p>
                   <img
                     src={movie.poster_url}
                     alt={movie.name}
@@ -124,6 +138,7 @@ const Cart = () => {
                   >
                     Remove
                   </button>
+                  <p>Quantity: {item.quantity}</p>
                   <div>
                     <label htmlFor="rentDuration" className="mr-2">
                       Rent Duration:
@@ -143,6 +158,10 @@ const Cart = () => {
                       <option value="100">Buy Movie</option>
                     </select>
                   </div>
+                  <div>
+                    Price: Rs.
+                    {calculatePrice(item)}
+                  </div>
                 </div>
               </div>
             );
@@ -151,12 +170,17 @@ const Cart = () => {
       {cartItems.length === 0 ? (
         <div>Your cart is empty</div>
       ) : (
-        <button
-          onClick={handleCreateOrder}
-          className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
-        >
-          Order
-        </button>
+        <>
+          <div>
+            <h3>Total Price: Rs.{totalCartPrice()}</h3>
+          </div>
+          <button
+            onClick={handleCreateOrder}
+            className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+          >
+            Order
+          </button>
+        </>
       )}
 
       {error && <div className="error">{error}</div>}
