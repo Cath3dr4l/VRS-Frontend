@@ -6,6 +6,8 @@ import {
   Navigate,
 } from "react-router-dom";
 import { useAuthContext } from "./hooks/useAuthContext";
+import { useStaffContext } from "./hooks/useStaffContext";
+import { useManagerContext } from "./hooks/useManagerContext";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import Movie from "./pages/Movie";
@@ -17,9 +19,13 @@ import PrivateRoutes from "./utils/PrivateRoutes";
 import Management from "./pages/Management";
 import Staff from "./pages/Staff";
 import Manager from "./pages/Manager";
+import Recruit from "./pages/Recruit";
 
 const App = () => {
   const { customer } = useAuthContext();
+  const { staff } = useStaffContext();
+  const { manager } = useManagerContext();
+
   return (
     <Router>
       <div className="z-[100] fixed">
@@ -46,9 +52,33 @@ const App = () => {
             <Route path="/profile" exact element={<Profile />} />
             <Route path="/cart" exact element={<Cart />} />
           </Route>
-          <Route path="/management" element={<Management />} />
-          <Route path="/management/staff" element={<Staff />} />
-          <Route path="/management/manager" element={<Manager />} />
+          <Route
+            path="/management"
+            element={
+              !staff && !manager ? (
+                <Management />
+              ) : (
+                <Navigate
+                  to={manager ? "/management/manager" : "/management/staff"}
+                />
+              )
+            }
+          />
+          <Route
+            element={
+              <PrivateRoutes userType="staff" redirectPath="/management" />
+            }
+          >
+            <Route path="/management/staff" element={<Staff />} />
+          </Route>
+          <Route
+            element={
+              <PrivateRoutes userType="manager" redirectPath="/management" />
+            }
+          >
+            <Route path="/management/manager" element={<Manager />} />
+            <Route path="/management/recruit" element={<Recruit />} />
+          </Route>
         </Routes>
       </div>
     </Router>
