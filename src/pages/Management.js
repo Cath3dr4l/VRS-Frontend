@@ -8,10 +8,9 @@ const Management = () => {
   const { login, error, isLoading } = useLogin();
   const navigate = useNavigate();
 
-
   const handleStaffSubmit = async (e) => {
     e.preventDefault();
-    const success = await login(username, password, 'staff');
+    const success = await login(username, password, "staff");
     if (success) {
       navigate("/management/staff");
     }
@@ -19,7 +18,7 @@ const Management = () => {
 
   const handleManagerSubmit = async (e) => {
     e.preventDefault();
-    const success = await login(username, password, 'manager');
+    const success = await login(username, password, "manager");
     if (success) {
       navigate("/management/manager");
     }
@@ -32,17 +31,19 @@ const Management = () => {
           <form className="w-full flex flex-col">
             <h1 className="text-2xl font-semibold text-center my-4">Log In</h1>
             <p>
-              <input className="p-2 rounded w-full bg-gray-700"
+              <input
+                className="p-2 rounded w-full bg-gray-700"
                 type="text"
                 value={username}
-                placeholder = "Username" 
+                placeholder="Username"
                 required
                 onChange={(e) => setUsername(e.target.value)}
               />
             </p>
             <br />
             <p>
-              <input className="p-2 rounded w-full bg-gray-700"
+              <input
+                className="p-2 rounded w-full bg-gray-700"
                 type="password"
                 value={password}
                 placeholder="Password"
@@ -53,12 +54,24 @@ const Management = () => {
             </p>
             <br />
             <div className="flow-root">
-            <button className="bg-primary float-right w-[48%] py-3 my-2 font-semibold " id="sub_btn" type="submit" disabled={isLoading} onClick={handleStaffSubmit}>
-              Staff
-            </button>
-            <button className="bg-primary float-left w-[48%] py-3 my-2 font-semibold " id="sub_btn" type="submit" disabled={isLoading} onClick = {handleManagerSubmit}>
-              Manager
-            </button>
+              <button
+                className="bg-primary float-right w-[48%] py-3 my-2 font-semibold "
+                id="sub_btn"
+                type="submit"
+                disabled={isLoading}
+                onClick={handleStaffSubmit}
+              >
+                Staff
+              </button>
+              <button
+                className="bg-primary float-left w-[48%] py-3 my-2 font-semibold "
+                id="sub_btn"
+                type="submit"
+                disabled={isLoading}
+                onClick={handleManagerSubmit}
+              >
+                Manager
+              </button>
             </div>
             {error && <div className="error">{error}</div>}
           </form>

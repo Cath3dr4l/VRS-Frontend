@@ -1,11 +1,7 @@
-import React from 'react'
+import React from "react";
 
 const Staff = () => {
-  return (
-    <div className='py-24'>
-        Staff
-        </div>
-  )
-}
+  return <div className="py-24">Staff</div>;
+};
 
-export default Staff
+export default Staff;

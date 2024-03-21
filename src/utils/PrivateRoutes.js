@@ -8,8 +8,8 @@ const PrivateRoutes = (props) => {
   const { userType, redirectPath } = props;
   const [isAuthenticated, setIsAuthenticated] = useState(true);
   const { dispatch: dispatchCustomer } = useAuthContext();
-  const { dispatch : dispatchStaff} = useStaffContext();
-  const { dispatch : dispatchManager} = useManagerContext();
+  const { dispatch: dispatchStaff } = useStaffContext();
+  const { dispatch: dispatchManager } = useManagerContext();
 
   useEffect(() => {
     const checkAuth = async () => {

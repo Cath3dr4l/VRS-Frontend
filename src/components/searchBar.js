@@ -51,12 +51,11 @@ const SearchBar = ({ videosPath }) => {
   };
 
   useEffect(() => {
-    setData(filteredData.slice(0,25));
-    if(data.length === filteredData.length) {
-      setCanLoadMore({right: false});
+    setData(filteredData.slice(0, 25));
+    if (data.length === filteredData.length) {
+      setCanLoadMore({ right: false });
     }
-  }
-  ,[filteredData])
+  }, [filteredData]);
 
   return (
     <div>

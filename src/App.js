@@ -46,9 +46,9 @@ const App = () => {
             <Route path="/profile" exact element={<Profile />} />
             <Route path="/cart" exact element={<Cart />} />
           </Route>
-          <Route path="/management" element={<Management/>}/>
-          <Route path="/management/staff" element={<Staff/>}/>
-          <Route path="/management/manager" element={<Manager/>}/>
+          <Route path="/management" element={<Management />} />
+          <Route path="/management/staff" element={<Staff />} />
+          <Route path="/management/manager" element={<Manager />} />
         </Routes>
       </div>
     </Router>
