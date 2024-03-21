@@ -65,7 +65,7 @@ const Profile = () => {
         {orders &&
           orders.map((order) => (
             <div key={order._id}>
-              <p>{order.video.name}</p>
+              <p>{order.videoID.name}</p>
               <p>Qty: {order.quantity}</p>
               <p>Status: {order.status}</p>
               <p>Price: {order.price}</p>
