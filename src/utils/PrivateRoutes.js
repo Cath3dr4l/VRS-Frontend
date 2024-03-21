@@ -1,11 +1,16 @@
 import { useState, useEffect } from "react";
 import { Outlet, Navigate } from "react-router-dom";
 import { useAuthContext } from "../hooks/useAuthContext";
+import { useStaffContext } from "../hooks/useStaffContext";
+import { useManagerContext } from "../hooks/useManagerContext";
 
 const PrivateRoutes = (props) => {
   const { userType, redirectPath } = props;
   const [isAuthenticated, setIsAuthenticated] = useState(true);
   const { dispatch: dispatchCustomer } = useAuthContext();
+  const { dispatch : dispatchStaff} = useStaffContext();
+  const { dispatch : dispatchManager} = useManagerContext();
+
   useEffect(() => {
     const checkAuth = async () => {
       const user = JSON.parse(localStorage.getItem(userType));
@@ -22,6 +27,13 @@ const PrivateRoutes = (props) => {
         switch (userType) {
           case "customer":
             dispatchCustomer({ type: "LOGOUT" });
+            break;
+          case "staff":
+            dispatchStaff({ type: "LOGOUT" });
+            break;
+          case "manager":
+            dispatchManager({ type: "LOGOUT" });
+            break;
         }
         return setIsAuthenticated(false);
       } else {

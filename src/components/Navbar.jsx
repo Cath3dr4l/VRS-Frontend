@@ -14,7 +14,12 @@ const Navbar = () => {
   };
 
   if (location.pathname.startsWith("/management")) {
-    return <div>you dont get css </div>;
+    return (
+    <div>
+      <h1 className="font-poppins cursor-pointer float-left text-3xl font-bold text-white">
+    VIDEODOG
+  </h1></div>
+    );
   }
 
   return (

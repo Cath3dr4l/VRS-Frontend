@@ -14,6 +14,9 @@ import Profile from "./pages/Profile";
 import HomePage from "./components/homePage";
 import Navbar from "./components/Navbar";
 import PrivateRoutes from "./utils/PrivateRoutes";
+import Management from "./pages/Management";
+import Staff from "./pages/Staff";
+import Manager from "./pages/Manager";
 
 const App = () => {
   const { customer } = useAuthContext();
@@ -43,7 +46,9 @@ const App = () => {
             <Route path="/profile" exact element={<Profile />} />
             <Route path="/cart" exact element={<Cart />} />
           </Route>
-          <Route path="/management" />
+          <Route path="/management" element={<Management/>}/>
+          <Route path="/management/staff" element={<Staff/>}/>
+          <Route path="/management/manager" element={<Manager/>}/>
         </Routes>
       </div>
     </Router>
