@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useAuthContext } from "../hooks/useAuthContext";
+import { formatDistanceToNow, format, add } from "date-fns";
 
 const Profile = () => {
   const { customer } = useAuthContext();
@@ -70,8 +71,23 @@ const Profile = () => {
               <p>Status: {order.status}</p>
               <p>Price: {order.price}</p>
               {order.status !== "bought" && (
-                <p>Rented for: {order.duration} weeks</p>
+                <div>
+                  <p>Rented for: {order.duration} weeks</p>
+                  <p>
+                    Due Date:
+                    {format(
+                      add(new Date(order.createdAt), { weeks: order.duration }),
+                      "dd/MM/yyyy"
+                    )}
+                  </p>
+                </div>
               )}
+              <p>
+                Ordered:
+                {formatDistanceToNow(new Date(order.createdAt), {
+                  addSuffix: true,
+                })}
+              </p>
             </div>
           ))}
       </div>
