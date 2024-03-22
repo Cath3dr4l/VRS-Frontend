@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useState } from "react";
 import { useLogin } from "../hooks/useLogin";
 
@@ -7,13 +7,15 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const { login, error, isLoading } = useLogin();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const success = await login(username, password,"customer");
+    const success = await login(username, password, "customer");
     if (success) {
-      navigate("/");
+      console.log(location.state);
+      navigate(location.state?.prev || "/");
     }
   };
 
@@ -24,17 +26,19 @@ const Login = () => {
           <form className="w-full flex flex-col" onSubmit={handleSubmit}>
             <h1 className="text-2xl font-semibold text-center my-4">Log In</h1>
             <p>
-              <input className="p-2 rounded w-full bg-gray-700"
+              <input
+                className="p-2 rounded w-full bg-gray-700"
                 type="text"
                 value={username}
-                placeholder = "Username" 
+                placeholder="Username"
                 required
                 onChange={(e) => setUsername(e.target.value)}
               />
             </p>
             <br />
             <p>
-              <input className="p-2 rounded w-full bg-gray-700"
+              <input
+                className="p-2 rounded w-full bg-gray-700"
                 type="password"
                 value={password}
                 placeholder="Password"
@@ -44,12 +48,18 @@ const Login = () => {
               />
             </p>
             <br />
-            <button className="bg-primary w-full py-3 my-3 font-semibold" id="sub_btn" type="submit" disabled={isLoading}>
+            <button
+              className="bg-primary w-full py-3 my-3 font-semibold"
+              id="sub_btn"
+              type="submit"
+              disabled={isLoading}
+            >
               Log In
             </button>
             {error && <div className="error">{error}</div>}
             <p className="py-3">
-              <span  className=" text-gray-600" > Don't have an account? </span> <Link to="/signup">Sign up</Link>.
+              <span className=" text-gray-600"> Don't have an account? </span>{" "}
+              <Link to="/signup">Sign up</Link>.
             </p>
           </form>
         </div>

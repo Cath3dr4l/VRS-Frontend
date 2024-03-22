@@ -1,4 +1,4 @@
-import { Link, useParams, useNavigate } from "react-router-dom";
+import { Link, useParams, useNavigate, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useCartContext } from "../hooks/useCartContext";
 import { useAuthContext } from "../hooks/useAuthContext";
@@ -36,6 +36,7 @@ const Movie = () => {
 
   const { customer } = useAuthContext();
   const navigate = useNavigate();
+  const location = useLocation();
   const quantity = getItemQuantity(id);
   return (
     <div>
@@ -44,7 +45,8 @@ const Movie = () => {
           <div className="w-full h-screen flow-root text-text">
             <div className="w-[50%] h-full float-right">
               <div className="absolute right-0 w-[50%] h-full bg-gradient-to-r from-background "></div>
-              <img className="w-full h-full object-cover"
+              <img
+                className="w-full h-full object-cover"
                 src={movie.poster_url}
                 alt="Poster"
               />
@@ -59,7 +61,9 @@ const Movie = () => {
                     className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                     onClick={() => {
                       if (!customer) {
-                        navigate("/login");
+                        navigate("/login", {
+                          state: { prev: location.pathname },
+                        });
                         return;
                       }
                       increaseItemQuantity(id);
@@ -68,7 +72,10 @@ const Movie = () => {
                     + Add To Cart
                   </button>
                 ) : (
-                  <div className="flex items-center flex-col" style={{ gap: ".5rem" }}>
+                  <div
+                    className="flex items-center flex-col"
+                    style={{ gap: ".5rem" }}
+                  >
                     <div
                       className="flex justify-center items-center"
                       style={{ gap: ".5rem" }}
@@ -100,7 +107,9 @@ const Movie = () => {
                       <select
                         id="rentDuration"
                         defaultValue={getDuration(id)}
-                        onChange={(e) => setDuration(id, Number(e.target.value))}
+                        onChange={(e) =>
+                          setDuration(id, Number(e.target.value))
+                        }
                         className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-black rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                       >
                         <option value="1">1 Week</option>

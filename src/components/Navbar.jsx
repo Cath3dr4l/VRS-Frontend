@@ -15,10 +15,11 @@ const Navbar = () => {
 
   if (location.pathname.startsWith("/management")) {
     return (
-    <div>
-      <h1 className="font-poppins cursor-pointer float-left text-3xl font-bold text-white">
-    VIDEODOG
-  </h1></div>
+      <div>
+        <h1 className="font-poppins cursor-pointer float-left text-3xl font-bold text-white">
+          VIDEODOG
+        </h1>
+      </div>
     );
   }
 
@@ -49,7 +50,7 @@ const Navbar = () => {
           <Link to="/signup">
             <button className="cursor-pointer pr-4 text-white">Sign Up</button>
           </Link>
-          <Link to="/login">
+          <Link to="/login" state={{ prev: location.pathname }}>
             <button className="bg-primary cursor-pointer rounded px-6 py-2 text-white">
               Log In
             </button>
