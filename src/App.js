@@ -20,6 +20,7 @@ import Management from "./pages/Management";
 import Staff from "./pages/Staff";
 import Manager from "./pages/Manager";
 import Recruit from "./pages/Recruit";
+import AddMovie from "./pages/AddMovie";
 
 const App = () => {
   const { customer } = useAuthContext();
@@ -78,6 +79,7 @@ const App = () => {
           >
             <Route path="/management/manager" element={<Manager />} />
             <Route path="/management/recruit" element={<Recruit />} />
+            <Route path="/management/addmovie" element={<AddMovie />} />
           </Route>
         </Routes>
       </div>
