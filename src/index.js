@@ -10,14 +10,14 @@ import { ManagerContextProvider } from "./context/ManagerContext";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <ManagerContextProvider>
-      <StaffContextProvider>
-        <AuthContextProvider>
-          <CartContextProvider>
+    <AuthContextProvider>
+      <CartContextProvider>
+        <StaffContextProvider>
+          <ManagerContextProvider>
             <App />
-          </CartContextProvider>
-        </AuthContextProvider>
+          </ManagerContextProvider>
       </StaffContextProvider>
-    </ManagerContextProvider>
+      </CartContextProvider>
+    </AuthContextProvider>
   </React.StrictMode>
 );
