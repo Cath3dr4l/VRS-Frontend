@@ -2,6 +2,8 @@ import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useLogout } from "../hooks/useLogout";
 import { useAuthContext } from "../hooks/useAuthContext";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 
 const Navbar = () => {
   const { customer } = useAuthContext();
@@ -35,7 +37,9 @@ const Navbar = () => {
       {customer ? (
         <div className="float-right mx-2">
           <Link to="/cart">
-            <button className="cursor-pointer pr-4 text-white">Cart</button>
+            <button className="cursor-pointer pr-4 text-white">
+              <FontAwesomeIcon icon={faShoppingCart} />
+            </button>
           </Link>
           <Link to="/profile">
             <button className="cursor-pointer pr-4 text-white">Profile</button>
