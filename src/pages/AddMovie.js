@@ -138,6 +138,7 @@ const AddMovie = () => {
                 onChange={(e) => setRentPrice(e.target.value)}
               />
             </p>
+            <br />
             <p>
               <input
                 className="p-2 rounded w-full bg-gray-700"
@@ -148,6 +149,7 @@ const AddMovie = () => {
                 onChange={(e) => setRating(e.target.value)}
               />
             </p>
+            <br />
             <p>
               <input
                 className="p-2 rounded w-full bg-gray-700"
@@ -158,20 +160,24 @@ const AddMovie = () => {
                 onChange={(e) => setDescription(e.target.value)}
               />
             </p>
-            <div>
-              {genreList.map((genre) => (
-                <p key={genre}>
-                  <label>
+            <br />
+            <div className="p-2 rounded w-full bg-gray-700">
+              <p>Genres:</p>
+              <div className="grid grid-cols-3 gap-2">
+                {genreList.map((genre) => (
+                  <div key={genre} className="flex items-center mt-2">
                     <input
                       type="checkbox"
                       value={genre}
                       onChange={handleGenreChange}
                       checked={genres.includes(genre)}
                     />
-                    {genre.charAt(0).toUpperCase() + genre.slice(1)}
-                  </label>
-                </p>
-              ))}
+                    <label htmlFor={genre} className="ml-2 block text-sm">
+                      {genre.charAt(0).toUpperCase() + genre.slice(1)}
+                    </label>
+                  </div>
+                ))}
+              </div>
             </div>
             <br />
             <button

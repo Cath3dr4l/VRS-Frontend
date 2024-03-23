@@ -16,9 +16,11 @@ const Navbar = () => {
   if (location.pathname.startsWith("/management")) {
     return (
       <div>
-        <h1 className="font-poppins cursor-pointer float-left text-3xl font-bold text-white">
-          VIDEODOG
-        </h1>
+        <Link to="/management">
+          <h1 className="font-poppins cursor-pointer float-left text-3xl font-bold text-white">
+            VIDEODOG
+          </h1>
+        </Link>
       </div>
     );
   }
