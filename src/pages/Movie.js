@@ -2,6 +2,13 @@ import { Link, useParams, useNavigate, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useCartContext } from "../hooks/useCartContext";
 import { useAuthContext } from "../hooks/useAuthContext";
+import { Rating } from "@mui/material";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faExternalLinkAlt,
+  faMoneyBillWave,
+  faHandHoldingUsd,
+} from "@fortawesome/free-solid-svg-icons";
 
 const Movie = () => {
   const { id } = useParams();
@@ -53,12 +60,72 @@ const Movie = () => {
             </div>
             <div className="w-[50%] float-left my-20 px-4 flow-root">
               <h1 className="font-semibold text-3xl"> {movie.name} </h1>
-              <p className="my-4">{movie.summary_text}</p>
-              <p>{movie.rating}</p>
+              <p className="my-7">{movie.summary_text}</p>
+              <>
+                <p className="font-semibold">
+                  IMDB rating: {movie.rating}
+                  {movie.ImdbId && (
+                    <Link
+                      to={`https://www.imdb.com/title/${movie.ImdbId}`}
+                      style={{ marginLeft: "10px" }}
+                    >
+                      <FontAwesomeIcon icon={faExternalLinkAlt} />
+                    </Link>
+                  )}
+                </p>
+                <Rating
+                  value={movie.rating}
+                  max={10.0}
+                  precision={0.1}
+                  readOnly
+                />
+              </>
+              <br />
+              <>
+                <p className="font-semibold">Genres:</p>
+                <div className="flex space-x-2">
+                  {movie.genre.map((g) => (
+                    <p
+                      key={g}
+                      className="px-2 py-1 bg-gray-500 text-white rounded"
+                    >
+                      {g.charAt(0).toUpperCase() + g.slice(1)}
+                    </p>
+                  ))}
+                </div>
+              </>
+              <br />
+              {movie.cast && movie.cast.length > 0 && (
+                <>
+                  <p className="font-semibold">Cast:</p>
+                  <div className="flex flex-wrap space-x-2">
+                    {movie.cast.map((actor) => (
+                      <p
+                        key={actor.name_id}
+                        className="px-2 py-1 bg-red-700 text-white rounded"
+                      >
+                        {actor.name}
+                      </p>
+                    ))}
+                  </div>
+                </>
+              )}
+              <br />
+              <br />
+              <>
+                <p className="font-semibold">
+                  <FontAwesomeIcon icon={faMoneyBillWave} /> Buy for: ₹
+                  {movie.buy_price}
+                </p>
+                <p className="font-semibold">
+                  <FontAwesomeIcon icon={faHandHoldingUsd} /> Rent for: ₹
+                  {movie.rent_price}
+                </p>
+              </>
               <div className="mt-auto">
                 {quantity === 0 ? (
                   <button
-                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                    className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
                     onClick={() => {
                       if (!customer) {
                         navigate("/login", {
@@ -131,6 +198,8 @@ const Movie = () => {
                   </div>
                 )}
               </div>
+              <br />
+              <br />
               <p className="text-primary">
                 <Link to="/">Go back to the homepage</Link>
               </p>
