@@ -30,6 +30,29 @@ const AllOrders = () => {
       fetchOrders();
     }
   }, [staff]);
+
+  const handleReturn = async (orderID) => {
+    const response = await fetch(`/api/staffs/orders/${orderID}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${staff.token}`,
+      },
+      body: JSON.stringify({ status: "returned" }),
+    });
+    const data = await response.json();
+    if (!response.ok) {
+      setError(data.error);
+    }
+    if (response.ok) {
+      setOrders((prevOrders) =>
+        prevOrders.map((order) =>
+          order._id === orderID ? { ...order, status: "returned" } : order
+        )
+      );
+      setError(null);
+    }
+  };
   return (
     <div style={{ color: "white " }}>
       <div className="Orders">
@@ -51,6 +74,12 @@ const AllOrders = () => {
                       "dd/MM/yyyy"
                     )}
                   </p>
+                  <button
+                    onClick={() => handleReturn(order._id)}
+                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                  >
+                    Mark as Returned
+                  </button>
                 </div>
               ))}
         </div>
