@@ -2,18 +2,19 @@ import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useLogout } from "../hooks/useLogout";
 import { useAuthContext } from "../hooks/useAuthContext";
+import { useStaffContext } from "../hooks/useStaffContext";
+import { useManagerContext } from "../hooks/useManagerContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 
 const Navbar = () => {
   const { customer } = useAuthContext();
+  const { staff } = useStaffContext();
+  const { manager } = useManagerContext();
   const location = useLocation();
 
   // Log Out
   const { logout } = useLogout();
-  const handleClick = () => {
-    logout();
-  };
 
   if (location.pathname.startsWith("/management")) {
     return (
@@ -23,6 +24,17 @@ const Navbar = () => {
             VIDEODOG
           </h1>
         </Link>
+        {(staff || manager) && (
+          <button
+            className="bg-primary cursor-pointer rounded px-6 py-2 text-white"
+            onClick={() => {
+              if (staff) logout("staff");
+              if (manager) logout("manager");
+            }}
+          >
+            Log Out
+          </button>
+        )}
       </div>
     );
   }
@@ -46,7 +58,9 @@ const Navbar = () => {
           </Link>
           <button
             className="bg-primary cursor-pointer rounded px-6 py-2 text-white"
-            onClick={handleClick}
+            onClick={() => {
+              logout("customer");
+            }}
           >
             Log Out
           </button>

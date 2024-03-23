@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import StaffSearchList from "../components/staffSearchList";
 
 const Staff = () => {
   return (
@@ -9,6 +10,10 @@ const Staff = () => {
           All Orders
         </button>
       </Link>
+      <div>
+        <h1 className="text-white font-semibold">All movies</h1>
+        <StaffSearchList videosPath="../api/videos" />
+      </div>
     </>
   );
 };

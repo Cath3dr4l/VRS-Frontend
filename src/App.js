@@ -21,6 +21,8 @@ import Staff from "./pages/Staff";
 import Manager from "./pages/Manager";
 import Recruit from "./pages/Recruit";
 import AddMovie from "./pages/AddMovie";
+import EditMovie from "./pages/EditMovie";
+import MovieManage from "./pages/MovieManage";
 import AllOrders from "./pages/AllOrders";
 
 const App = () => {
@@ -82,6 +84,8 @@ const App = () => {
             <Route path="/management/manager" element={<Manager />} />
             <Route path="/management/recruit" element={<Recruit />} />
             <Route path="/management/addmovie" element={<AddMovie />} />
+            <Route path="/management/movie/:id" element={<MovieManage />} />
+            <Route path="/management/editmovie/:id" element={<EditMovie />} />
           </Route>
         </Routes>
       </div>

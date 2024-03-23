@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import StaffSearchList from "../components/staffSearchList";
 
 const Manager = () => {
-
   return (
     <div className="py-10">
       <Link to="/management/recruit">
