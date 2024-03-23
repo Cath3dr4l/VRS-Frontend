@@ -1,12 +1,48 @@
 import React from "react";
 import { Card, Button } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useStaffContext } from "../hooks/useStaffContext";
 import { useManagerContext } from "../hooks/useManagerContext";
+import { confirmAlert } from "react-confirm-alert";
+import "react-confirm-alert/src/react-confirm-alert.css";
 
 const StaffCardComponent = ({ item }) => {
   const { staff } = useStaffContext();
   const { manager } = useManagerContext();
+  const navigate = useNavigate();
+
+  const deleteItem = (id) => {
+    confirmAlert({
+      title: "Confirm to delete",
+      message: "Are you sure you want to delete this movie?",
+      buttons: [
+        {
+          label: "Yes",
+          onClick: () => {
+            fetch(`/api/managers/video/${id}`, {
+              method: "DELETE",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${manager.token}`,
+              },
+            })
+              .then((res) => res.json())
+              .then((data) => {
+                console.log(data);
+                navigate("/management/manager");
+              })
+              .catch((err) => console.log(err));
+          },
+        },
+        {
+          label: "No",
+          onClick: () => {
+            return;
+          },
+        },
+      ],
+    });
+  };
 
   return (
     <Card className="w-screen h-[240px] my-[5px] flow-root bg-white/30 rounded-md">
@@ -37,12 +73,20 @@ const StaffCardComponent = ({ item }) => {
       <Card.Body className="float-right flex flex-col p-4">
         {manager ? (
           <div className="flex flex-row">
-            <Link to={`/management/editmovie/${item._id}`}>
-              <Button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 m-2 rounded">
-                Edit
-              </Button>
-            </Link>
-            <Button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 m-2 rounded">
+            <Button
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 m-2 rounded"
+              onClick={() => {
+                navigate(`/management/editmovie/${item._id}`);
+              }}
+            >
+              Edit
+            </Button>
+            <Button
+              className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 m-2 rounded"
+              onClick={() => {
+                deleteItem(item._id);
+              }}
+            >
               Delete
             </Button>
           </div>
