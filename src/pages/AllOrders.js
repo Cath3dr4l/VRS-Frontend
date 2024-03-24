@@ -20,7 +20,7 @@ const AllOrders = () => {
         setError(data.error);
       }
       if (response.ok) {
-        setOrders(data);
+        setOrders(data.filter((order) => order.videoID && order.customerID));
         setError(null);
         console.log(data);
       }

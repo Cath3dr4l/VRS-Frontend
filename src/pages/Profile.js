@@ -38,7 +38,7 @@ const Profile = () => {
         setError(data.error);
       }
       if (response.ok) {
-        setOrders(data);
+        setOrders(data.filter((order) => order.videoID));
         console.log(data);
         setError(null);
       }

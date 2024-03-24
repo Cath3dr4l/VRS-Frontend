@@ -18,20 +18,21 @@ const StaffCardComponent = ({ item }) => {
       buttons: [
         {
           label: "Yes",
-          onClick: () => {
-            fetch(`/api/managers/video/${id}`, {
+          onClick: async () => {
+            const response = await fetch(`/api/managers/video/${id}`, {
               method: "DELETE",
               headers: {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${manager.token}`,
               },
-            })
-              .then((res) => res.json())
-              .then((data) => {
-                console.log(data);
-                navigate("/management/manager");
-              })
-              .catch((err) => console.log(err));
+            });
+            const data = await response.json();
+            if (response.ok) {
+              alert("Movie deleted successfully");
+              navigate("/management/manager");
+            } else {
+              alert(`An error occured: ${data.error}`);
+            }
           },
         },
         {
