@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import InfiniteListComponent from "./infiniteList";
 import CardComponent from "./cardComponent";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
 
 const SearchBar = ({ videosPath }) => {
   const [videos, setVideos] = useState([]);
@@ -59,22 +61,29 @@ const SearchBar = ({ videosPath }) => {
 
   return (
     <div>
-      <input
-        type="text"
-        placeholder="Search..."
-        onChange={(e) => {
-          if (e.target.value.length !== 0) {
-            setIsSearching(true);
-          }
-          if (e.target.value.length === 0) {
-            setIsSearching(false);
-          }
-          setFilteredData(search(videos, e.target.value));
-        }}
-      />
-
+      <div className="relative mx-5">
+        <input
+          type="text"
+          placeholder="Search..."
+          className="text-white bg-gray-800 border-none px-3 py-2 rounded pl-10 w-full text-lg focus:outline-none focus:ring-2 focus:ring-red-600 focus:ring-opacity-50"
+          onChange={(e) => {
+            if (e.target.value.length !== 0) {
+              setIsSearching(true);
+            }
+            if (e.target.value.length === 0) {
+              setIsSearching(false);
+            }
+            setFilteredData(search(videos, e.target.value));
+          }}
+        />
+        <FontAwesomeIcon
+          icon={faSearch}
+          className="absolute left-3 top-3 text-white"
+        />
+      </div>
+      <br />
       {data.length === 0 && isSearching && (
-        <p style={{ color: "white" }}>No Movies Found</p>
+        <p className="text-white mx-5 mt-2">No Movies Found</p>
       )}
 
       {isSearching && (
