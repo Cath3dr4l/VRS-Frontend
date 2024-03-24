@@ -18,7 +18,7 @@ const Navbar = () => {
 
   if (location.pathname.startsWith("/management")) {
     return (
-      <div>
+      <div className="w-screen flow-root">
         <Link to="/management">
           <h1 className="font-poppins cursor-pointer float-left text-3xl font-bold text-white">
             VIDEODOG
@@ -26,7 +26,7 @@ const Navbar = () => {
         </Link>
         {(staff || manager) && (
           <button
-            className="bg-primary cursor-pointer rounded px-6 py-2 text-white"
+            className="bg-primary cursor-pointer float-right rounded px-6 py-2 m-4 text-l text-white"
             onClick={() => {
               if (staff) logout("staff");
               if (manager) logout("manager");
