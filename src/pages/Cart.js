@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { useCartContext } from "../hooks/useCartContext";
 import { useAuthContext } from "../hooks/useAuthContext";
+import React from "react";
+import InvoiceComponent from "../components/invoiceComponent.js";
 
 const Cart = () => {
   const { customer } = useAuthContext();
@@ -61,6 +63,21 @@ const Cart = () => {
     return movie.rent_price * item.quantity * item.duration;
   };
 
+  const [orderPlaced, setOrderPlaced] = useState(false);
+  const [invoiceItems, setInvoiceItems] = useState([]);
+
+  useEffect(() => {
+    console.log("here:", invoiceItems);
+    if (invoiceItems.length > 0) {
+      setOrderPlaced(true);
+    }
+  }, [invoiceItems]);
+
+  const createInvoice = async () => {
+    // console.log(cartItems);
+    setInvoiceItems(cartItems);
+  };
+
   const totalCartPrice = () => {
     return cartItems.reduce((sum, item) => {
       return sum + calculatePrice(item);
@@ -88,7 +105,7 @@ const Cart = () => {
         setError(null);
       }
     });
-    clearCart();
+    createInvoice().then(clearCart());
   };
 
   return (
@@ -109,32 +126,32 @@ const Cart = () => {
             return (
               <div
                 key={item.id}
-                className="text-white flex items-center justify-between"
+                className="flex items-center justify-between text-white"
               >
                 <div>
                   <h3>{movie.name}</h3>
                   <img
                     src={movie.poster_url}
                     alt={movie.name}
-                    className="w-48 h-auto"
+                    className="h-auto w-48"
                   />
                 </div>
                 <div>
                   <button
                     onClick={() => increaseItemQuantity(item.id)}
-                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                    className="rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
                   >
                     +
                   </button>
                   <button
                     onClick={() => decreaseItemQuantity(item.id)}
-                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                    className="rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
                   >
                     -
                   </button>
                   <button
                     onClick={() => removeItem(item.id)}
-                    className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+                    className="rounded bg-red-500 px-4 py-2 font-bold text-white hover:bg-red-700"
                   >
                     Remove
                   </button>
@@ -149,7 +166,7 @@ const Cart = () => {
                         setDuration(item.id, Number(e.target.value))
                       }
                       defaultValue={item.duration}
-                      className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-black rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                      className="mt-1 block w-full rounded-md border border-gray-300 bg-black px-3 py-2 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                     >
                       <option value="1">1 Week</option>
                       <option value="2">2 Weeks</option>
@@ -176,11 +193,17 @@ const Cart = () => {
           </div>
           <button
             onClick={handleCreateOrder}
-            className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+            className="rounded bg-green-500 px-4 py-2 font-bold text-white hover:bg-green-700"
           >
             Order
           </button>
         </>
+      )}
+
+      {orderPlaced && (
+        <div>
+          <InvoiceComponent order={invoiceItems} />
+        </div>
       )}
 
       {error && <div className="error">{error}</div>}
