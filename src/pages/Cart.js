@@ -83,7 +83,102 @@ const Cart = () => {
       return sum + calculatePrice(item);
     }, 0);
   };
-  const handleCreateOrder = () => {
+
+  const checkoutHandler = async () => {
+    const response = await fetch("/api/payment/checkout", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${customer.token}`,
+      },
+      body: JSON.stringify({
+        amount: totalCartPrice(),
+      }),
+    });
+
+    const data = await response.json();
+    if (!response.ok) {
+      setError(data.error);
+      return;
+    }
+    setError(null);
+    var options = {
+      key: process.env.REACT_APP_RZP_KEY_ID,
+      amount: data.payment.amount,
+      currency: data.payment.currency,
+      name: "VideoDog",
+      description: "Test Transaction",
+      image: "https://example.com/your_logo",
+      order_id: data.payment.id,
+      callback_url: "/api/payment/verify",
+      prefill: {
+        name: customer.name,
+        email: customer.email,
+        contact: customer.phone,
+      },
+      handler: async (response) => {
+        const razorpay_order_id = await response.razorpay_order_id;
+        const razorpay_payment_id = await response.razorpay_payment_id;
+        const razorpay_signature = await response.razorpay_signature;
+        const res = await fetch("/api/payment/success", {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            razorpay_payment_id,
+            razorpay_order_id,
+            razorpay_signature,
+          }),
+        });
+        const data = await res.json();
+        if (!res.ok) {
+          setError(data.error);
+        }
+        if (res.ok) {
+          setError(null);
+          handleCreateOrder(data.transaction.transactionID);
+        }
+      },
+      notes: {
+        address: "Razorpay Corporate Office",
+      },
+      theme: {
+        color: "#3399cc",
+      },
+    };
+    var rzp1 = new window.Razorpay(options);
+    rzp1.open();
+    rzp1.on("payment.failed", function (response) {
+      // alert(response.error.code);
+      // alert(response.error.description);
+      // alert(response.error.source);
+      // alert(response.error.step);
+      // alert(response.error.reason);
+      // alert(response.error.metadata.order_id);
+      // alert(response.error.metadata.payment_id);
+      alert("Payment Failed");
+    });
+  };
+
+  const handleClick = () => {
+    const outOfStockMessage = cartItems.reduce((message, item) => {
+      const movie = movies.find((movie) => movie._id === item.id);
+      if (item.quantity > movie.stock) {
+        return message + `${movie.name}; In Stock: ${movie.stock}\n`;
+      }
+      return message;
+    }, "Too Many Items\n");
+
+    if (outOfStockMessage !== "Too Many Items\n") {
+      alert(outOfStockMessage);
+      return;
+    }
+
+    checkoutHandler();
+  };
+
+  const handleCreateOrder = async (transactionID) => {
     cartItems.forEach(async (item) => {
       const response = await fetch("/api/customers/order", {
         method: "POST",
@@ -95,6 +190,7 @@ const Cart = () => {
           videoID: item.id,
           quantity: item.quantity,
           duration: item.duration,
+          transactionID: transactionID,
         }),
       });
       const data = await response.json();
@@ -192,7 +288,7 @@ const Cart = () => {
             <h3>Total Price: Rs.{totalCartPrice()}</h3>
           </div>
           <button
-            onClick={handleCreateOrder}
+            onClick={handleClick}
             className="rounded bg-green-500 px-4 py-2 font-bold text-white hover:bg-green-700"
           >
             Order
