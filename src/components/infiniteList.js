@@ -19,12 +19,15 @@ const InfiniteListComponent = ({
     <div className="group relative items-center">
       <FaAngleDoubleLeft
         className="absolute left-0 top-1/2 z-10 hidden h-[350px] -translate-y-1/2 transform cursor-pointer bg-gradient-to-r from-black text-3xl text-white/50 opacity-75 hover:opacity-100 hover:text-white/90 group-hover:block"
-        onClick={() => ref.current.scrollBy({
-          left: -[window.innerWidth - 100],
-          behavior: 'smooth'
-        })}
+        onClick={() =>
+          ref.current.scrollBy({
+            left: -[window.innerWidth - 100],
+            behavior: "smooth",
+          })
+        }
       />
-      <div className="w-full"
+      <div
+        className="w-full"
         ref={ref}
         style={{
           px: -4,
@@ -41,10 +44,12 @@ const InfiniteListComponent = ({
       </div>
       <FaAngleDoubleRight
         className="absolute right-0 top-1/2 z-10 hidden h-[350px] -translate-y-1/2 transform cursor-pointer bg-gradient-to-l from-black text-3xl text-white/50 opacity-80 hover:opacity-100 hover:text-white/90 group-hover:block"
-        onClick={() => ref.current.scrollBy({
-          left: [window.innerWidth - 100],
-          behavior: 'smooth'
-        })}
+        onClick={() =>
+          ref.current.scrollBy({
+            left: [window.innerWidth - 100],
+            behavior: "smooth",
+          })
+        }
       />
     </div>
   );
