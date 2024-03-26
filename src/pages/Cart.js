@@ -3,6 +3,8 @@ import { useCartContext } from "../hooks/useCartContext";
 import { useAuthContext } from "../hooks/useAuthContext";
 import React from "react";
 import InvoiceComponent from "../components/invoiceComponent.js";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
 const Cart = () => {
   const { customer } = useAuthContext();
@@ -141,10 +143,10 @@ const Cart = () => {
         }
       },
       notes: {
-        address: "Razorpay Corporate Office",
+        address: "DataDog HQ",
       },
       theme: {
-        color: "#3399cc",
+        color: "#aa132f",
       },
     };
     var rzp1 = new window.Razorpay(options);
@@ -205,16 +207,15 @@ const Cart = () => {
   };
 
   return (
-    <div>
-      <h2>Cart</h2>
-      <div>
-        {profile && (
-          <div className="text-white">
-            <h3>Customer: {profile.name}</h3>
-            <h3>Email: {profile.email}</h3>
-          </div>
-        )}
-      </div>
+    <div className="container mx-auto px-6 py-8">
+      <h2 className="text-3xl font-bold text-center text-white">Cart</h2>
+      {profile && (
+        <div className="text-center mt-6 text-gray-300">
+          <h3 className="text-2xl">Customer: {profile.name}</h3>
+          <h3 className="text-2xl">Email: {profile.email}</h3>
+        </div>
+      )}
+
       <div>
         {movies &&
           cartItems.map((item) => {
@@ -222,38 +223,40 @@ const Cart = () => {
             return (
               <div
                 key={item.id}
-                className="flex items-center justify-between text-white"
+                className="grid grid-cols-3 items-center justify-between mt-6 pt-6 border-t"
               >
-                <div>
-                  <h3>{movie.name}</h3>
+                <div className="flex items-center">
                   <img
                     src={movie.poster_url}
                     alt={movie.name}
-                    className="h-auto w-48"
+                    className="w-20"
                   />
+                  <div className="ml-4">
+                    <span className="text-white font-bold">{movie.name}</span>
+                    <div className="text-white">
+                      Price: Rs.
+                      {calculatePrice(item)}
+                    </div>
+                  </div>
                 </div>
-                <div>
-                  <button
-                    onClick={() => increaseItemQuantity(item.id)}
-                    className="rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
-                  >
-                    +
-                  </button>
-                  <button
-                    onClick={() => decreaseItemQuantity(item.id)}
-                    className="rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
-                  >
-                    -
-                  </button>
-                  <button
-                    onClick={() => removeItem(item.id)}
-                    className="rounded bg-red-500 px-4 py-2 font-bold text-white hover:bg-red-700"
-                  >
-                    Remove
-                  </button>
-                  <p>Quantity: {item.quantity}</p>
-                  <div>
-                    <label htmlFor="rentDuration" className="mr-2">
+                <div className="flex flex-col items-center">
+                  <div className="flex justify-between">
+                    <button
+                      onClick={() => decreaseItemQuantity(item.id)}
+                      className="rounded bg-blue-500 w-8 h-8 mx-2 flex items-center justify-center text-base font-bold text-white hover:bg-blue-700"
+                    >
+                      -
+                    </button>
+                    <p className="text-white">Quantity: {item.quantity}</p>
+                    <button
+                      onClick={() => increaseItemQuantity(item.id)}
+                      className="rounded bg-blue-500 w-8 h-8  mx-2 flex items-center justify-center text-base font-bold text-white hover:bg-blue-700"
+                    >
+                      +
+                    </button>
+                  </div>
+                  <div className="flex items-center">
+                    <label htmlFor="rentDuration" className="mr-2 text-white">
                       Rent Duration:
                     </label>
                     <select
@@ -262,7 +265,7 @@ const Cart = () => {
                         setDuration(item.id, Number(e.target.value))
                       }
                       defaultValue={item.duration}
-                      className="mt-1 block w-full rounded-md border border-gray-300 bg-black px-3 py-2 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                      className="mt-1 block rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                     >
                       <option value="1">1 Week</option>
                       <option value="2">2 Weeks</option>
@@ -271,21 +274,25 @@ const Cart = () => {
                       <option value="100">Buy Movie</option>
                     </select>
                   </div>
-                  <div>
-                    Price: Rs.
-                    {calculatePrice(item)}
-                  </div>
+                </div>
+                <div className="flex justify-end">
+                  <button
+                    onClick={() => removeItem(item.id)}
+                    className="rounded bg-red-600 px-2 py-1 font-bold text-white hover:bg-red-700"
+                  >
+                    <FontAwesomeIcon icon={faTrash} />
+                  </button>
                 </div>
               </div>
             );
           })}
       </div>
       {cartItems.length === 0 ? (
-        <div>Your cart is empty</div>
+        <div className="text-white">Your cart is empty</div>
       ) : (
         <>
-          <div>
-            <h3>Total Price: Rs.{totalCartPrice()}</h3>
+          <div className="text-white mt-4 mb-4">
+            <h3 className="text-2xl">Total Price: Rs.{totalCartPrice()}</h3>
           </div>
           <button
             onClick={handleClick}
