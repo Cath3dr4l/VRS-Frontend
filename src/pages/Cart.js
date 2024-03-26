@@ -1,10 +1,11 @@
+import React from "react";
+import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useCartContext } from "../hooks/useCartContext";
 import { useAuthContext } from "../hooks/useAuthContext";
-import React from "react";
 import InvoiceComponent from "../components/invoiceComponent.js";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faTrash, faSadTear } from "@fortawesome/free-solid-svg-icons";
 
 const Cart = () => {
   const { customer } = useAuthContext();
@@ -208,12 +209,10 @@ const Cart = () => {
 
   return (
     <div className="container mx-auto px-6 py-8">
-      <h2 className="text-3xl font-bold text-center text-white">Cart</h2>
       {profile && (
-        <div className="text-center mt-6 text-gray-300">
-          <h3 className="text-2xl">Customer: {profile.name}</h3>
-          <h3 className="text-2xl">Email: {profile.email}</h3>
-        </div>
+        <h2 className="text-3xl font-bold text-center text-white">
+          {profile.name}'s Cart
+        </h2>
       )}
 
       <div>
@@ -226,11 +225,13 @@ const Cart = () => {
                 className="grid grid-cols-3 items-center justify-between mt-6 pt-6 border-t"
               >
                 <div className="flex items-center">
-                  <img
-                    src={movie.poster_url}
-                    alt={movie.name}
-                    className="w-20"
-                  />
+                  <Link to={`/movie/${item.id}`}>
+                    <img
+                      src={movie.poster_url}
+                      alt={movie.name}
+                      className="w-20"
+                    />
+                  </Link>
                   <div className="ml-4">
                     <span className="text-white font-bold">{movie.name}</span>
                     <div className="text-white">
@@ -288,7 +289,11 @@ const Cart = () => {
           })}
       </div>
       {cartItems.length === 0 ? (
-        <div className="text-white">Your cart is empty</div>
+        <div className="text-white text-center text-3xl mt-20">
+          <p>
+            Your cart is empty <FontAwesomeIcon icon={faSadTear} />
+          </p>
+        </div>
       ) : (
         <>
           <div className="text-white mt-4 mb-4">

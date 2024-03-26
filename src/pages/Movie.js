@@ -59,10 +59,10 @@ const Movie = () => {
               />
             </div>
             <div className="w-[50%] float-left my-20 px-4 flow-root">
-              <h1 className="font-semibold text-3xl"> {movie.name} </h1>
-              <p className="my-7">{movie.summary_text}</p>
+              <h1 className="font-semibold text-7xl"> {movie.name} </h1>
+              <p className="my-7 text-lg">{movie.summary_text}</p>
               <>
-                <p className="font-semibold">
+                <p className="font-semibold text-lg">
                   IMDB rating: {movie.rating}
                   {movie.ImdbId && (
                     <Link
@@ -80,9 +80,8 @@ const Movie = () => {
                   readOnly
                 />
               </>
-              <br />
               <>
-                <p className="font-semibold">Genres:</p>
+                <p className="font-semibold text-lg mt-4">Genres:</p>
                 <div className="flex space-x-2">
                   {movie.genre.map((g) => (
                     <p
@@ -94,10 +93,9 @@ const Movie = () => {
                   ))}
                 </div>
               </>
-              <br />
               {movie.cast && movie.cast.length > 0 && (
                 <>
-                  <p className="font-semibold">Cast:</p>
+                  <p className="font-semibold text-lg mt-4">Cast:</p>
                   <div className="flex flex-wrap space-x-2">
                     {movie.cast.map((actor) => (
                       <p
@@ -110,34 +108,34 @@ const Movie = () => {
                   </div>
                 </>
               )}
-              <br />
-              <br />
               <>
-                <p className="font-semibold">
+                <p className="font-semibold text-lg mt-6">
                   <FontAwesomeIcon icon={faMoneyBillWave} /> Buy for: ₹
                   {movie.buy_price}
                 </p>
-                <p className="font-semibold">
+                <p className="font-semibold text-lg">
                   <FontAwesomeIcon icon={faHandHoldingUsd} /> Rent for: ₹
                   {movie.rent_price}
                 </p>
               </>
-              <div className="mt-auto">
+              <div className="mt-4">
                 {quantity === 0 ? (
-                  <button
-                    className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
-                    onClick={() => {
-                      if (!customer) {
-                        navigate("/login", {
-                          state: { prev: location.pathname },
-                        });
-                        return;
-                      }
-                      increaseItemQuantity(id);
-                    }}
-                  >
-                    + Add To Cart
-                  </button>
+                  <div className="flex justify-center">
+                    <button
+                      className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+                      onClick={() => {
+                        if (!customer) {
+                          navigate("/login", {
+                            state: { prev: location.pathname },
+                          });
+                          return;
+                        }
+                        increaseItemQuantity(id);
+                      }}
+                    >
+                      + Add To Cart
+                    </button>
+                  </div>
                 ) : (
                   <div
                     className="flex items-center flex-col"
@@ -155,11 +153,11 @@ const Movie = () => {
                       >
                         -
                       </button>
-                      <div>
-                        <span className="text-4x1">{quantity}</span> in cart
+                      <div className="text-lg font-semibold">
+                        <span className="text-2xl">{quantity}</span> in cart
                       </div>
                       <button
-                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                        className="bg-blue-500 hover:bg-blue-700 text-white text-lg font-bold py-2 px-4 rounded"
                         onClick={() => {
                           increaseItemQuantity(id);
                         }}
@@ -167,17 +165,20 @@ const Movie = () => {
                         +
                       </button>
                     </div>
-                    <div>
-                      <label htmlFor="rentDuration" className="mr-2">
+                    <div className="flex items-center">
+                      <label
+                        htmlFor="rentDuration"
+                        className="mr-2 text-white text-lg"
+                      >
                         Rent Duration:
                       </label>
                       <select
                         id="rentDuration"
-                        defaultValue={getDuration(id)}
                         onChange={(e) =>
                           setDuration(id, Number(e.target.value))
                         }
-                        className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-black rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                        defaultValue={getDuration(id)}
+                        className="mt-1 block rounded-md border text-black border-gray-300 px-3 py-2 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500"
                       >
                         <option value="1">1 Week</option>
                         <option value="2">2 Weeks</option>
@@ -198,10 +199,10 @@ const Movie = () => {
                   </div>
                 )}
               </div>
-              <br />
-              <br />
-              <p className="text-primary">
-                <Link to="/">Go back to the homepage</Link>
+              <p className="text-gray-300 fixed bottom-5 left-5">
+                <Link to="/" className="hover:text-red-500">
+                  Go back to the Homepage
+                </Link>
               </p>
             </div>
           </div>
