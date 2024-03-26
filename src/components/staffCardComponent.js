@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Card, Button } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { useStaffContext } from "../hooks/useStaffContext";
@@ -43,6 +43,26 @@ const StaffCardComponent = ({ item }) => {
         },
       ],
     });
+  };
+
+  const [editing, setEditing] = useState(false);
+  const [stock, setStock] = useState(item.stock);
+
+  const saveStock = async (id) => {
+    const response = await fetch(`/api/staffs/video/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${staff.token}`,
+      },
+      body: JSON.stringify({ stock }),
+    });
+    const data = await response.json();
+    if (response.ok) {
+      alert("Stock updated successfully");
+    } else {
+      alert(`An error occured: ${data.error}`);
+    }
   };
 
   return (
@@ -92,29 +112,37 @@ const StaffCardComponent = ({ item }) => {
             </Button>
           </div>
         ) : (
-          <div
-            className="flex justify-center items-center"
-            style={{ gap: ".5rem" }}
-          >
-            <button
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-              onClick={() => {
-                //   decreaseItemQuantity(id);
+          <div>
+            <label className="text-white text-xl font-semibold mr-2">
+              Stock:
+            </label>
+            <input
+              disabled={!editing}
+              defaultValue={item.stock}
+              className="text-black w-20"
+              onInput={(e) => {
+                e.target.value = e.target.value.replace(/[^0-9]/g, "");
+                setStock(e.target.value);
               }}
+            ></input>
+            <div
+              className="flex justify-center items-center"
+              style={{ gap: ".5rem" }}
             >
-              -
-            </button>
-            <div>
-              <span className="text-4x1">{item.stock}</span> in stock
+              <button
+                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                onClick={() => {
+                  if (editing) {
+                    setEditing(false);
+                    saveStock(item._id);
+                  } else {
+                    setEditing(true);
+                  }
+                }}
+              >
+                {editing ? "Save" : "Edit"}
+              </button>
             </div>
-            <button
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-              onClick={() => {
-                //   increaseItemQuantity(id);
-              }}
-            >
-              +
-            </button>
           </div>
         )}
       </Card.Body>
