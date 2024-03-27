@@ -11,9 +11,10 @@ import { useManagerContext } from "./hooks/useManagerContext";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import Movie from "./pages/Movie";
+import Category from "./pages/Category";
 import Cart from "./pages/Cart";
 import Profile from "./pages/Profile";
-import HomePage from "./components/homePage";
+import Home from "./pages/Home";
 import Navbar from "./components/Navbar";
 import PrivateRoutes from "./utils/PrivateRoutes";
 import Management from "./pages/Management";
@@ -38,7 +39,7 @@ const App = () => {
 
       <div>
         <Routes>
-          <Route exact path="/" element={<HomePage />} />
+          <Route exact path="/" element={<Home />} />
           <Route
             path="/login"
             element={!customer ? <Login /> : <Navigate to="/" />}
@@ -48,6 +49,7 @@ const App = () => {
             element={!customer ? <Signup /> : <Navigate to="/" />}
           />
           <Route path="/movie/:id" element={<Movie />} />
+          <Route path="/category/:genre" element={<Category />} />
           <Route
             element={
               <PrivateRoutes userType="customer" redirectPath="/login" />

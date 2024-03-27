@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useLogout } from "../hooks/useLogout";
 import { useAuthContext } from "../hooks/useAuthContext";
@@ -8,10 +8,25 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 
 const Navbar = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { customer } = useAuthContext();
   const { staff } = useStaffContext();
   const { manager } = useManagerContext();
   const location = useLocation();
+  const genreList = [
+    "action",
+    "comedy",
+    "drama",
+    "sci-fi",
+    "horror",
+    "thriller",
+    "romance",
+    "animation",
+    "fantasy",
+    "mystery",
+    "crime",
+    "adventure",
+  ];
 
   // Log Out
   const { logout } = useLogout();
@@ -46,6 +61,38 @@ const Navbar = () => {
           VIDEODOG
         </h1>
       </Link>
+      <div className="group inline-block relative ml-10">
+        <button
+          className="font-lg text-xl font-semibold text-white cursor-pointer"
+          onMouseEnter={() => setIsMenuOpen(true)}
+          onMouseLeave={() => setIsMenuOpen(false)}
+        >
+          Categories
+        </button>
+        <div
+          className={`absolute mt-1 z-10 w-64 transition-transform ease-out duration-500 ${
+            isMenuOpen ? "block" : "hidden"
+          }`}
+          onMouseEnter={() => setIsMenuOpen(true)}
+          onMouseLeave={() => setIsMenuOpen(false)}
+        >
+          <ul className="bg-gray-800 text-white p-2 rounded-lg shadow -mt-1 grid grid-cols-2 gap-2">
+            {genreList.map((genre) => {
+              return (
+                <li key={genre} className="hover:bg-gray-700">
+                  <Link
+                    to={`/category/${genre}`}
+                    className="block py-2"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    {genre.charAt(0).toUpperCase() + genre.slice(1)}
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      </div>
       {customer ? (
         <div className="float-right mx-2">
           <Link to="/cart">

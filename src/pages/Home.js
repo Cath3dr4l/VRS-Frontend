@@ -1,19 +1,20 @@
-import React, { useEffect, useState } from "react";
-import SearchBar from "./searchBar";
-import RowComponent from "./RowComponent";
+import SearchBar from "../components/searchBar";
+import RowComponent from "../components/RowComponent";
 
-const HomePage = () => {
-
+const Home = () => {
   return (
     <div className="py-20">
       <SearchBar videosPath="api/videos" />
 
       <RowComponent title="All Movies" videosPath="api/videos" />
       <RowComponent title="Action" videosPath="api/videos/genre/action" />
+      <RowComponent title="Crime" videosPath="api/videos/genre/crime" />
       <RowComponent title="Sci-Fi" videosPath="api/videos/genre/sci-fi" />
+      <RowComponent title="Fantasy" videosPath="api/videos/genre/fantasy" />
+      <RowComponent title="Animation" videosPath="api/videos/genre/animation" />
       <RowComponent title="Drama" videosPath="api/videos/genre/drama" />
     </div>
   );
 };
 
-export default HomePage;
+export default Home;
