@@ -84,12 +84,13 @@ const Movie = () => {
                 <p className="font-semibold text-lg mt-4">Genres:</p>
                 <div className="flex space-x-2">
                   {movie.genre.map((g) => (
-                    <p
+                    <Link
                       key={g}
+                      to={`/category/${g}`}
                       className="px-2 py-1 bg-gray-500 text-white rounded"
                     >
                       {g.charAt(0).toUpperCase() + g.slice(1)}
-                    </p>
+                    </Link>
                   ))}
                 </div>
               </>
@@ -98,12 +99,13 @@ const Movie = () => {
                   <p className="font-semibold text-lg mt-4">Cast:</p>
                   <div className="flex flex-wrap space-x-2">
                     {movie.cast.map((actor) => (
-                      <p
+                      <Link
                         key={actor.name_id}
+                        to={`https://www.imdb.com/name/${actor.name_id}`}
                         className="px-2 py-1 bg-red-700 text-white rounded"
                       >
                         {actor.name}
-                      </p>
+                      </Link>
                     ))}
                   </div>
                 </>
