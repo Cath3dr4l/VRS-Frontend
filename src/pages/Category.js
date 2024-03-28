@@ -29,7 +29,7 @@ const Category = () => {
 
   useEffect(() => {
     if (!movies) return;
-    const movieNum = parseInt(screenSize.width / 200) - 2;
+    const movieNum = parseInt((screenSize.width - 200) / 200);
     console.log(movieNum);
     const rows = [];
     for (let i = 0; i < movies.length; i += movieNum) {
@@ -41,7 +41,7 @@ const Category = () => {
 
   return (
     <div>
-      <h1 className="text-4xl font-bold text-text text-center py-8">
+      <h1 className="text-4xl font-bold text-text text-center pt-16 py-4">
         {genre.toUpperCase()}
       </h1>
       {movies &&

@@ -208,7 +208,7 @@ const Cart = () => {
   };
 
   return (
-    <div className="container mx-auto px-6 py-8">
+    <div className="container mx-auto px-6 pt-16 py-4">
       {profile && (
         <h2 className="text-3xl font-bold text-center text-white">
           {profile.name}'s Cart

@@ -78,7 +78,7 @@ const Profile = () => {
   return (
     <>
       <div className="flex flex-col h-screen">
-        <h1 className="text-4xl font-bold text-text text-center py-8">
+        <h1 className="text-4xl font-bold text-text text-center pt-16 py-4">
           Profile
         </h1>
         <div className="text-white flex justify-between flex-grow">
