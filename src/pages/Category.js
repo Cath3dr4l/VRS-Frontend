@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import useScreenSize from "../hooks/useScreenSize";
 import CardComponent from "../components/cardComponent";
 
 const Category = () => {
@@ -7,6 +8,7 @@ const Category = () => {
   const [movies, setMovies] = useState(null);
   const [movieRows, setMovieRows] = useState([]);
   const [error, setError] = useState(null);
+  const screenSize = useScreenSize();
 
   useEffect(() => {
     const fetchMovies = async () => {
@@ -26,15 +28,16 @@ const Category = () => {
   }, [genre]);
 
   useEffect(() => {
-    // Group movies into arrays of 7
     if (!movies) return;
+    const movieNum = parseInt(screenSize.width / 200) - 2;
+    console.log(movieNum);
     const rows = [];
-    for (let i = 0; i < movies.length; i += 7) {
-      rows.push(movies.slice(i, i + 7));
+    for (let i = 0; i < movies.length; i += movieNum) {
+      rows.push(movies.slice(i, i + movieNum));
     }
 
     setMovieRows(rows);
-  }, [movies]);
+  }, [movies, screenSize.width]);
 
   return (
     <div>
@@ -49,6 +52,7 @@ const Category = () => {
             ))}
           </div>
         ))}
+      {error && <h1 className="text-2xl text-red-500 text-center">{error}</h1>}
     </div>
   );
 };
