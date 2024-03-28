@@ -64,7 +64,7 @@ const Profile = () => {
         "Content-Type": "application/json",
         Authorization: `Bearer ${customer.token}`,
       },
-      body: JSON.stringify({ name }),
+      body: JSON.stringify({ name, address }),
     });
     const data = await response.json();
     if (response.ok) {
@@ -129,7 +129,7 @@ const Profile = () => {
                   <dd className="font-normal">{profile.phone}</dd>
                 </div>
                 <div>
-                  <dt className="font-semibold">Name:</dt>
+                  <dt className="font-semibold">Address:</dt>
                   {isEditingAddress ? (
                     <input
                       className="text-gray-900 w-1/2"
@@ -165,35 +165,37 @@ const Profile = () => {
           </div>
           <div>
             <h2 className="text-2xl font-bold mr-2">Orders</h2>
-            {orders &&
-              orders.map((order) => (
-                <div key={order._id}>
-                  <p>{order.videoID.name}</p>
-                  <p>Qty: {order.quantity}</p>
-                  <p>Status: {order.status}</p>
-                  <p>Price: {order.price}</p>
-                  {order.status !== "bought" && (
-                    <div>
-                      <p>Rented for: {order.duration} weeks</p>
-                      <p>
-                        Due Date:
-                        {format(
-                          add(new Date(order.createdAt), {
-                            weeks: order.duration,
-                          }),
-                          "dd/MM/yyyy"
-                        )}
-                      </p>
-                    </div>
-                  )}
-                  <p>
-                    Ordered:
-                    {formatDistanceToNow(new Date(order.createdAt), {
-                      addSuffix: true,
-                    })}
-                  </p>
-                </div>
-              ))}
+            <div className="flex flex-col space-y-4">
+              {orders &&
+                orders.map((order) => (
+                  <div key={order._id} className="p-4 border rounded shadow">
+                    <h2 className="font-bold text-lg">{order.videoID.name}</h2>
+                    <p>Quantity: {order.quantity}</p>
+                    <p>Status: {order.status}</p>
+                    <p>Price: {order.price}</p>
+                    {order.status !== "bought" && (
+                      <div>
+                        <p>Rented for: {order.duration} weeks</p>
+                        <p>
+                          Due Date:
+                          {format(
+                            add(new Date(order.createdAt), {
+                              weeks: order.duration,
+                            }),
+                            "dd/MM/yyyy"
+                          )}
+                        </p>
+                      </div>
+                    )}
+                    <p>
+                      Ordered:
+                      {formatDistanceToNow(new Date(order.createdAt), {
+                        addSuffix: true,
+                      })}
+                    </p>
+                  </div>
+                ))}
+            </div>
           </div>
         </div>
       </div>
