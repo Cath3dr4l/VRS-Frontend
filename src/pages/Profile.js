@@ -167,74 +167,82 @@ const Profile = () => {
             <h2 className="text-2xl font-bold">Orders</h2>
             <div className="flex flex-col space-y-4 text-lg">
               {orders &&
-                orders.map((order) => (
-                  <div
-                    key={order._id}
-                    className="p-4 border rounded shadow grid grid-cols-3 gap-4"
-                  >
-                    <div>
-                      <h2 className="font-bold text-xl">
-                        {order.videoID.name}
-                      </h2>
-                      <img
-                        src={order.videoID.poster_url}
-                        alt={order.videoID.name}
-                        className="w-24"
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <p>Quantity: {order.quantity}</p>
-                      <p>Price: Rs. {order.price}</p>
-                    </div>
-                    <div className="space-y-2">
-                      <p>
-                        Status:{" "}
-                        <span
-                          className={`font-bold ${
-                            order.status === "rented"
-                              ? "text-red-500"
-                              : order.status === "bought"
-                              ? "text-green-500"
-                              : "text-gray-500"
-                          }`}
-                        >
-                          {order.status.toUpperCase()}
-                        </span>
-                      </p>
-                      <p>
-                        Ordered:{" "}
-                        {formatDistanceToNow(new Date(order.createdAt), {
-                          addSuffix: true,
-                        })}
-                      </p>
-                      {order.status !== "bought" && (
+                orders
+                  .sort((a, b) => {
+                    const orderStatus = ["rented", "bought", "returned"];
+                    return (
+                      orderStatus.indexOf(a.status) -
+                      orderStatus.indexOf(b.status)
+                    );
+                  })
+                  .map((order) => (
+                    <div
+                      key={order._id}
+                      className="p-4 border rounded shadow grid grid-cols-3 gap-4"
+                    >
+                      <div>
+                        <h2 className="font-bold text-xl">
+                          {order.videoID.name}
+                        </h2>
+                        <img
+                          src={order.videoID.poster_url}
+                          alt={order.videoID.name}
+                          className="w-24"
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <p>Quantity: {order.quantity}</p>
+                        <p>Price: Rs. {order.price}</p>
+                      </div>
+                      <div className="space-y-2">
                         <p>
-                          Rented for: {order.duration}{" "}
-                          {order.duration > 1 ? "weeks" : "week"}
+                          Status:{" "}
+                          <span
+                            className={`font-bold ${
+                              order.status === "returned"
+                                ? "text-gray-500"
+                                : "text-green-500"
+                            }`}
+                          >
+                            {order.status.toUpperCase()}
+                          </span>
                         </p>
-                      )}
-                      {order.status === "rented" && (
-                        <p className="font-semibold">
-                          Due Date:{" "}
-                          {format(
-                            add(new Date(order.createdAt), {
-                              weeks: order.duration,
-                            }),
-                            "MMMM do, yyyy"
-                          )}
-                        </p>
-                      )}
-                      {order.status === "returned" && (
                         <p>
-                          Returned:{" "}
-                          {formatDistanceToNow(new Date(order.updatedAt), {
+                          Ordered:{" "}
+                          {formatDistanceToNow(new Date(order.createdAt), {
                             addSuffix: true,
                           })}
                         </p>
-                      )}
+                        {order.status !== "bought" && (
+                          <p>
+                            Rented for: {order.duration}{" "}
+                            {order.duration > 1 ? "weeks" : "week"}
+                          </p>
+                        )}
+                        {order.status === "rented" && (
+                          <p className="font-semibold">
+                            Due Date:{" "}
+                            <span className="text-red-500">
+                              {format(
+                                add(new Date(order.createdAt), {
+                                  weeks: order.duration,
+                                }),
+                                "MMMM do, yyyy"
+                              )}
+                            </span>
+                          </p>
+                        )}
+                        {order.status === "returned" && (
+                          <p>
+                            Returned:{" "}
+                            {formatDistanceToNow(new Date(order.updatedAt), {
+                              addSuffix: true,
+                            })}
+                          </p>
+                        )}
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  ))}
             </div>
           </div>
         </div>
