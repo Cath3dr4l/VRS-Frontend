@@ -163,36 +163,76 @@ const Profile = () => {
               </dl>
             )}
           </div>
-          <div>
-            <h2 className="text-2xl font-bold mr-2">Orders</h2>
-            <div className="flex flex-col space-y-4">
+          <div className="w-3/4 ml-2 mr-4">
+            <h2 className="text-2xl font-bold">Orders</h2>
+            <div className="flex flex-col space-y-4 text-lg">
               {orders &&
                 orders.map((order) => (
-                  <div key={order._id} className="p-4 border rounded shadow">
-                    <h2 className="font-bold text-lg">{order.videoID.name}</h2>
-                    <p>Quantity: {order.quantity}</p>
-                    <p>Status: {order.status}</p>
-                    <p>Price: {order.price}</p>
-                    {order.status !== "bought" && (
-                      <div>
-                        <p>Rented for: {order.duration} weeks</p>
+                  <div
+                    key={order._id}
+                    className="p-4 border rounded shadow grid grid-cols-3 gap-4"
+                  >
+                    <div>
+                      <h2 className="font-bold text-xl">
+                        {order.videoID.name}
+                      </h2>
+                      <img
+                        src={order.videoID.poster_url}
+                        alt={order.videoID.name}
+                        className="w-24"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <p>Quantity: {order.quantity}</p>
+                      <p>Price: Rs. {order.price}</p>
+                    </div>
+                    <div className="space-y-2">
+                      <p>
+                        Status:{" "}
+                        <span
+                          className={`font-bold ${
+                            order.status === "rented"
+                              ? "text-red-500"
+                              : order.status === "bought"
+                              ? "text-green-500"
+                              : "text-gray-500"
+                          }`}
+                        >
+                          {order.status.toUpperCase()}
+                        </span>
+                      </p>
+                      <p>
+                        Ordered:{" "}
+                        {formatDistanceToNow(new Date(order.createdAt), {
+                          addSuffix: true,
+                        })}
+                      </p>
+                      {order.status !== "bought" && (
                         <p>
-                          Due Date:
+                          Rented for: {order.duration}{" "}
+                          {order.duration > 1 ? "weeks" : "week"}
+                        </p>
+                      )}
+                      {order.status === "rented" && (
+                        <p className="font-semibold">
+                          Due Date:{" "}
                           {format(
                             add(new Date(order.createdAt), {
                               weeks: order.duration,
                             }),
-                            "dd/MM/yyyy"
+                            "MMMM do, yyyy"
                           )}
                         </p>
-                      </div>
-                    )}
-                    <p>
-                      Ordered:
-                      {formatDistanceToNow(new Date(order.createdAt), {
-                        addSuffix: true,
-                      })}
-                    </p>
+                      )}
+                      {order.status === "returned" && (
+                        <p>
+                          Returned:{" "}
+                          {formatDistanceToNow(new Date(order.updatedAt), {
+                            addSuffix: true,
+                          })}
+                        </p>
+                      )}
+                    </div>
                   </div>
                 ))}
             </div>
