@@ -20,7 +20,7 @@ const Category = () => {
         setError(data.error);
       }
       if (response.ok) {
-        setMovies(data);
+        setMovies(data.filter((video) => video.disabled === false));
         setError(null);
       }
     };

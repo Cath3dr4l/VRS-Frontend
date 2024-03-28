@@ -13,8 +13,13 @@ const RowComponent = ({ title, videosPath }) => {
     const fetchVideos = async () => {
       const response = await fetch(videosPath, { method: "GET" });
       const json = await response.json();
-      setVideos(json);
-      setData(json.slice(0, 25)); // Store the first 25 videos in data
+      if (!response.ok) {
+        console.log(json.error);
+      }
+      if (response.ok) {
+        setVideos(json.filter((video) => video.disabled === false));
+        setData(json.filter((video) => video.disabled === false).slice(0, 25)); // Store the first 25 videos in data
+      }
     };
     fetchVideos();
   }, []);

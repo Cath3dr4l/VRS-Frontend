@@ -11,24 +11,25 @@ const StaffCardComponent = ({ item }) => {
   const { manager } = useManagerContext();
   const navigate = useNavigate();
 
-  const deleteItem = (id) => {
+  const disableItem = (id) => {
     confirmAlert({
-      title: "Confirm to delete",
-      message: "Are you sure you want to delete this movie?",
+      title: "Confirm to disable",
+      message: "Are you sure you want to disable this movie?",
       buttons: [
         {
           label: "Yes",
           onClick: async () => {
             const response = await fetch(`/api/managers/video/${id}`, {
-              method: "DELETE",
+              method: "PUT",
               headers: {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${manager.token}`,
               },
+              body: JSON.stringify({ disabled: true }),
             });
             const data = await response.json();
             if (response.ok) {
-              alert("Movie deleted successfully");
+              alert("Movie disabled successfully");
               navigate("/management/manager");
             } else {
               alert(`An error occured: ${data.error}`);
@@ -43,6 +44,24 @@ const StaffCardComponent = ({ item }) => {
         },
       ],
     });
+  };
+
+  const enableItem = async (id) => {
+    const response = await fetch(`/api/managers/video/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${manager.token}`,
+      },
+      body: JSON.stringify({ disabled: false }),
+    });
+    const data = await response.json();
+    if (response.ok) {
+      alert("Movie enabled successfully");
+      navigate("/management/manager");
+    } else {
+      alert(`An error occured: ${data.error}`);
+    }
   };
 
   const [editing, setEditing] = useState(false);
@@ -102,48 +121,69 @@ const StaffCardComponent = ({ item }) => {
             >
               Edit
             </Button>
-            <Button
-              className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 m-2 rounded"
-              onClick={() => {
-                deleteItem(item._id);
-              }}
-            >
-              Delete
-            </Button>
+            <>
+              {item.disabled ? (
+                <Button
+                  className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 m-2 rounded"
+                  onClick={() => {
+                    enableItem(item._id);
+                  }}
+                >
+                  Enable
+                </Button>
+              ) : (
+                <Button
+                  className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 m-2 rounded"
+                  onClick={() => {
+                    disableItem(item._id);
+                  }}
+                >
+                  Disable
+                </Button>
+              )}
+            </>
           </div>
         ) : (
-          <div>
-            <label className="text-white text-xl font-semibold mr-2">
-              Stock:
-            </label>
-            <input
-              disabled={!editing}
-              defaultValue={item.stock}
-              className="text-black w-20"
-              onInput={(e) => {
-                e.target.value = e.target.value.replace(/[^0-9]/g, "");
-                setStock(e.target.value);
-              }}
-            ></input>
-            <div
-              className="flex justify-center items-center"
-              style={{ gap: ".5rem" }}
-            >
-              <button
-                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                onClick={() => {
-                  if (editing) {
-                    setEditing(false);
-                    saveStock(item._id);
-                  } else {
-                    setEditing(true);
-                  }
-                }}
-              >
-                {editing ? "Save" : "Edit"}
-              </button>
-            </div>
-          </div>
+          <>
+            {item.disabled ? (
+              <div className="text-white text-xl font-semibold">
+                This movie is disabled
+              </div>
+            ) : (
+              <div>
+                <label className="text-white text-xl font-semibold mr-2">
+                  Stock:
+                </label>
+                <input
+                  disabled={!editing}
+                  defaultValue={item.stock}
+                  className="text-black w-20"
+                  onInput={(e) => {
+                    e.target.value = e.target.value.replace(/[^0-9]/g, "");
+                    setStock(e.target.value);
+                  }}
+                ></input>
+                <div
+                  className="flex justify-center items-center"
+                  style={{ gap: ".5rem" }}
+                >
+                  <button
+                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                    onClick={() => {
+                      if (editing) {
+                        setEditing(false);
+                        saveStock(item._id);
+                      } else {
+                        setEditing(true);
+                      }
+                    }}
+                  >
+                    {editing ? "Save" : "Edit"}
+                  </button>
+                </div>
+              </div>
+            )}
+          </>
         )}
       </Card.Body>
     </Card>
