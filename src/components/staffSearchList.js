@@ -15,8 +15,9 @@ const StaffSearchList = ({ videosPath }) => {
     const fetchVideos = async () => {
       const response = await fetch(videosPath, { method: "GET" });
       const json = await response.json();
-      setVideos(json);
-      setData(json.slice(0, 25)); // Store the first 25 videos in data
+      const sortedMovies = json.sort((a, b) => b.rating - a.rating);
+      setVideos(sortedMovies);
+      setData(sortedMovies.slice(0, 25)); // Store the first 25 videos in data
     };
     fetchVideos();
     setFilteredData(videos);

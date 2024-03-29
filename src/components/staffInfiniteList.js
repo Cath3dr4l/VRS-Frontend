@@ -17,7 +17,8 @@ const StaffInfiniteListComponent = ({
 
   return (
     <div>
-      <div className="w-full"
+      <div
+        className="w-full"
         ref={ref}
         style={{
           px: -4,
