@@ -12,7 +12,7 @@ const MovieStaff = () => {
 
   useEffect(() => {
     const fetchMovie = async () => {
-      const response = await fetch(`/api/staffs/video/${id}`, {
+      const response = await fetch(`/api/staffs/movie/${id}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -41,7 +41,7 @@ const MovieStaff = () => {
   }, [movie]);
 
   const saveStock = async (id) => {
-    const response = await fetch(`/api/staffs/video/${id}`, {
+    const response = await fetch(`/api/staffs/movie/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

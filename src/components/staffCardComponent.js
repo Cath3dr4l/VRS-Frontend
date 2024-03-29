@@ -30,6 +30,7 @@ const StaffCardComponent = ({ item }) => {
             const data = await response.json();
             if (response.ok) {
               alert("Movie disabled successfully");
+              item.disabled = true;
               navigate("/management/manager");
             } else {
               alert(`An error occured: ${data.error}`);
@@ -58,6 +59,7 @@ const StaffCardComponent = ({ item }) => {
     const data = await response.json();
     if (response.ok) {
       alert("Movie enabled successfully");
+      item.disabled = false;
       navigate("/management/manager");
     } else {
       alert(`An error occured: ${data.error}`);
