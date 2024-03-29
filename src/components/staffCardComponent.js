@@ -157,10 +157,10 @@ const StaffCardComponent = ({ item }) => {
                 <input
                   disabled={!editing}
                   defaultValue={item.stock}
-                  className={`w-20 ${
+                  className={`w-16 ${
                     editing
-                      ? "border-2 text-black text-xl text-center font-semibold bg-text focus:outline-none focus:ring-2 focus:ring-blue"
-                      : "text-white text-center text-xl font-semibold bg-transparent border-none"
+                      ? "border-2 text-black text-xl text-right font-semibold bg-text focus:outline-none focus:ring-2 focus:ring-blue"
+                      : "text-white text-right text-xl font-semibold bg-transparent border-none"
                   }`}
                   onInput={(e) => {
                     e.target.value = e.target.value.replace(/[^0-9]/g, "");
@@ -172,7 +172,7 @@ const StaffCardComponent = ({ item }) => {
                   style={{ gap: ".5rem" }}
                 >
                   <button
-                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mt-4 mr-4 rounded"
+                    className="bg-blue-500 w-32 hover:bg-blue-700 text-white font-bold py-2 px-4 mt-4 mr-4 rounded"
                     onClick={() => {
                       if (editing) {
                         setEditing(false);
