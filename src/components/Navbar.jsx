@@ -6,6 +6,8 @@ import { useStaffContext } from "../hooks/useStaffContext";
 import { useManagerContext } from "../hooks/useManagerContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
+import { FaAngleDown } from "react-icons/fa";
+
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -61,13 +63,13 @@ const Navbar = () => {
           VIDEODOG
         </h1>
       </Link>
-      <div className="group inline-block relative ml-10">
+      <div className="group inline-block relative ml-10 m-1">
         <button
-          className="font-lg text-xl font-semibold text-white cursor-pointer"
+          className="font-lg text-xl font-semibold text-white cursor-pointer flex items-center"
           onMouseEnter={() => setIsMenuOpen(true)}
           onMouseLeave={() => setIsMenuOpen(false)}
         >
-          Categories
+          Categories <FaAngleDown className="ml-1" />
         </button>
         <div
           className={`absolute mt-1 z-10 w-64 transition-transform ease-out duration-500 ${

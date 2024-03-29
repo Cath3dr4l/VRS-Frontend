@@ -81,23 +81,25 @@ const SearchBar = ({ videosPath }) => {
           className="absolute left-3 top-3 text-white"
         />
       </div>
-      <br />
-      {data.length === 0 && isSearching && (
-        <p className="text-white mx-5 mt-2">No Movies Found</p>
-      )}
+      <div>
+        <br />
+        {data.length === 0 && isSearching && (
+          <p className="text-white mx-5 mt-2">No Movies Found</p>
+        )}
 
-      {isSearching && (
-        <InfiniteListComponent
-          style={{ scrollbars: "false" }}
-          isLoading={isLoading}
-          items={data}
-          canLoadMore={canLoadMore}
-          next={next}
-          renderComponent={(item) => (
-            <CardComponent item={item} key={item.id} />
-          )}
-        />
-      )}
+        {isSearching && (
+          <InfiniteListComponent
+            style={{ scrollbars: "false" }}
+            isLoading={isLoading}
+            items={data}
+            canLoadMore={canLoadMore}
+            next={next}
+            renderComponent={(item) => (
+              <CardComponent item={item} key={item.id} />
+            )}
+          />
+        )}
+      </div>
     </div>
   );
 };

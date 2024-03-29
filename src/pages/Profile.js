@@ -82,7 +82,7 @@ const Profile = () => {
           Profile
         </h1>
         <div className="text-white flex justify-between flex-grow">
-          <div className="w-1/4 bg-gray-900 text-white p-6 shadow-lg">
+          <div className="w-1/4 bg-gradient-to-t from-text/15 to-text/2 text-white p-6 pt-0 shadow-lg">
             <h2 className="text-2xl font-bold mb-4">Profile Details</h2>
             {profile && (
               <dl className="space-y-2 text-lg">
@@ -164,7 +164,7 @@ const Profile = () => {
             )}
           </div>
           <div className="w-3/4 ml-2 mr-4">
-            <h2 className="text-2xl font-bold">Orders</h2>
+            <h2 className="text-2xl font-bold m-4">Orders</h2>
             <div className="flex flex-col space-y-4 text-lg">
               {orders &&
                 orders.map((order) => (

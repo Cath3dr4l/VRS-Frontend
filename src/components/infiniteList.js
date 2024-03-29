@@ -16,7 +16,7 @@ const InfiniteListComponent = ({
   });
 
   return (
-    <div className="group relative items-center">
+    <div className="group relative items-center ease-in-out">
       <FaAngleDoubleLeft
         className="absolute left-0 top-1/2 z-10 hidden h-[350px] -translate-y-1/2 transform cursor-pointer bg-gradient-to-r from-black text-3xl text-white/50 opacity-75 hover:opacity-100 hover:text-white/90 group-hover:block"
         onClick={() =>
