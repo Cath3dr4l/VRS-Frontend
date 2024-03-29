@@ -87,7 +87,11 @@ const StaffCardComponent = ({ item }) => {
   return (
     <Card className="w-full h-[240px] my-[5px] flow-root bg-white/25 rounded-md">
       <Link
-        to={`/management/movie/${item._id}`}
+        to={
+          manager
+            ? `/management/moviemanage/${item._id}`
+            : `/management/moviestaff/${item._id}`
+        }
         style={{ textDecoration: "none" }}
       >
         <div className="float-left mx-2 py-2 w-[300px]">

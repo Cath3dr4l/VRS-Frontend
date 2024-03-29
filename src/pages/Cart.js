@@ -164,6 +164,10 @@ const Cart = () => {
     });
   };
 
+  const handlePrint = () => {
+    window.print();
+  };
+
   const handleClick = () => {
     const outOfStockMessage = cartItems.reduce((message, item) => {
       const movie = movies.find((movie) => movie._id === item.id);
@@ -308,11 +312,21 @@ const Cart = () => {
         </>
       )}
 
-      {orderPlaced && (
+      {/* {orderPlaced && (
         <div>
           <InvoiceComponent order={invoiceItems} />
         </div>
-      )}
+      )} */}
+
+      <div className="my-24">
+        <div>
+          <InvoiceComponent order={invoiceItems} />
+        </div>
+        <button className="bg-white" onClick={handlePrint}>
+          {" "}
+          Print Invoice{" "}
+        </button>
+      </div>
 
       {error && <div className="error">{error}</div>}
     </div>

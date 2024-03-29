@@ -13,13 +13,19 @@ const styles = StyleSheet.create({
   },
 });
 
+// Name, Quantity, Rent Duration/Buy, Unit Price, Total Price
+
 const InvoiceComponent = ({ order }) => {
   console.log("order: ", order);
   return (
-    <Document>
+    <Document className="bg-white">
       <Page size="A4" style={styles.page}>
         <View style={styles.section}>
           <Text>Invoice</Text>
+          <section>
+            <h2> Customer name:</h2>
+            <p> Phone number: </p>
+          </section>
           {/* <Text>Order ID: {order.id}</Text>
           <Text>Order Date: {order.date}</Text>
           <Text>Order Total: {order.total}</Text> */}
