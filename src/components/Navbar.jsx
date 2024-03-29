@@ -35,15 +35,15 @@ const Navbar = () => {
 
   if (location.pathname.startsWith("/management")) {
     return (
-      <div className="w-screen flow-root">
+      <div className="bg-background/80 w-screen items-center justify-between flow-root p-4">
         <Link to="/management">
           <h1 className="font-poppins cursor-pointer float-left text-3xl font-bold text-white">
             VIDEODOG
           </h1>
         </Link>
         {(staff || manager) && (
-          <button
-            className="bg-primary cursor-pointer float-right rounded px-6 py-2 m-4 text-l text-white"
+          <button 
+            className="bg-primary cursor-pointer float-right rounded px-6 py-2 mr-2 text-white"
             onClick={() => {
               if (staff) logout("staff");
               if (manager) logout("manager");

@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import StaffInfiniteListComponent from "./staffInfiniteList";
 import StaffCardComponent from "./staffCardComponent";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
 
 const StaffSearchList = ({ videosPath }) => {
   const [videos, setVideos] = useState([]);
@@ -57,20 +59,23 @@ const StaffSearchList = ({ videosPath }) => {
   }, [filteredData]);
 
   return (
-    <div>
+    <div className="relative mx-5">
       <input
         type="text"
         placeholder="Search..."
+        className="text-white bg-gray-800 border-none px-3 py-2 my-4 rounded pl-10 w-full text-lg focus:outline-none focus:ring-2 focus:ring-red-600 focus:ring-opacity-50"
         onChange={(e) => {
           setFilteredData(search(videos, e.target.value));
         }}
       />
+      <FontAwesomeIcon
+        icon={faSearch}
+        className="absolute left-3 top-7 text-white"
+      />
 
-      {data.length === 0 && (
-        <p style={{ color: "white" }}>No Movies Found</p>
-      )}
+      {data.length === 0 && <p style={{ color: "white" }}>No Movies Found</p>}
 
-      {(
+      {
         <StaffInfiniteListComponent
           style={{ scrollbars: "false" }}
           isLoading={isLoading}
@@ -81,7 +86,7 @@ const StaffSearchList = ({ videosPath }) => {
             <StaffCardComponent item={item} key={item.id} />
           )}
         />
-      )}
+      }
     </div>
   );
 };

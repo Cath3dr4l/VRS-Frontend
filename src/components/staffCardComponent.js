@@ -85,22 +85,22 @@ const StaffCardComponent = ({ item }) => {
   };
 
   return (
-    <Card className="w-screen h-[240px] my-[5px] flow-root bg-white/30 rounded-md">
+    <Card className="w-full h-[240px] my-[5px] flow-root bg-white/25 rounded-md">
       <Link
         to={`/management/movie/${item._id}`}
         style={{ textDecoration: "none" }}
       >
-        <div className="float-left w-[60%]">
+        <div className="float-left mx-2 py-2 w-[300px]">
           <Card.Img
-            className="mx-[5px] my-[5px] h-[190px] w-[150px] object-cover overflow-hidden"
+            className="my-[5px] mx-auto h-[190px] w-[150px] object-cover overflow-hidden"
             variant="top"
             src={item.poster_url}
             alt="Poster"
           />
           <Card.Title
-            className="text-white font-semibold text-xl mx-2"
+            className="text-white m-auto font-semibold text-xl"
             style={{
-              textAlign: "left",
+              textAlign: "center",
               textOverflow: "ellipsis",
               overflow: "hidden",
               whiteSpace: "nowrap",
@@ -110,9 +110,9 @@ const StaffCardComponent = ({ item }) => {
           </Card.Title>
         </div>
       </Link>
-      <Card.Body className="float-right flex flex-col p-4">
+      <Card.Body className="float-right flex flex-col p-4 mt-12">
         {manager ? (
-          <div className="flex flex-row">
+          <div className="flex flex-col mr-12 w-32">
             <Button
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 m-2 rounded"
               onClick={() => {
@@ -146,7 +146,7 @@ const StaffCardComponent = ({ item }) => {
         ) : (
           <>
             {item.disabled ? (
-              <div className="text-white text-xl font-semibold">
+              <div className="text-white text-xl mt-4 font-semibold">
                 This movie is disabled
               </div>
             ) : (
@@ -157,7 +157,11 @@ const StaffCardComponent = ({ item }) => {
                 <input
                   disabled={!editing}
                   defaultValue={item.stock}
-                  className="text-black w-20"
+                  className={`w-20 ${
+                    editing
+                      ? "border-2 text-black text-xl text-center font-semibold bg-text focus:outline-none focus:ring-2 focus:ring-blue"
+                      : "text-white text-center text-xl font-semibold bg-transparent border-none"
+                  }`}
                   onInput={(e) => {
                     e.target.value = e.target.value.replace(/[^0-9]/g, "");
                     setStock(e.target.value);
@@ -168,7 +172,7 @@ const StaffCardComponent = ({ item }) => {
                   style={{ gap: ".5rem" }}
                 >
                   <button
-                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mt-4 mr-4 rounded"
                     onClick={() => {
                       if (editing) {
                         setEditing(false);
