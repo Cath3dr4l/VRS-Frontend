@@ -24,6 +24,7 @@ import Recruit from "./pages/Recruit";
 import AddMovie from "./pages/AddMovie";
 import EditMovie from "./pages/EditMovie";
 import MovieManage from "./pages/MovieManage";
+import MovieStaff from "./pages/MovieStaff";
 import AllOrders from "./pages/AllOrders";
 import OrdersManage from "./pages/OrdersManage";
 
@@ -78,6 +79,7 @@ const App = () => {
           >
             <Route path="/management/staff" element={<Staff />} />
             <Route path="/management/allorders" element={<AllOrders />} />
+            <Route path="/management/moviestaff/:id" element={<MovieStaff />} />
           </Route>
           <Route
             element={
@@ -87,7 +89,10 @@ const App = () => {
             <Route path="/management/manager" element={<Manager />} />
             <Route path="/management/recruit" element={<Recruit />} />
             <Route path="/management/addmovie" element={<AddMovie />} />
-            <Route path="/management/movie/:id" element={<MovieManage />} />
+            <Route
+              path="/management/moviemanage/:id"
+              element={<MovieManage />}
+            />
             <Route path="/management/editmovie/:id" element={<EditMovie />} />
             <Route path="/management/manageorders" element={<OrdersManage />} />
           </Route>
