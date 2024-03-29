@@ -25,6 +25,7 @@ import AddMovie from "./pages/AddMovie";
 import EditMovie from "./pages/EditMovie";
 import MovieManage from "./pages/MovieManage";
 import AllOrders from "./pages/AllOrders";
+import OrdersManage from "./pages/OrdersManage";
 
 const App = () => {
   const { customer } = useAuthContext();
@@ -88,6 +89,7 @@ const App = () => {
             <Route path="/management/addmovie" element={<AddMovie />} />
             <Route path="/management/movie/:id" element={<MovieManage />} />
             <Route path="/management/editmovie/:id" element={<EditMovie />} />
+            <Route path="/management/manageorders" element={<OrdersManage />} />
           </Route>
         </Routes>
       </div>

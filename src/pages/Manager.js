@@ -7,7 +7,7 @@ const Manager = () => {
   return (
     <div>
       <div className="z-[100] fixed ml-[200px] m-5 flex gap-4">
-        <Link to="/management/allorders">
+        <Link to="/management/manageorders">
           <button className="font-lg text-xl font-semibold text-white cursor-pointer flex items-center">
             All Orders
             <FaAngleDown className="ml-1" />
@@ -28,7 +28,7 @@ const Manager = () => {
       </div>
       <div className="py-20">
         {/* <h1 className="text-white font-semibold">All movies</h1> */}
-        <StaffSearchList videosPath="../api/videos" />
+        <StaffSearchList videosPath="/api/videos" />
       </div>
     </div>
   );
