@@ -54,26 +54,32 @@ const AllOrders = () => {
     }
   };
   return (
-    <div style={{ color: "white " }}>
-      <div className="Orders">
-        <br />
-        <div className="due-orders">
-          <h2>Due Orders</h2>
-          {orders &&
-            orders
-              .filter((order) => order.status === "rented")
-              .map((order) => (
-                <div key={order._id}>
-                  <p>Movie: {order.videoID.name}</p>
+    <div className="pt-16 text-white">
+      <h2 className="text-xl font-semibold mb-4 mx-2">Due Orders</h2>
+      <div className="grid grid-cols-3 gap-4 mx-2">
+        {orders &&
+          orders
+            .filter((order) => order.status === "rented")
+            .map((order) => (
+              <div
+                key={order._id}
+                className="flex flex-col justify-between border p-4 rounded shadow space-y-2"
+              >
+                <div className="space-y-2">
+                  <p className="font-bold text-lg">{order.videoID.name}</p>
                   <p>Customer: {order.customerID.name}</p>
                   <p>Price: {order.price}</p>
                   <p>
                     Due Date:
                     {format(
-                      add(new Date(order.createdAt), { weeks: order.duration }),
+                      add(new Date(order.createdAt), {
+                        weeks: order.duration,
+                      }),
                       "dd/MM/yyyy"
                     )}
                   </p>
+                </div>
+                <div>
                   <button
                     onClick={() => handleReturn(order._id)}
                     className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
@@ -81,36 +87,42 @@ const AllOrders = () => {
                     Mark as Returned
                   </button>
                 </div>
-              ))}
-        </div>
-        <br />
-        <div className="bought-orders">
-          <h2>Bought Orders</h2>
-          {orders &&
-            orders
-              .filter((order) => order.status === "bought")
-              .map((order) => (
-                <div key={order._id}>
-                  <p>Movie: {order.videoID.name}</p>
-                  <p>Customer: {order.customerID.name}</p>
-                  <p>Price: {order.price}</p>
-                </div>
-              ))}
-        </div>
-        <br />
-        <div className="returned-orders">
-          <h2>Returned Orders</h2>
-          {orders &&
-            orders
-              .filter((order) => order.status === "returned")
-              .map((order) => (
-                <div key={order._id}>
-                  <p>Movie: {order.videoID.name}</p>
-                  <p>Customer: {order.customerID.name}</p>
-                  <p>Price: {order.price}</p>
-                </div>
-              ))}
-        </div>
+              </div>
+            ))}
+      </div>
+      <br />
+      <h2 className="text-xl font-semibold mb-4 mx-2">Bought Orders</h2>
+      <div className="grid grid-cols-3 gap-4 mx-2">
+        {orders &&
+          orders
+            .filter((order) => order.status === "bought")
+            .map((order) => (
+              <div
+                key={order._id}
+                className="flex flex-col justify-between border p-4 rounded space-y-2"
+              >
+                <p>Movie: {order.videoID.name}</p>
+                <p>Customer: {order.customerID.name}</p>
+                <p>Price: {order.price}</p>
+              </div>
+            ))}
+      </div>
+      <br />
+      <h2 className="text-xl font-semibold mb-4 mx-2">Returned Orders</h2>
+      <div className="grid grid-cols-3 gap-4 mx-2">
+        {orders &&
+          orders
+            .filter((order) => order.status === "returned")
+            .map((order) => (
+              <div
+                key={order._id}
+                className="flex flex-col justify-between border p-4 rounded space-y-2"
+              >
+                <p>Movie: {order.videoID.name}</p>
+                <p>Customer: {order.customerID.name}</p>
+                <p>Price: {order.price}</p>
+              </div>
+            ))}
       </div>
       {error && <div className="error">{error}</div>}
     </div>

@@ -97,7 +97,9 @@ const MovieManage = () => {
                 padding: "10px",
               }}
             >
-              <h2>Total Revenue: ₹{totalRevenue}</h2>
+              <h2 className="text-xl text-green-500 font-semibold">
+                Total Revenue: ₹{totalRevenue}
+              </h2>
               <ol>
                 {movie.ordered.map((order, index) => (
                   <li
@@ -110,14 +112,19 @@ const MovieManage = () => {
                     }}
                   >
                     <p>Revenue: ₹{order.price}</p>
-                    <p>Status: {order.status}</p>
+                    <p>
+                      Status:{" "}
+                      {order.status.charAt(0).toUpperCase() +
+                        order.status.slice(1)}
+                    </p>
                   </li>
                 ))}
               </ol>
             </div>
-            <br />
-            <p className="text-primary">
-              <Link to="/management">Go back to the homepage</Link>
+            <p className="text-gray-300 fixed bottom-5 left-5">
+              <Link to="/" className="hover:text-red-500">
+                Go back to the Homepage
+              </Link>
             </p>
           </div>
         )}
