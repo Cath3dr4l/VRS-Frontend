@@ -20,7 +20,7 @@ const AllOrders = () => {
         setError(data.error);
       }
       if (response.ok) {
-        setOrders(data.filter((order) => order.videoID && order.customerID));
+        setOrders(data.filter((order) => order.movieID && order.customerID));
         setError(null);
         console.log(data);
       }
@@ -66,7 +66,7 @@ const AllOrders = () => {
                 className="flex flex-col justify-between border p-4 rounded shadow space-y-2"
               >
                 <div className="space-y-2">
-                  <p className="font-bold text-lg">{order.videoID.name}</p>
+                  <p className="font-bold text-lg">{order.movieID.name}</p>
                   <p>Customer: {order.customerID.name}</p>
                   <p>Price: {order.price}</p>
                   <p>
@@ -101,7 +101,7 @@ const AllOrders = () => {
                 key={order._id}
                 className="flex flex-col justify-between border p-4 rounded space-y-2"
               >
-                <p>Movie: {order.videoID.name}</p>
+                <p>Movie: {order.movieID.name}</p>
                 <p>Customer: {order.customerID.name}</p>
                 <p>Price: {order.price}</p>
               </div>
@@ -118,7 +118,7 @@ const AllOrders = () => {
                 key={order._id}
                 className="flex flex-col justify-between border p-4 rounded space-y-2"
               >
-                <p>Movie: {order.videoID.name}</p>
+                <p>Movie: {order.movieID.name}</p>
                 <p>Customer: {order.customerID.name}</p>
                 <p>Price: {order.price}</p>
               </div>

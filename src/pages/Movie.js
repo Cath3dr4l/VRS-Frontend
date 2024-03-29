@@ -18,7 +18,7 @@ const Movie = () => {
 
   useEffect(() => {
     const fetchMovie = async () => {
-      const response = await fetch(`/api/videos/${id}`, { method: "GET" });
+      const response = await fetch(`/api/movies/${id}`, { method: "GET" });
       const data = await response.json();
 
       if (!response.ok) {
@@ -60,9 +60,14 @@ const Movie = () => {
             </div>
             <div className="w-[50%] float-left my-20 px-4 flow-root">
               <h1 className="font-semibold text-7xl"> {movie.name} </h1>
-              <p className="my-7 text-lg">{movie.summary_text}</p>
+              <p className="mt-7 text-lg">{movie.summary_text}</p>
+              {movie.runtime && (
+                <p className="font-semibold text-md">
+                  Duration: {movie.runtime}
+                </p>
+              )}
               <>
-                <p className="font-semibold text-lg">
+                <p className="font-semibold text-lg mt-7">
                   IMDB rating: {movie.rating}
                   {movie.ImdbId && (
                     <Link
@@ -99,15 +104,22 @@ const Movie = () => {
                   <p className="font-semibold text-lg mt-4">Cast:</p>
                   <div className="flex flex-wrap space-x-2">
                     {movie.cast.map((actor) => (
-                      <Link
-                        key={actor.name_id}
-                        to={`https://www.imdb.com/name/${actor.name_id}`}
+                      <p
+                        key={actor}
                         className="px-2 py-1 bg-red-700 text-white rounded"
                       >
-                        {actor.name}
-                      </Link>
+                        {actor}
+                      </p>
                     ))}
                   </div>
+                </>
+              )}
+              {movie.director && (
+                <>
+                  <p className="font-semibold text-lg mt-4">Director:</p>
+                  <p className="px-2 py-1 bg-red-700 text-white rounded inline-block">
+                    {movie.director}
+                  </p>
                 </>
               )}
               <>

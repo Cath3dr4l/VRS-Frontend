@@ -4,15 +4,15 @@ import RowComponent from "../components/RowComponent";
 const Home = () => {
   return (
     <div className="py-20">
-      <SearchBar videosPath="api/videos" />
+      <SearchBar videosPath="api/movies" />
 
-      <RowComponent title="All Movies" videosPath="api/videos" />
-      <RowComponent title="Action" videosPath="api/videos/genre/action" />
-      <RowComponent title="Crime" videosPath="api/videos/genre/crime" />
-      <RowComponent title="Sci-Fi" videosPath="api/videos/genre/sci-fi" />
-      <RowComponent title="Fantasy" videosPath="api/videos/genre/fantasy" />
-      <RowComponent title="Animation" videosPath="api/videos/genre/animation" />
-      <RowComponent title="Drama" videosPath="api/videos/genre/drama" />
+      <RowComponent title="All Movies" videosPath="api/movies" />
+      <RowComponent title="Action" videosPath="api/movies/genre/action" />
+      <RowComponent title="Crime" videosPath="api/movies/genre/crime" />
+      <RowComponent title="Sci-Fi" videosPath="api/movies/genre/sci-fi" />
+      <RowComponent title="Fantasy" videosPath="api/movies/genre/fantasy" />
+      <RowComponent title="Animation" videosPath="api/movies/genre/animation" />
+      <RowComponent title="Drama" videosPath="api/movies/genre/drama" />
     </div>
   );
 };

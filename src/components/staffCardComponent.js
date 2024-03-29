@@ -19,7 +19,7 @@ const StaffCardComponent = ({ item }) => {
         {
           label: "Yes",
           onClick: async () => {
-            const response = await fetch(`/api/managers/video/${id}`, {
+            const response = await fetch(`/api/managers/movie/${id}`, {
               method: "PUT",
               headers: {
                 "Content-Type": "application/json",
@@ -47,7 +47,7 @@ const StaffCardComponent = ({ item }) => {
   };
 
   const enableItem = async (id) => {
-    const response = await fetch(`/api/managers/video/${id}`, {
+    const response = await fetch(`/api/managers/movie/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -68,7 +68,7 @@ const StaffCardComponent = ({ item }) => {
   const [stock, setStock] = useState(item.stock);
 
   const saveStock = async (id) => {
-    const response = await fetch(`/api/staffs/video/${id}`, {
+    const response = await fetch(`/api/staffs/movie/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

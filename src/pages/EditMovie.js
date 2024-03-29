@@ -34,7 +34,7 @@ const EditMovie = () => {
 
   useEffect(() => {
     const fetchMovie = async () => {
-      const response = await fetch(`/api/videos/${id}`, { method: "GET" });
+      const response = await fetch(`/api/movies/${id}`, { method: "GET" });
       const data = await response.json();
 
       if (!response.ok) {
@@ -59,7 +59,7 @@ const EditMovie = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-    const response = await fetch(`/api/managers/video/${id}`, {
+    const response = await fetch(`/api/managers/movie/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

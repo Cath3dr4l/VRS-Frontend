@@ -12,7 +12,7 @@ const Category = () => {
 
   useEffect(() => {
     const fetchMovies = async () => {
-      const response = await fetch(`/api/videos/genre/${genre}`, {
+      const response = await fetch(`/api/movies/genre/${genre}`, {
         method: "GET",
       });
       const data = await response.json();
@@ -20,7 +20,10 @@ const Category = () => {
         setError(data.error);
       }
       if (response.ok) {
-        setMovies(data.filter((video) => video.disabled === false));
+        const sortedMovies = data
+          .filter((video) => video.disabled === false)
+          .sort((a, b) => b.rating - a.rating);
+        setMovies(sortedMovies);
         setError(null);
       }
     };

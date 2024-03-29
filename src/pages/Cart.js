@@ -39,7 +39,7 @@ const Cart = () => {
     };
 
     const fetchMovies = async () => {
-      const response = await fetch("/api/videos", { method: "GET" });
+      const response = await fetch("/api/movies", { method: "GET" });
       const data = await response.json();
       if (!response.ok) {
         setError(data.error);
@@ -190,7 +190,7 @@ const Cart = () => {
           Authorization: `Bearer ${customer.token}`,
         },
         body: JSON.stringify({
-          videoID: item.id,
+          movieID: item.id,
           quantity: item.quantity,
           duration: item.duration,
           transactionID: transactionID,

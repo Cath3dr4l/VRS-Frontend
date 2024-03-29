@@ -12,7 +12,7 @@ const MovieManage = () => {
 
   useEffect(() => {
     const fetchMovie = async () => {
-      const response = await fetch(`/api/managers/video/${id}`, {
+      const response = await fetch(`/api/managers/movie/${id}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",

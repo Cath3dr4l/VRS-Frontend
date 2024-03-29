@@ -28,7 +28,7 @@ const Manager = () => {
       </div>
       <div className="py-20">
         {/* <h1 className="text-white font-semibold">All movies</h1> */}
-        <StaffSearchList videosPath="/api/videos" />
+        <StaffSearchList videosPath="/api/movies" />
       </div>
     </div>
   );

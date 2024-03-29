@@ -15,7 +15,7 @@ const Staff = () => {
       </div>
       <div className="py-20">
         {/* <h1 className="text-white font-bold text-xl mx-4 p-2">All movies</h1> */}
-        <StaffSearchList videosPath="../api/videos" />
+        <StaffSearchList videosPath="../api/movies" />
       </div>
     </div>
   );

@@ -46,7 +46,7 @@ const Profile = () => {
         setError(data.error);
       }
       if (response.ok) {
-        setOrders(data.filter((order) => order.videoID));
+        setOrders(data.filter((order) => order.movieID));
         console.log(data);
         setError(null);
       }
@@ -182,11 +182,11 @@ const Profile = () => {
                     >
                       <div>
                         <h2 className="font-bold text-xl">
-                          {order.videoID.name}
+                          {order.movieID.name}
                         </h2>
                         <img
-                          src={order.videoID.poster_url}
-                          alt={order.videoID.name}
+                          src={order.movieID.poster_url}
+                          alt={order.movieID.name}
                           className="w-24"
                         />
                       </div>

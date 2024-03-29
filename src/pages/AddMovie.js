@@ -31,7 +31,7 @@ const AddMovie = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-    const response = await fetch("/api/managers/video", {
+    const response = await fetch("/api/managers/movie", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

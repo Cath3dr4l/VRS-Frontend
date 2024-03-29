@@ -17,8 +17,11 @@ const RowComponent = ({ title, videosPath }) => {
         console.log(json.error);
       }
       if (response.ok) {
-        setVideos(json.filter((video) => video.disabled === false));
-        setData(json.filter((video) => video.disabled === false).slice(0, 25)); // Store the first 25 videos in data
+        const sortedMovies = json
+          .filter((video) => video.disabled === false)
+          .sort((a, b) => b.rating - a.rating);
+        setVideos(sortedMovies);
+        setData(sortedMovies.slice(0, 25)); // Store the first 25 videos in data
       }
     };
     fetchVideos();
