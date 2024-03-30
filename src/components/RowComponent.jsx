@@ -2,30 +2,11 @@ import React, { useEffect, useState } from "react";
 import InfiniteListComponent from "./infiniteList";
 import CardComponent from "./cardComponent";
 
-const RowComponent = ({ title, videosPath }) => {
-  const [data, setData] = useState([]);
+const RowComponent = ({ title, videosArray }) => {
+  const [data, setData] = useState(videosArray.slice(0, 25));
   const [isLoading, setIsLoading] = useState(false);
   const [canLoadMore, setCanLoadMore] = useState({ right: true });
-
-  // Fetch Movies
-  const [videos, setVideos] = useState([]);
-  useEffect(() => {
-    const fetchVideos = async () => {
-      const response = await fetch(videosPath, { method: "GET" });
-      const json = await response.json();
-      if (!response.ok) {
-        console.log(json.error);
-      }
-      if (response.ok) {
-        const sortedMovies = json
-          .filter((video) => video.disabled === false)
-          .sort((a, b) => b.rating - a.rating);
-        setVideos(sortedMovies);
-        setData(sortedMovies.slice(0, 25)); // Store the first 25 videos in data
-      }
-    };
-    fetchVideos();
-  }, []);
+  const [videos, setVideos] = useState(videosArray);
 
   const fetchMoreVideos = async (last, length = 25) => {
     return new Promise((resolve) => {
@@ -50,7 +31,9 @@ const RowComponent = ({ title, videosPath }) => {
 
   return (
     <div>
-      <h1 className="text-text p-4 font-semibold md:text-2xl">{title}</h1>
+      <h1 className="text-text p-4 font-semibold md:text-2xl capitalize">
+        {title}
+      </h1>
       <InfiniteListComponent
         style={{ scrollbars: "false" }}
         isLoading={isLoading}
