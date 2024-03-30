@@ -9,7 +9,7 @@ const StaffSearchList = ({ videosArray }) => {
   const [isSearching, setIsSearching] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [canLoadMore, setCanLoadMore] = useState({ down: true });
-  const [data, setData] = useState(videosArray.slice(0, 25));
+  const [data, setData] = useState(videosArray.slice(0, 24));
   const [filteredData, setFilteredData] = useState(videosArray);
 
   const keys = ["name"];
@@ -20,7 +20,7 @@ const StaffSearchList = ({ videosArray }) => {
     );
   };
 
-  const fetchMoreVideos = async (last, length = 25) => {
+  const fetchMoreVideos = async (last, length = 24) => {
     return new Promise((resolve) => {
       setTimeout(() => {
         const newData = filteredData.slice(last, last + length);
@@ -34,7 +34,7 @@ const StaffSearchList = ({ videosArray }) => {
     console.log(last);
     setIsLoading(true);
     const newData = await fetchMoreVideos(last);
-    if (data.length + 25 >= filteredData.length) {
+    if (data.length + 24 >= filteredData.length) {
       setCanLoadMore({ down: false });
     }
     setData((prev) => [...prev, ...newData]);
@@ -45,8 +45,8 @@ const StaffSearchList = ({ videosArray }) => {
   };
 
   useEffect(() => {
-    setData(filteredData.slice(0, 25));
-    if (25 >= filteredData.length) {
+    setData(filteredData.slice(0, 24));
+    if (24 >= filteredData.length) {
       setCanLoadMore({ down: false });
     } else {
       setCanLoadMore({ down: true });

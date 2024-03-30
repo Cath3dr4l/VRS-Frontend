@@ -25,7 +25,7 @@ const Manager = () => {
         console.log(data.error);
         setIsFetching(false);
       } else {
-        setMovies(data);
+        setMovies(data.sort((a, b) => b.rating - a.rating));
         setIsFetching(false);
       }
     };
