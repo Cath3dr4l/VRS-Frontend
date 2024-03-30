@@ -4,30 +4,19 @@ import StaffCardComponent from "./staffCardComponent";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 
-const StaffSearchList = ({ videosPath }) => {
-  const [videos, setVideos] = useState([]);
+const StaffSearchList = ({ videosArray }) => {
+  const [videos, setVideos] = useState(videosArray);
   const [isSearching, setIsSearching] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [canLoadMore, setCanLoadMore] = useState({ down: true });
-  const [data, setData] = useState([]);
-  const [filteredData, setFilteredData] = useState([]);
-
-  useEffect(() => {
-    const fetchVideos = async () => {
-      const response = await fetch(videosPath, { method: "GET" });
-      const json = await response.json();
-      setVideos(json.filter((video) => video.disabled === false));
-      setFilteredData(json.filter((video) => video.disabled === false));
-      setData(json.filter((video) => video.disabled === false).slice(0, 25)); // Store the first 25 videos in data
-    };
-    fetchVideos();
-  }, []);
+  const [data, setData] = useState(videosArray.slice(0, 25));
+  const [filteredData, setFilteredData] = useState(videosArray);
 
   const keys = ["name"];
 
   const search = (data, query) => {
     return data.filter((row) =>
-      keys.some((key) => row[key].toLowerCase().includes(query.toLowerCase())),
+      keys.some((key) => row[key].toLowerCase().includes(query.toLowerCase()))
     );
   };
 

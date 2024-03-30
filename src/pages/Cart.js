@@ -5,12 +5,16 @@ import { useCartContext } from "../hooks/useCartContext";
 import { useAuthContext } from "../hooks/useAuthContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash, faSadTear } from "@fortawesome/free-solid-svg-icons";
+import Loader from "../components/Loader";
+import { set } from "date-fns";
 
 const Cart = () => {
   const { customer } = useAuthContext();
   const [profile, setProfile] = useState(null);
   const [movies, setMovies] = useState(null);
   const [error, setError] = useState(null);
+  const [isFetching, setIsFetching] = useState(false);
+
   const navigate = useNavigate();
   const {
     cartItems,
@@ -23,6 +27,7 @@ const Cart = () => {
 
   useEffect(() => {
     const fetchProfile = async () => {
+      setIsFetching(true);
       const response = await fetch("/api/customers/profile", {
         headers: {
           Authorization: `Bearer ${customer.token}`,
@@ -31,6 +36,7 @@ const Cart = () => {
       const data = await response.json();
       if (!response.ok) {
         setError(data.error);
+        setIsFetching(false);
       }
       if (response.ok) {
         setProfile(data);
@@ -46,14 +52,15 @@ const Cart = () => {
         const data = await Promise.all(promises);
         setMovies(data);
         setError(null);
+        setIsFetching(false);
       } catch (error) {
         setError(error.message);
+        setIsFetching(false);
       }
     };
 
     if (customer) {
-      fetchProfile();
-      fetchMovies();
+      fetchProfile().then(fetchMovies());
     }
   }, [customer]);
 
@@ -206,108 +213,119 @@ const Cart = () => {
   };
 
   return (
-    <div className="container mx-auto px-6 pt-16 py-4">
-      {profile && (
-        <h2 className="text-3xl font-bold text-center text-white">
-          {profile.name}'s Cart
-        </h2>
-      )}
+    <>
+      {isFetching ? (
+        <Loader />
+      ) : (
+        <div className="container mx-auto px-6 pt-16 py-4">
+          {profile && (
+            <h2 className="text-3xl font-bold text-center text-white">
+              {profile.name}'s Cart
+            </h2>
+          )}
 
-      <div>
-        {movies &&
-          cartItems.map((item) => {
-            const movie = movies.find((movie) => movie._id === item.id);
-            return (
-              <div
-                key={item.id}
-                className="grid grid-cols-3 items-center justify-between mt-6 pt-6 border-t"
-              >
-                <div className="flex items-center">
-                  <Link to={`/movie/${item.id}`}>
-                    <img
-                      src={movie.poster_url}
-                      alt={movie.name}
-                      className="w-20"
-                    />
-                  </Link>
-                  <div className="ml-4">
-                    <span className="text-white font-bold">{movie.name}</span>
-                    <div className="text-white">
-                      Price: Rs.
-                      {calculatePrice(item)}
+          <div>
+            {movies &&
+              cartItems.map((item) => {
+                const movie = movies.find((movie) => movie._id === item.id);
+                return (
+                  <div
+                    key={item.id}
+                    className="grid grid-cols-3 items-center justify-between mt-6 pt-6 border-t"
+                  >
+                    <div className="flex items-center">
+                      <Link to={`/movie/${item.id}`}>
+                        <img
+                          src={movie.poster_url}
+                          alt={movie.name}
+                          className="w-20"
+                        />
+                      </Link>
+                      <div className="ml-4">
+                        <span className="text-white font-bold">
+                          {movie.name}
+                        </span>
+                        <div className="text-white">
+                          Price: Rs.
+                          {calculatePrice(item)}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="flex flex-col items-center">
+                      <div className="flex justify-between">
+                        <button
+                          onClick={() => decreaseItemQuantity(item.id)}
+                          className="rounded bg-blue-500 w-8 h-8 mx-2 flex items-center justify-center text-base font-bold text-white hover:bg-blue-700"
+                        >
+                          -
+                        </button>
+                        <p className="text-white">Quantity: {item.quantity}</p>
+                        <button
+                          onClick={() => increaseItemQuantity(item.id)}
+                          className="rounded bg-blue-500 w-8 h-8  mx-2 flex items-center justify-center text-base font-bold text-white hover:bg-blue-700"
+                        >
+                          +
+                        </button>
+                      </div>
+                      <div className="flex items-center">
+                        <label
+                          htmlFor="rentDuration"
+                          className="mr-2 text-white"
+                        >
+                          Rent Duration:
+                        </label>
+                        <select
+                          id="rentDuration"
+                          onChange={(e) =>
+                            setDuration(item.id, Number(e.target.value))
+                          }
+                          defaultValue={item.duration}
+                          className="mt-1 block rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                        >
+                          <option value="1">1 Week</option>
+                          <option value="2">2 Weeks</option>
+                          <option value="3">3 Weeks</option>
+                          <option value="4">4 Weeks</option>
+                          <option value="100">Buy Movie</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div className="flex justify-end">
+                      <button
+                        onClick={() => removeItem(item.id)}
+                        className="rounded bg-red-600 px-2 py-1 font-bold text-white hover:bg-red-700"
+                      >
+                        <FontAwesomeIcon icon={faTrash} />
+                      </button>
                     </div>
                   </div>
-                </div>
-                <div className="flex flex-col items-center">
-                  <div className="flex justify-between">
-                    <button
-                      onClick={() => decreaseItemQuantity(item.id)}
-                      className="rounded bg-blue-500 w-8 h-8 mx-2 flex items-center justify-center text-base font-bold text-white hover:bg-blue-700"
-                    >
-                      -
-                    </button>
-                    <p className="text-white">Quantity: {item.quantity}</p>
-                    <button
-                      onClick={() => increaseItemQuantity(item.id)}
-                      className="rounded bg-blue-500 w-8 h-8  mx-2 flex items-center justify-center text-base font-bold text-white hover:bg-blue-700"
-                    >
-                      +
-                    </button>
-                  </div>
-                  <div className="flex items-center">
-                    <label htmlFor="rentDuration" className="mr-2 text-white">
-                      Rent Duration:
-                    </label>
-                    <select
-                      id="rentDuration"
-                      onChange={(e) =>
-                        setDuration(item.id, Number(e.target.value))
-                      }
-                      defaultValue={item.duration}
-                      className="mt-1 block rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-                    >
-                      <option value="1">1 Week</option>
-                      <option value="2">2 Weeks</option>
-                      <option value="3">3 Weeks</option>
-                      <option value="4">4 Weeks</option>
-                      <option value="100">Buy Movie</option>
-                    </select>
-                  </div>
-                </div>
-                <div className="flex justify-end">
-                  <button
-                    onClick={() => removeItem(item.id)}
-                    className="rounded bg-red-600 px-2 py-1 font-bold text-white hover:bg-red-700"
-                  >
-                    <FontAwesomeIcon icon={faTrash} />
-                  </button>
-                </div>
-              </div>
-            );
-          })}
-      </div>
-      {cartItems.length === 0 ? (
-        <div className="text-white text-center text-3xl mt-20">
-          <p>
-            Your cart is empty <FontAwesomeIcon icon={faSadTear} />
-          </p>
-        </div>
-      ) : (
-        <>
-          <div className="text-white mt-4 mb-4">
-            <h3 className="text-2xl">Total Price: Rs.{totalCartPrice()}</h3>
+                );
+              })}
           </div>
-          <button
-            onClick={handleClick}
-            className="rounded bg-green-500 px-4 py-2 font-bold text-white hover:bg-green-700"
-          >
-            Order
-          </button>
-        </>
-      )}
+          {cartItems.length === 0 ? (
+            <div className="text-white text-center text-3xl mt-20">
+              <p>
+                Your cart is empty <FontAwesomeIcon icon={faSadTear} />
+              </p>
+            </div>
+          ) : (
+            <>
+              <div className="text-white mt-4 mb-4">
+                <h3 className="text-2xl">Total Price: Rs.{totalCartPrice()}</h3>
+              </div>
+              <button
+                onClick={handleClick}
+                className="rounded bg-green-500 px-4 py-2 font-bold text-white hover:bg-green-700"
+              >
+                Order
+              </button>
+            </>
+          )}
 
-      {error && <div className="error">{error}</div>}
-    </div>
+          {error && <div className="error">{error}</div>}
+        </div>
+      )}
+    </>
   );
 };
 
