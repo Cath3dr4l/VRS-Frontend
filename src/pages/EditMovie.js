@@ -34,7 +34,10 @@ const EditMovie = () => {
 
   useEffect(() => {
     const fetchMovie = async () => {
-      const response = await fetch(`/api/movies/${id}`, { method: "GET" });
+      const response = await fetch(`/api/managers/movie/${id}`, {
+        method: "GET",
+        headers: { Authorization: `Bearer ${manager.token}` },
+      });
       const data = await response.json();
 
       if (!response.ok) {

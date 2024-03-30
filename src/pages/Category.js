@@ -2,22 +2,27 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import useScreenSize from "../hooks/useScreenSize";
 import CardComponent from "../components/cardComponent";
+import Loader from "../components/Loader";
 
 const Category = () => {
   const { genre } = useParams();
   const [movies, setMovies] = useState(null);
   const [movieRows, setMovieRows] = useState([]);
   const [error, setError] = useState(null);
+  const [isFetching, setIsFetching] = useState(false);
+
   const screenSize = useScreenSize();
 
   useEffect(() => {
     const fetchMovies = async () => {
+      setIsFetching(true);
       const response = await fetch(`/api/movies/genre/${genre}`, {
         method: "GET",
       });
       const data = await response.json();
       if (!response.ok) {
         setError(data.error);
+        setIsFetching(false);
       }
       if (response.ok) {
         const sortedMovies = data
@@ -25,6 +30,9 @@ const Category = () => {
           .sort((a, b) => b.rating - a.rating);
         setMovies(sortedMovies);
         setError(null);
+        setTimeout(() => {
+          setIsFetching(false);
+        }, 500);
       }
     };
     fetchMovies();
@@ -43,20 +51,28 @@ const Category = () => {
   }, [movies, screenSize.width]);
 
   return (
-    <div>
-      <h1 className="text-4xl font-bold text-text text-center pt-16 py-4">
-        {genre.toUpperCase()}
-      </h1>
-      {movies &&
-        movieRows.map((row, rowIndex) => (
-          <div key={rowIndex} className="flex justify-center gap-1 p-4">
-            {row.map((movie) => (
-              <CardComponent key={movie.id} item={movie} />
+    <>
+      {isFetching ? (
+        <Loader />
+      ) : (
+        <div>
+          <h1 className="text-4xl font-bold text-text text-center pt-16 py-4">
+            {genre.toUpperCase()}
+          </h1>
+          {movies &&
+            movieRows.map((row, rowIndex) => (
+              <div key={rowIndex} className="flex justify-center gap-1 p-4">
+                {row.map((movie) => (
+                  <CardComponent key={movie.id} item={movie} />
+                ))}
+              </div>
             ))}
-          </div>
-        ))}
-      {error && <h1 className="text-2xl text-red-500 text-center">{error}</h1>}
-    </div>
+          {error && (
+            <h1 className="text-2xl text-red-500 text-center">{error}</h1>
+          )}
+        </div>
+      )}
+    </>
   );
 };
 
