@@ -86,16 +86,20 @@ const StaffSearchList = ({ videosPath }) => {
       <div>
         {data.length === 0 && <p style={{ color: "white" }}>No Movies Found</p>}
 
-        <StaffInfiniteListComponent
-          style={{ scrollbars: "false" }}
-          isLoading={isLoading}
-          items={data}
-          canLoadMore={canLoadMore}
-          next={next}
-          renderComponent={(item) => (
-            <StaffCardComponent item={item} key={item.id} />
-          )}
-        />
+        {isSearching ? (
+          <StaffInfiniteListComponent
+            style={{ scrollbars: "false" }}
+            isLoading={isLoading}
+            items={data}
+            canLoadMore={canLoadMore}
+            next={next}
+            renderComponent={(item) => (
+              <StaffCardComponent item={item} key={item.id} />
+            )}
+          />
+        ) : (
+          <div>Loading...(alag wala)</div>
+        )}
       </div>
     </>
   );

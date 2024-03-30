@@ -19,7 +19,7 @@ const StaffCardComponent = ({ item }) => {
         {
           label: "Yes",
           onClick: async () => {
-            const response = await fetch(`/api/managers/movie/${id}`, {
+            const response = await fetch(`/api/managers/movie/disable/${id}`, {
               method: "PUT",
               headers: {
                 "Content-Type": "application/json",

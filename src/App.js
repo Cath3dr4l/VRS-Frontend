@@ -27,6 +27,7 @@ import MovieManage from "./pages/MovieManage";
 import MovieStaff from "./pages/MovieStaff";
 import AllOrders from "./pages/AllOrders";
 import OrdersManage from "./pages/OrdersManage";
+import Invoice from "./pages/invoice";
 
 const App = () => {
   const { customer } = useAuthContext();
@@ -59,6 +60,7 @@ const App = () => {
           >
             <Route path="/profile" exact element={<Profile />} />
             <Route path="/cart" exact element={<Cart />} />
+            <Route path="/invoice" exact element={<Invoice />} />
           </Route>
           <Route
             path="/management"

@@ -1,19 +1,55 @@
 import SearchBar from "../components/searchBar";
 import RowComponent from "../components/RowComponent";
+import GenreRow from "../components/GenreRow";
+import { useEffect, useState } from "react";
+import Loader from "../components/Loader";
 
 const Home = () => {
-  return (
-    <div className="py-20">
-      <SearchBar videosPath="api/movies" />
+  const [isFetching, setIsFetching] = useState(true);
+  const [movies, setMovies] = useState(null);
+  useEffect(() => {
+    const fetchMovies = async () => {
+      setIsFetching(true);
+      const response = await fetch("/api/movies", { method: "GET" });
+      const data = await response.json();
+      if (!response.ok) {
+        setIsFetching(false);
+      }
+      if (response.ok) {
+        const sortedMovies = data
+          .filter((video) => video.disabled === false)
+          .sort((a, b) => b.rating - a.rating);
+        setMovies(sortedMovies);
+        setTimeout(() => {
+          setIsFetching(false);
+        }, 500);
+      }
+    };
 
-      <RowComponent title="All Movies" videosPath="api/movies" />
-      <RowComponent title="Action" videosPath="api/movies/genre/action" />
-      <RowComponent title="Crime" videosPath="api/movies/genre/crime" />
-      <RowComponent title="Sci-Fi" videosPath="api/movies/genre/sci-fi" />
-      <RowComponent title="Fantasy" videosPath="api/movies/genre/fantasy" />
-      <RowComponent title="Animation" videosPath="api/movies/genre/animation" />
-      <RowComponent title="Drama" videosPath="api/movies/genre/drama" />
-    </div>
+    if (!movies) {
+      fetchMovies();
+    }
+  });
+
+  return (
+    <>
+      {isFetching || !movies ? (
+        <Loader />
+      ) : (
+        <div className="py-20">
+          <SearchBar videosPath="api/movies" />
+
+          <RowComponent title="All Movies" videosArray={movies} />
+          <GenreRow genre="action" videosArray={movies} />
+          <GenreRow genre="comedy" videosArray={movies} />
+          <GenreRow genre="crime" videosArray={movies} />
+          <GenreRow genre="sci-fi" videosArray={movies} />
+          <GenreRow genre="fantasy" videosArray={movies} />
+          <GenreRow genre="animation" videosArray={movies} />
+          <GenreRow genre="drama" videosArray={movies} />
+        </div>
+      )}
+    </>
   );
 };
 
