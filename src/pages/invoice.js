@@ -24,14 +24,16 @@ const Invoice = () => {
       <Document>
         <Page size="A4" style={tw("p-4 flex flex-row flex-wrap gap-4")}>
           <View style={tw("w-full mb-4")}>
-            <Text style={tw("text-2xl font-bold")}>Invoice</Text>
-            <View style={tw("flex flex-row justify-between")}>
-              <Text style={tw("text-lg")}>Customer name: {profile.phone}</Text>
-              <Text style={tw("text-lg")}>Phone number: {} </Text>
+            <Text style={tw("text-2xl font-bold ")}>DATADOG</Text>
+            <View style={tw("flex justify-between")}>
+              <Text style={tw("text-lg")}>Customer name: {profile.name}</Text>
+              <Text style={tw("text-lg")}>Phone number: {profile.phone} </Text>
             </View>
           </View>
           <View style={tw("w-full")}>
-            <View style={tw("flex flex-row justify-between")}>
+            <View
+              style={tw("flex flex-row justify-between font-semibold text-2xl")}
+            >
               <Text>Movie Title</Text>
               <Text>Quantity</Text>
               <Text>Rent Duration</Text>
@@ -43,12 +45,28 @@ const Invoice = () => {
               return (
                 <>
                   {movie && (
-                    <View style={tw("flex flex-row justify-between")}>
-                      <Text>Item Name {item.name}</Text>
+                    <View
+                      style={tw(
+                        "flex flex-row justify-between font-semibold text-xl"
+                      )}
+                    >
+                      <Text>{movie.name}</Text>
                       <Text>{item.quantity}</Text>
-                      <Text>Rent Time{item.rentDuration}</Text>
-                      <Text>Ek ka Price{item.unitPrice}</Text>
-                      <Text>Total Price{item.totalPrice}</Text>
+                      <Text>
+                        {item.duration === 100
+                          ? "Buy"
+                          : item.duration + " week/s"}
+                      </Text>
+                      <Text>
+                        {item.duration === 100
+                          ? movie.buy_price
+                          : movie.rent_price}
+                      </Text>
+                      <Text>
+                        {item.duration === 100
+                          ? movie.buy_price * item.quantity
+                          : movie.rent_price * item.quantity * item.duration}
+                      </Text>
                     </View>
                   )}
                 </>
@@ -56,7 +74,9 @@ const Invoice = () => {
             })}
           </View>
           <View style={tw("w-full mt-4")}>
-            <Text style={tw("text-lg font-bold")}>Total Price: {total}</Text>
+            <Text style={tw("text-lg font-bold text-right")}>
+              Total Price: {total}
+            </Text>
           </View>
         </Page>
       </Document>
