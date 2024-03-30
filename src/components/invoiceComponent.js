@@ -1,15 +1,14 @@
 import React from "react";
-import { Document, Page, Text, View, StyleSheet } from "@react-pdf/renderer";
+import { PDFViewer, Document, Page, Text, View } from "@react-pdf/renderer";
+import { createTw } from "react-pdf-tailwind";
 
-const styles = StyleSheet.create({
-  page: {
-    flexDirection: "row",
-    backgroundColor: "#E4E4E4",
-  },
-  section: {
-    margin: 10,
-    padding: 10,
-    flexGrow: 1,
+const tw = createTw({
+  theme: {
+    extend: {
+      colors: {
+        custom: "cornflowerblue",
+      },
+    },
   },
 });
 
@@ -18,20 +17,45 @@ const styles = StyleSheet.create({
 const InvoiceComponent = ({ order }) => {
   console.log("order: ", order);
   return (
-    <Document className="bg-white">
-      <Page size="A4" style={styles.page}>
-        <View style={styles.section}>
-          <Text>Invoice</Text>
-          <section>
-            <h2> Customer name:</h2>
-            <p> Phone number: </p>
-          </section>
-          {/* <Text>Order ID: {order.id}</Text>
-          <Text>Order Date: {order.date}</Text>
-          <Text>Order Total: {order.total}</Text> */}
-        </View>
-      </Page>
-    </Document>
+    <PDFViewer width="100%" height="650px">
+      <Document>
+        <Page size="A4" style={tw("p-4 flex flex-col")}>
+          <View style={tw("mb-4")}>
+            <Text style={tw("text-2xl font-bold")}>Invoice</Text>
+            <View style={tw("flex flex-row justify-between")}>
+              <Text style={tw("text-lg")}>Customer name:</Text>
+              <Text style={tw("text-lg")}>Phone number:</Text>
+            </View>
+          </View>
+          <View style={tw("flex-grow")}>
+            <Text style={tw("text-lg font-bold")}>Invoice Items:</Text>
+            <View style={tw("flex flex-row justify-between")}>
+              <Text style={tw("font-bold")}>Name</Text>
+              <Text style={tw("font-bold")}>Quantity</Text>
+              <Text style={tw("font-bold")}>Rent Duration/Buy</Text>
+              <Text style={tw("font-bold")}>Unit Price</Text>
+              <Text style={tw("font-bold")}>Total Price</Text>
+            </View>
+            {order.map((item) => (
+              <View key={item.id} style={tw("flex flex-row justify-between")}>
+                <Text>{item.name}</Text>
+                <Text>{item.quantity}</Text>
+                <Text>{item.rentDuration}</Text>
+                <Text>{item.unitPrice}</Text>
+                <Text>{item.totalPrice}</Text>
+              </View>
+            ))}
+          </View>
+          <View style={tw("mt-4")}>
+            <Text style={tw("text-lg font-bold")}>Footer:</Text>
+            <View style={tw("flex flex-row justify-between")}>
+              <Text style={tw("font-bold")}>Final Price:</Text>
+              <Text style={tw("font-bold")}>$FINAL_PRICE$</Text>
+            </View>
+          </View>
+        </Page>
+      </Document>
+    </PDFViewer>
   );
 };
 

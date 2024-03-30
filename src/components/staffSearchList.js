@@ -7,7 +7,7 @@ import { faSearch } from "@fortawesome/free-solid-svg-icons";
 const StaffSearchList = ({ videosPath }) => {
   const [videos, setVideos] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [canLoadMore, setCanLoadMore] = useState({ right: true });
+  const [canLoadMore, setCanLoadMore] = useState({ down: true });
   const [data, setData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
 
@@ -48,14 +48,14 @@ const StaffSearchList = ({ videosPath }) => {
     setData((prev) => [...prev, ...newData]);
     setIsLoading(false);
     if (data.length === filteredData.length) {
-      setCanLoadMore({ right: false });
+      setCanLoadMore({ down: false });
     }
   };
 
   useEffect(() => {
     setData(filteredData.slice(0, 25));
     if (data.length === filteredData.length) {
-      setCanLoadMore({ right: false });
+      setCanLoadMore({ down: false });
     }
   }, [filteredData]);
 

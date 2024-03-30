@@ -1,9 +1,8 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useCartContext } from "../hooks/useCartContext";
 import { useAuthContext } from "../hooks/useAuthContext";
-import InvoiceComponent from "../components/invoiceComponent.js";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash, faSadTear } from "@fortawesome/free-solid-svg-icons";
 
@@ -12,6 +11,7 @@ const Cart = () => {
   const [profile, setProfile] = useState(null);
   const [movies, setMovies] = useState(null);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
   const {
     cartItems,
     increaseItemQuantity,
@@ -66,19 +66,11 @@ const Cart = () => {
     return movie.rent_price * item.quantity * item.duration;
   };
 
-  const [orderPlaced, setOrderPlaced] = useState(false);
-  const [invoiceItems, setInvoiceItems] = useState([]);
-
-  useEffect(() => {
-    console.log("here:", invoiceItems);
-    if (invoiceItems.length > 0) {
-      setOrderPlaced(true);
-    }
-  }, [invoiceItems]);
-
   const createInvoice = async () => {
     // console.log(cartItems);
-    setInvoiceItems(cartItems);
+    navigate("/invoice", {
+      state: { order: cartItems, profile: profile, total: totalCartPrice() },
+    });
   };
 
   const totalCartPrice = () => {
@@ -162,10 +154,6 @@ const Cart = () => {
       // alert(response.error.metadata.payment_id);
       alert("Payment Failed");
     });
-  };
-
-  const handlePrint = () => {
-    window.print();
   };
 
   const handleClick = () => {
@@ -311,22 +299,6 @@ const Cart = () => {
           </button>
         </>
       )}
-
-      {/* {orderPlaced && (
-        <div>
-          <InvoiceComponent order={invoiceItems} />
-        </div>
-      )} */}
-
-      <div className="my-24">
-        <div>
-          <InvoiceComponent order={invoiceItems} />
-        </div>
-        <button className="bg-white" onClick={handlePrint}>
-          {" "}
-          Print Invoice{" "}
-        </button>
-      </div>
 
       {error && <div className="error">{error}</div>}
     </div>
