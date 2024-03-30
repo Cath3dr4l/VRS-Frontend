@@ -1,35 +1,47 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useAuthContext } from "../hooks/useAuthContext";
-import CardComponent from "./cardComponent";
+import RowComponent from "./RowComponent";
+import { PacmanLoader } from "react-spinners";
 
 const DataComponent = () => {
   const { customer } = useAuthContext();
   const [orders, setOrders] = useState([]);
   const [error, setError] = useState(null);
-  const [isFetching, setIsFetching] = useState(false);
-  const [data, setData] = useState(null);
-
-  let cnt = 0;
-  const recommendations = new Set();
-
+  const [recommendations, setRecommendations] = useState(null);
+  const [isFetching, setIsFetching] = useState(true);
   useEffect(() => {
-    orders.forEach((order) => {
-      axios
-        .get(`/api/recommend/${encodeURIComponent(order.movieID.name)}`)
-        .then((response) => {
-          response.data.movies.forEach((movie) => {
-            recommendations.add(movie);
+    const fetchRecommendations = async () => {
+      try {
+        const promises = orders.map((order) =>
+          axios.get(
+            `/api/movies/recommend/${encodeURIComponent(order.movieID.name)}`
+          )
+        );
+        const responses = await Promise.all(promises);
+        const recommendationsSet = new Set(recommendations);
+        responses.forEach((response) => {
+          response.data.forEach((movie) => {
+            recommendationsSet.add(movie);
           });
-        })
-        .catch((error) => {
-          console.error("Error fetching data:", error);
         });
-    });
+        setRecommendations([...recommendationsSet]);
+        setIsFetching(false);
+        setError(null);
+      } catch (error) {
+        setError(error);
+        setIsFetching(false);
+      }
+    };
+
+    if (orders.length > 0) {
+      fetchRecommendations();
+    }
   }, [orders]);
 
   useEffect(() => {
     const fetchLast5Orders = async () => {
+      setIsFetching(true);
       const response = await fetch("/api/customers/order", {
         method: "GET",
         headers: {
@@ -46,9 +58,8 @@ const DataComponent = () => {
           data
             .filter((order) => order.movieID)
             .reverse()
-            .slice(0, 5),
+            .slice(0, 5)
         );
-        setIsFetching(false);
         setError(null);
       }
     };
@@ -58,11 +69,27 @@ const DataComponent = () => {
   }, [customer]);
 
   return (
-    <div>
-      {customer &&
-        data &&
-        data.movies.map((item) => <CardComponent item={item} key={cnt++} />)}
-    </div>
+    <>
+      {isFetching ? (
+        <div className="w-screen h-[250px] z-[100] flex justify-center items-center">
+          <div className="flex flex-col justify-center items-center">
+            <PacmanLoader color="#fff" size={60} />
+            <div className="text-text font-poppins text-2xl mt-10">
+              Loading Recommendations
+            </div>
+          </div>
+        </div>
+      ) : (
+        <div>
+          {recommendations && (
+            <RowComponent
+              title="Recommendations"
+              videosArray={recommendations}
+            />
+          )}
+        </div>
+      )}
+    </>
   );
 };
 

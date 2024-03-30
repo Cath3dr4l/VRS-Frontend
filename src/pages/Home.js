@@ -4,10 +4,13 @@ import GenreRow from "../components/GenreRow";
 import { useEffect, useState } from "react";
 import Loader from "../components/Loader";
 import DataComponent from "../components/dataComponent";
+import { useAuthContext } from "../hooks/useAuthContext";
 
 const Home = () => {
   const [isFetching, setIsFetching] = useState(true);
   const [movies, setMovies] = useState(null);
+  const { customer } = useAuthContext();
+
   useEffect(() => {
     const fetchMovies = async () => {
       setIsFetching(true);
@@ -40,7 +43,7 @@ const Home = () => {
         <div className="py-20">
           <SearchBar videosPath="api/movies" />
 
-          <DataComponent />
+          {customer && <DataComponent />}
 
           <RowComponent title="All Movies" videosArray={movies} />
           <GenreRow genre="action" videosArray={movies} />
