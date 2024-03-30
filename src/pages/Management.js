@@ -1,10 +1,13 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useLogin } from "../hooks/useLogin";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 
 const Management = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const { login, error, isLoading } = useLogin();
   const navigate = useNavigate();
 
@@ -41,17 +44,22 @@ const Management = () => {
               />
             </p>
             <br />
-            <p>
+            <div className="relative">
               <input
                 className="p-2 rounded w-full bg-gray-700"
-                type="password"
+                type={showPassword ? "text" : "password"}
                 value={password}
                 placeholder="Password"
                 required
                 onChange={(e) => setPassword(e.target.value)}
                 autoComplete="Password"
               />
-            </p>
+              <FontAwesomeIcon
+                className="absolute top-3 right-3 text-lg cursor-pointer"
+                icon={showPassword ? faEyeSlash : faEye}
+                onClick={() => setShowPassword(!showPassword)}
+              />
+            </div>
             <br />
             <div className="flow-root">
               <button

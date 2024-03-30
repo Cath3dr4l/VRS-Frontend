@@ -4,34 +4,23 @@ import StaffCardComponent from "./staffCardComponent";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 
-const StaffSearchList = ({ videosPath }) => {
-  const [videos, setVideos] = useState([]);
+const StaffSearchList = ({ videosArray }) => {
+  const [videos, setVideos] = useState(videosArray);
   const [isSearching, setIsSearching] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [canLoadMore, setCanLoadMore] = useState({ down: true });
-  const [data, setData] = useState([]);
-  const [filteredData, setFilteredData] = useState([]);
-
-  useEffect(() => {
-    const fetchVideos = async () => {
-      const response = await fetch(videosPath, { method: "GET" });
-      const json = await response.json();
-      setVideos(json.filter((video) => video.disabled === false));
-      setFilteredData(json.filter((video) => video.disabled === false));
-      setData(json.filter((video) => video.disabled === false).slice(0, 25)); // Store the first 25 videos in data
-    };
-    fetchVideos();
-  }, []);
+  const [data, setData] = useState(videosArray.slice(0, 24));
+  const [filteredData, setFilteredData] = useState(videosArray);
 
   const keys = ["name"];
 
   const search = (data, query) => {
     return data.filter((row) =>
-      keys.some((key) => row[key].toLowerCase().includes(query.toLowerCase())),
+      keys.some((key) => row[key].toLowerCase().includes(query.toLowerCase()))
     );
   };
 
-  const fetchMoreVideos = async (last, length = 25) => {
+  const fetchMoreVideos = async (last, length = 24) => {
     return new Promise((resolve) => {
       setTimeout(() => {
         const newData = filteredData.slice(last, last + length);
@@ -45,7 +34,7 @@ const StaffSearchList = ({ videosPath }) => {
     console.log(last);
     setIsLoading(true);
     const newData = await fetchMoreVideos(last);
-    if (data.length + 25 >= filteredData.length) {
+    if (data.length + 24 >= filteredData.length) {
       setCanLoadMore({ down: false });
     }
     setData((prev) => [...prev, ...newData]);
@@ -56,8 +45,8 @@ const StaffSearchList = ({ videosPath }) => {
   };
 
   useEffect(() => {
-    setData(filteredData.slice(0, 25));
-    if (25 >= filteredData.length) {
+    setData(filteredData.slice(0, 24));
+    if (24 >= filteredData.length) {
       setCanLoadMore({ down: false });
     } else {
       setCanLoadMore({ down: true });

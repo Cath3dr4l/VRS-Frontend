@@ -2,12 +2,15 @@ import React from "react";
 import { useState } from "react";
 import { useSignup } from "../hooks/useSignup";
 import { useNavigate, Link } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 // import "../App.css";
 
 const Signup = () => {
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -28,7 +31,7 @@ const Signup = () => {
     if (success) {
       navigate("/");
     }
-  }
+  };
   return (
     <div className="fixed w-full px-4 py-24 z-[50]">
       <div className="max-w-[450px] h-[600px] mx-auto bg-black/25 text-white rounded-md">
@@ -36,25 +39,32 @@ const Signup = () => {
           <form className="w-full flex flex-col" onSubmit={handleSubmit}>
             <h1 className="text-2xl font-semibold text-center my-4">Sign Up</h1>
             <p>
-              <input className="p-2 rounded w-full bg-gray-700"
+              <input
+                className="p-2 rounded w-full bg-gray-700"
                 type="text"
                 value={username}
-                placeholder = "Username" 
+                placeholder="Username"
                 required
                 onChange={(e) => setUsername(e.target.value)}
               />
             </p>
             <br />
-            <p>
-              <input className="p-2 rounded w-full bg-gray-700"
-                type="password"
+            <div className="relative">
+              <input
+                className="p-2 rounded w-full bg-gray-700"
+                type={showPassword ? "text" : "password"}
                 value={password}
                 placeholder="Password"
                 required
                 onChange={(e) => setPassword(e.target.value)}
                 autoComplete="Password"
               />
-            </p>
+              <FontAwesomeIcon
+                className="absolute top-3 right-3 text-lg cursor-pointer"
+                icon={showPassword ? faEyeSlash : faEye}
+                onClick={() => setShowPassword(!showPassword)}
+              />
+            </div>
             <br />
             <p>
               <input
@@ -68,7 +78,8 @@ const Signup = () => {
             </p>
             <br />
             <p>
-              <input className="p-2 rounded w-full bg-gray-700"
+              <input
+                className="p-2 rounded w-full bg-gray-700"
                 type="email"
                 value={email}
                 placeholder="Email"
@@ -78,7 +89,8 @@ const Signup = () => {
             </p>
             <br />
             <p>
-              <input className="p-2 rounded w-full bg-gray-700"
+              <input
+                className="p-2 rounded w-full bg-gray-700"
                 type="text"
                 value={phone}
                 required
@@ -88,7 +100,8 @@ const Signup = () => {
             </p>
             <br />
             <p>
-              <input className="p-2 rounded w-full bg-gray-700"
+              <input
+                className="p-2 rounded w-full bg-gray-700"
                 type="text"
                 value={address}
                 placeholder="Address"
@@ -96,15 +109,21 @@ const Signup = () => {
               />
             </p>
             <br />
-            <button className="bg-primary w-full py-3 my-3 font-semibold" id="sub_btn" type="submit" disabled={isLoading}>
+            <button
+              className="bg-primary w-full py-3 my-3 font-semibold"
+              id="sub_btn"
+              type="submit"
+              disabled={isLoading}
+            >
               Register
             </button>
             {error && <div className="error">{error}</div>}
             <p className="py-3">
-              <span  className=" text-gray-600" > Already have an account? </span> <Link to="/login">Log in</Link>.
+              <span className=" text-gray-600"> Already have an account? </span>{" "}
+              <Link to="/login">Log in</Link>.
             </p>
           </form>
-          </div>
+        </div>
       </div>
     </div>
   );

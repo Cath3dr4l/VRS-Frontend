@@ -18,13 +18,11 @@ const StaffInfiniteListComponent = ({
   return (
     <div>
       <div
-        className=" w-full"
+        className="grid grid-cols-3 gap-4 mx-4"
         ref={ref}
         style={{
           height: "80vh",
           overflowY: "auto",
-          display: "flex",
-          flexDirection: "column",
           scrollbarWidth: "none",
         }}
       >
