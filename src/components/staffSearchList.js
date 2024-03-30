@@ -50,6 +50,9 @@ const StaffSearchList = ({ videosPath }) => {
     }
     setData((prev) => [...prev, ...newData]);
     setIsLoading(false);
+    if (data.length === filteredData.length) {
+      setCanLoadMore({ down: false });
+    }
   };
 
   useEffect(() => {
@@ -86,20 +89,16 @@ const StaffSearchList = ({ videosPath }) => {
       <div>
         {data.length === 0 && <p style={{ color: "white" }}>No Movies Found</p>}
 
-        {isSearching ? (
-          <StaffInfiniteListComponent
-            style={{ scrollbars: "false" }}
-            isLoading={isLoading}
-            items={data}
-            canLoadMore={canLoadMore}
-            next={next}
-            renderComponent={(item) => (
-              <StaffCardComponent item={item} key={item.id} />
-            )}
-          />
-        ) : (
-          <div>Loading...(alag wala)</div>
-        )}
+        <StaffInfiniteListComponent
+          style={{ scrollbars: "false" }}
+          isLoading={isLoading}
+          items={data}
+          canLoadMore={canLoadMore}
+          next={next}
+          renderComponent={(item) => (
+            <StaffCardComponent item={item} key={item.id} />
+          )}
+        />
       </div>
     </>
   );
