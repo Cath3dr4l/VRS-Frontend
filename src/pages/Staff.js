@@ -4,10 +4,10 @@ import NavButton from "../components/NavButton";
 const Staff = () => {
   return (
     <div>
-      <div className="z-[100] fixed ml-[200px] m-5 flex gap-4">
+      <div className="fixed z-[100] m-5 ml-[200px] flex gap-4">
         <NavButton label="All Orders" path="/management/allorders" />
       </div>
-      <div className="py-20">
+      <div className="pt-20">
         <StaffSearchList videosPath="/api/movies" />
       </div>
     </div>

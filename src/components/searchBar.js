@@ -17,17 +17,17 @@ const SearchBar = ({ videosPath }) => {
       const response = await fetch(videosPath, { method: "GET" });
       const json = await response.json();
       setVideos(json.filter((video) => video.disabled === false));
+      setFilteredData(json.filter((video) => video.disabled === false));
       setData(json.filter((video) => video.disabled === false).slice(0, 25)); // Store the first 25 videos in data
     };
     fetchVideos();
-    setFilteredData(videos);
   }, []);
 
   const keys = ["name"];
 
   const search = (data, query) => {
     return data.filter((row) =>
-      keys.some((key) => row[key].toLowerCase().includes(query.toLowerCase()))
+      keys.some((key) => row[key].toLowerCase().includes(query.toLowerCase())),
     );
   };
 
@@ -45,17 +45,19 @@ const SearchBar = ({ videosPath }) => {
     console.log(last);
     setIsLoading(true);
     const newData = await fetchMoreVideos(last);
-    setData((prev) => [...prev, ...newData]);
-    setIsLoading(false);
-    if (data.length === filteredData.length) {
+    if (data.length + 25 >= filteredData.length) {
       setCanLoadMore({ right: false });
     }
+    setData((prev) => [...prev, ...newData]);
+    setIsLoading(false);
   };
 
   useEffect(() => {
     setData(filteredData.slice(0, 25));
-    if (data.length === filteredData.length) {
+    if (25 >= filteredData.length) {
       setCanLoadMore({ right: false });
+    } else {
+      setCanLoadMore({ right: true });
     }
   }, [filteredData]);
 
@@ -65,7 +67,7 @@ const SearchBar = ({ videosPath }) => {
         <input
           type="text"
           placeholder="Search..."
-          className="text-white bg-gray-800 border-none px-3 py-2 rounded pl-10 w-full text-lg focus:outline-none focus:ring-2 focus:ring-red-600 focus:ring-opacity-50"
+          className="w-full rounded border-none bg-gray-800 px-3 py-2 pl-10 text-lg text-white focus:outline-none focus:ring-2 focus:ring-red-600 focus:ring-opacity-50"
           onChange={(e) => {
             if (e.target.value.length !== 0) {
               setIsSearching(true);
@@ -84,7 +86,7 @@ const SearchBar = ({ videosPath }) => {
       <div>
         <br />
         {data.length === 0 && isSearching && (
-          <p className="text-white mx-5 mt-2">No Movies Found</p>
+          <p className="mx-5 mt-2 text-white">No Movies Found</p>
         )}
 
         {isSearching && (

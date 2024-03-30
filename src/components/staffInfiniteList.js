@@ -1,6 +1,5 @@
 import React from "react";
 import useInfiniteScroll from "react-easy-infinite-scroll-hook";
-import { FaAngleDoubleLeft, FaAngleDoubleRight } from "react-icons/fa";
 
 const StaffInfiniteListComponent = ({
   isLoading,
@@ -11,22 +10,21 @@ const StaffInfiniteListComponent = ({
 }) => {
   const ref = useInfiniteScroll({
     next,
-    columnCount: items.length,
+    rowCount: items.length,
+    // columnCount: 3,
     hasMore: canLoadMore,
   });
 
   return (
     <div>
       <div
-        className="w-full"
+        className="h-full w-full"
         ref={ref}
         style={{
-          px: -4,
-          overflowX: "auto",
+          height: "70vh",
           overflowY: "auto",
           display: "flex",
           flexDirection: "column",
-          whiteSpace: "nowrap",
           scrollbarWidth: "none",
         }}
       >
