@@ -8,7 +8,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 import { FaAngleDown } from "react-icons/fa";
 
-
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { customer } = useAuthContext();
@@ -42,7 +41,7 @@ const Navbar = () => {
           </h1>
         </Link>
         {(staff || manager) && (
-          <button 
+          <button
             className="bg-primary cursor-pointer float-right rounded px-6 py-2 mr-2 text-white"
             onClick={() => {
               if (staff) logout("staff");
@@ -69,7 +68,8 @@ const Navbar = () => {
           onMouseEnter={() => setIsMenuOpen(true)}
           onMouseLeave={() => setIsMenuOpen(false)}
         >
-          Categories <FaAngleDown className="ml-1" />
+          Categories{" "}
+          <FaAngleDown className="-translate-y-2 ml-1 transition-all duration-200 group-hover:translate-y-1 opacity-0 group-hover:opacity-100" />
         </button>
         <div
           className={`absolute mt-1 z-10 w-64 transition-transform ease-out duration-500 ${

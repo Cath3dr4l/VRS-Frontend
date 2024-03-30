@@ -85,7 +85,7 @@ const EditMovie = () => {
     if (response.ok) {
       setIsLoading(false);
       setError(null);
-      navigate(`/management/movie/${id}`);
+      navigate(`/management/moviemanage/${id}`);
     }
   };
 
