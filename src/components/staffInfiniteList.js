@@ -18,10 +18,10 @@ const StaffInfiniteListComponent = ({
   return (
     <div>
       <div
-        className="h-full w-full"
+        className=" w-full"
         ref={ref}
         style={{
-          height: "70vh",
+          height: "80vh",
           overflowY: "auto",
           display: "flex",
           flexDirection: "column",

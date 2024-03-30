@@ -28,7 +28,7 @@ const ScrollToTop = () =>{
   }, []);
 
   return ( 
-    <button onClick={scrollToTop} style={{display: visible ? 'inline' : 'none', position: 'fixed', bottom: '20px', right: '20px', backgroundColor: 'red', color: 'white', border: 'none', borderRadius: '50%', padding: '10px', fontSize: '24px'}}> 
+    <button onClick={scrollToTop} className="z-[100]" style={{display: visible ? 'inline' : 'none', position: 'fixed', bottom: '20px', right: '20px', backgroundColor: 'red', color: 'white', border: 'none', borderRadius: '50%', padding: '10px', fontSize: '24px'}}> 
      <FaArrowCircleUp /> 
     </button> 
   ); 

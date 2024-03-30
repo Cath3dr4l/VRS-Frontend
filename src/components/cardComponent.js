@@ -11,7 +11,7 @@ const CardComponent = ({ item }) => {
   return (
     <Link to={`/movie/${item._id}`} style={{ textDecoration: "none" }}>
       <Card
-        className="relative bg-white/30 w-[200px] m-[5px] transition-property duration-300 ease-in-out hover:bg-white/50 hover:w-[400px] hover:shadow-lg hover:z-[100]"
+        className="relative bg-white/30 w-[200px] m-[5px] transition-property duration-300 ease-in-out hover:bg-white/50 hover:w-[400px] hover:shadow-lg hover:z-[50]"
         style={{
           // boxShadow: "0 4px 8px 0 rgba(0,0,0,0.2)",
           // backdropFilter: "blur(10px)",
