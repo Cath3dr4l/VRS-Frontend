@@ -39,14 +39,15 @@ const Cart = () => {
     };
 
     const fetchMovies = async () => {
-      const response = await fetch("/api/movies", { method: "GET" });
-      const data = await response.json();
-      if (!response.ok) {
-        setError(data.error);
-      }
-      if (response.ok) {
+      try {
+        const promises = cartItems.map((item) =>
+          fetch(`/api/movies/${item.id}`).then((res) => res.json())
+        );
+        const data = await Promise.all(promises);
         setMovies(data);
         setError(null);
+      } catch (error) {
+        setError(error.message);
       }
     };
 
@@ -69,7 +70,12 @@ const Cart = () => {
   const createInvoice = async () => {
     // console.log(cartItems);
     navigate("/invoice", {
-      state: { order: cartItems, profile: profile, total: totalCartPrice() },
+      state: {
+        order: cartItems,
+        movies: movies,
+        profile: profile,
+        total: totalCartPrice(),
+      },
     });
   };
 

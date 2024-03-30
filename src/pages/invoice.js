@@ -17,9 +17,7 @@ const tw = createTw({
 
 const Invoice = () => {
   const location = useLocation();
-  const { order } = location.state;
-  const { profile } = location.state;
-  const { total } = location.state;
+  const { order, movies, profile, total } = location.state;
   console.log("order: ", order);
   return (
     <PDFViewer className="w-screen h-screen fixed top-0 z-[100]">
@@ -40,15 +38,22 @@ const Invoice = () => {
               <Text>Unit Price</Text>
               <Text>Total Price</Text>
             </View>
-            {order.map((item) => (
-              <View style={tw("flex flex-row justify-between")}>
-                <Text>Item Name {item.name}</Text>
-                <Text>{item.quantity}</Text>
-                <Text>Rent Time{item.rentDuration}</Text>
-                <Text>Ek ka Price{item.unitPrice}</Text>
-                <Text>Total Price{item.totalPrice}</Text>
-              </View>
-            ))}
+            {order.map((item) => {
+              const movie = movies.find((movie) => movie._id === item.id);
+              return (
+                <>
+                  {movie && (
+                    <View style={tw("flex flex-row justify-between")}>
+                      <Text>Item Name {item.name}</Text>
+                      <Text>{item.quantity}</Text>
+                      <Text>Rent Time{item.rentDuration}</Text>
+                      <Text>Ek ka Price{item.unitPrice}</Text>
+                      <Text>Total Price{item.totalPrice}</Text>
+                    </View>
+                  )}
+                </>
+              );
+            })}
           </View>
           <View style={tw("w-full mt-4")}>
             <Text style={tw("text-lg font-bold")}>Total Price: {total}</Text>
