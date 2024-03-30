@@ -3,6 +3,7 @@ import RowComponent from "../components/RowComponent";
 import GenreRow from "../components/GenreRow";
 import { useEffect, useState } from "react";
 import Loader from "../components/Loader";
+import DataComponent from "../components/dataComponent";
 
 const Home = () => {
   const [isFetching, setIsFetching] = useState(true);
@@ -38,6 +39,8 @@ const Home = () => {
       ) : (
         <div className="py-20">
           <SearchBar videosPath="api/movies" />
+
+          <DataComponent />
 
           <RowComponent title="All Movies" videosArray={movies} />
           <GenreRow genre="action" videosArray={movies} />
