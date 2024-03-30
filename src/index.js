@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
+import ScrollToTop from "./components/ScrollToTop";
 import { AuthContextProvider } from "./context/AuthContext";
 import { CartContextProvider } from "./context/CartContext";
 import { StaffContextProvider } from "./context/StaffContext";
@@ -15,8 +16,9 @@ root.render(
         <StaffContextProvider>
           <ManagerContextProvider>
             <App />
+            <ScrollToTop />
           </ManagerContextProvider>
-      </StaffContextProvider>
+        </StaffContextProvider>
       </CartContextProvider>
     </AuthContextProvider>
   </React.StrictMode>
