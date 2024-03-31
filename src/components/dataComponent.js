@@ -19,13 +19,16 @@ const DataComponent = () => {
           )
         );
         const responses = await Promise.all(promises);
-        const recommendationsSet = new Set(recommendations);
+        const recommendationsMap = {};
+        recommendations.forEach((movie) => {
+          recommendationsMap[movie.name] = movie;
+        });
         responses.forEach((response) => {
           response.data.forEach((movie) => {
-            recommendationsSet.add(movie);
+            recommendationsMap[movie.name] = movie;
           });
         });
-        setRecommendations([...recommendationsSet]);
+        setRecommendations(Object.values(recommendationsMap));
         setIsFetching(false);
         setError(null);
       } catch (error) {
@@ -84,7 +87,9 @@ const DataComponent = () => {
           {recommendations && (
             <RowComponent
               title="Recommendations"
-              videosArray={recommendations}
+              videosArray={recommendations
+                .filter((video) => video.disabled === false)
+                .sort((a, b) => b.rating - a.rating)}
             />
           )}
         </div>
