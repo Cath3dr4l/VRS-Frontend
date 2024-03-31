@@ -27,7 +27,7 @@ import MovieManage from "./pages/MovieManage";
 import MovieStaff from "./pages/MovieStaff";
 import AllOrders from "./pages/AllOrders";
 import OrdersManage from "./pages/OrdersManage";
-import Invoice from "./pages/invoice";
+import Invoice from "./pages/Invoice";
 
 const App = () => {
   const { customer } = useAuthContext();
