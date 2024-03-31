@@ -20,9 +20,6 @@ const DataComponent = () => {
         );
         const responses = await Promise.all(promises);
         const recommendationsMap = {};
-        recommendations.forEach((movie) => {
-          recommendationsMap[movie.name] = movie;
-        });
         responses.forEach((response) => {
           response.data.forEach((movie) => {
             recommendationsMap[movie.name] = movie;
