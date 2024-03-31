@@ -43,7 +43,7 @@ const Home = () => {
         <div className="py-20">
           <SearchBar videosPath="api/movies" />
 
-          {customer && <DataComponent />}
+          <DataComponent />
 
           <RowComponent title="All Movies" videosArray={movies} />
           <GenreRow genre="action" videosArray={movies} />

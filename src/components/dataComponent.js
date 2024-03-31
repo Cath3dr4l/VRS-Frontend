@@ -15,8 +15,8 @@ const DataComponent = () => {
       try {
         const promises = orders.map((order) =>
           axios.get(
-            `/api/movies/recommend/${encodeURIComponent(order.movieID.name)}`
-          )
+            `/api/movies/recommend/${encodeURIComponent(order.movieID.name)}`,
+          ),
         );
         const responses = await Promise.all(promises);
         const recommendationsMap = {};
@@ -58,7 +58,7 @@ const DataComponent = () => {
           data
             .filter((order) => order.movieID)
             .reverse()
-            .slice(0, 5)
+            .slice(0, 5),
         );
         setError(null);
       }
@@ -70,26 +70,30 @@ const DataComponent = () => {
 
   return (
     <>
-      {isFetching ? (
-        <div className="w-screen h-[250px] z-[100] flex justify-center items-center">
-          <div className="flex flex-col justify-center items-center">
-            <PacmanLoader color="#fff" size={60} />
-            <div className="text-text font-poppins text-2xl mt-10">
-              Loading Recommendations
+      {customer && (
+        <>
+          {isFetching ? (
+            <div className="z-[100] flex h-[250px] w-screen items-center justify-center">
+              <div className="flex flex-col items-center justify-center">
+                <PacmanLoader color="#fff" size={60} />
+                <div className="mt-10 font-poppins text-2xl text-text">
+                  Loading Recommendations
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-      ) : (
-        <div>
-          {recommendations && (
-            <RowComponent
-              title="Recommendations"
-              videosArray={recommendations
-                .filter((video) => video.disabled === false)
-                .sort((a, b) => b.rating - a.rating)}
-            />
+          ) : (
+            <div>
+              {recommendations && (
+                <RowComponent
+                  title="Recommendations"
+                  videosArray={recommendations
+                    .filter((video) => video.disabled === false)
+                    .sort((a, b) => b.rating - a.rating)}
+                />
+              )}
+            </div>
           )}
-        </div>
+        </>
       )}
     </>
   );
