@@ -1,5 +1,9 @@
-# HEHEHEHHEHE
+# VRS Frontend
 
-Theme:
-https://www.realtimecolors.com/?colors=e8dedf-181618-aa132f-908c89-d93667&fonts=Poppins-Poppins
-^has tailwind CSS code
+#### Setting up React App:
+
+- `npm install`
+
+#### Create .env file:
+
+- REACT_APP_RZP_KEY_ID= Razorpay API Key ID for payment gateway
