@@ -28,6 +28,8 @@ import MovieStaff from "./pages/MovieStaff";
 import AllOrders from "./pages/AllOrders";
 import OrdersManage from "./pages/OrdersManage";
 import Invoice from "./pages/Invoice";
+import ForgotPass from "./pages/ForgotPass";
+import ResetPass from "./pages/ResetPass";
 
 const App = () => {
   const { customer } = useAuthContext();
@@ -50,6 +52,14 @@ const App = () => {
           <Route
             path="/signup"
             element={!customer ? <Signup /> : <Navigate to="/" />}
+          />
+          <Route
+            path="/forgot"
+            element={!customer ? <ForgotPass /> : <Navigate to="/" />}
+          />
+          <Route
+            path="/resetpass/:token"
+            element={!customer ? <ResetPass /> : <Navigate to="/" />}
           />
           <Route path="/movie/:id" element={<Movie />} />
           <Route path="/category/:genre" element={<Category />} />

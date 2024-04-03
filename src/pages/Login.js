@@ -69,6 +69,9 @@ const Login = () => {
               <span className=" text-gray-600"> Don't have an account? </span>{" "}
               <Link to="/signup">Sign up</Link>.
             </p>
+            <p>
+              <Link to="/forgot">Forgot password?</Link>
+            </p>
           </form>
         </div>
       </div>
