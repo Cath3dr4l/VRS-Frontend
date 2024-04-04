@@ -35,7 +35,7 @@ const MovieStaff = () => {
   }, [id, staff]);
 
   useEffect(() => {
-    if (staff) {
+    if (staff && movie) {
       setStock(movie.stock);
     }
   }, [movie]);

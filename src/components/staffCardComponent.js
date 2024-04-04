@@ -96,7 +96,7 @@ const StaffCardComponent = ({ item }) => {
         }
         style={{ textDecoration: "none" }}
       >
-        <div className="float-left mx-2 py-2 w-[300px]">
+        <div className="float-left mx-2 py-2 w-[200px]">
           <Card.Img
             className="my-[5px] mx-auto h-[190px] w-[150px] object-cover overflow-hidden"
             variant="top"
