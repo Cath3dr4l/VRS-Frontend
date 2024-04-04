@@ -30,6 +30,7 @@ import OrdersManage from "./pages/OrdersManage";
 import Invoice from "./pages/Invoice";
 import ForgotPass from "./pages/ForgotPass";
 import ResetPass from "./pages/ResetPass";
+import Notifs from "./pages/Notifs";
 
 const App = () => {
   const { customer } = useAuthContext();
@@ -92,6 +93,7 @@ const App = () => {
             <Route path="/management/staff" element={<Staff />} />
             <Route path="/management/allorders" element={<AllOrders />} />
             <Route path="/management/moviestaff/:id" element={<MovieStaff />} />
+            <Route path="/management/notifs" element={<Notifs />} />
           </Route>
           <Route
             element={
