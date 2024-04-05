@@ -55,15 +55,15 @@ const AllOrders = () => {
   };
   return (
     <div className="pt-16 text-white">
-      <h2 className="text-xl font-semibold mb-4 mx-2">Due Orders</h2>
-      <div className="grid grid-cols-3 gap-4 mx-2">
+      <h2 className="text-xl font-semibold mb-4 mx-4">Due Orders</h2>
+      <div className="grid grid-cols-3 gap-4 m-4">
         {orders &&
           orders
             .filter((order) => order.status === "rented")
             .map((order) => (
               <div
                 key={order._id}
-                className="flex flex-col justify-between border p-4 rounded shadow space-y-2"
+                className="flex flex-col justify-between p-4 bg-white/25 rounded-md shadow space-y-2"
               >
                 <div className="space-y-2">
                   <p className="font-bold text-lg">{order.movieID.name}</p>
@@ -99,7 +99,7 @@ const AllOrders = () => {
             .map((order) => (
               <div
                 key={order._id}
-                className="flex flex-col justify-between border p-4 rounded space-y-2"
+                className="flex flex-col justify-between  p-4 bg-white/25 rounded-md shadow space-y-2"
               >
                 <p>Movie: {order.movieID.name}</p>
                 <p>Customer: {order.customerID.name}</p>
@@ -116,7 +116,7 @@ const AllOrders = () => {
             .map((order) => (
               <div
                 key={order._id}
-                className="flex flex-col justify-between border p-4 rounded space-y-2"
+                className="flex flex-col justify-between  p-4 bg-white/25 rounded-md shadow space-y-2"
               >
                 <p>Movie: {order.movieID.name}</p>
                 <p>Customer: {order.customerID.name}</p>

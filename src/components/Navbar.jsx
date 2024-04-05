@@ -78,7 +78,7 @@ const Navbar = () => {
           onMouseEnter={() => setIsMenuOpen(true)}
           onMouseLeave={() => setIsMenuOpen(false)}
         >
-          <ul className="bg-gray-800 text-white p-2 rounded-lg shadow -mt-1 grid grid-cols-2 gap-2">
+          <ul className="bg-gray-800 text-white p-2 rounded-lg shadow mt-1 grid grid-cols-2 gap-2">
             {genreList.map((genre) => {
               return (
                 <li key={genre} className="hover:bg-gray-700">

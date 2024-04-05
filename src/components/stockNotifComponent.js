@@ -84,7 +84,7 @@ const StockNotif = ({ movie }) => {
                 }
               }}
             >
-              {editing ? "Save" : "Edit"}
+              {editing ? "Save" : "Resolve"}
             </button>
           </div>
         </div>

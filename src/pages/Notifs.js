@@ -33,7 +33,7 @@ const Notifs = () => {
         <>
           <div className="w-[50%] float-left">
             {" "}
-            <h1 className="text-2xl text-white font-semibold">
+            <h1 className="my-4 text-2xl text-white font-semibold">
               Low Stock Movies
             </h1>
             {notifs.lowStockMovies.map((movie) => (
@@ -41,7 +41,7 @@ const Notifs = () => {
             ))}
           </div>
           <div className="w-[50%] float-right">
-            <h1 className="text-2xl text-white font-semibold">
+            <h1 className="m-4 text-2xl text-white font-semibold">
               Over Due Orders
             </h1>
             {notifs.pastDueOrders.map((order) => (
