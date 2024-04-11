@@ -31,6 +31,7 @@ import Invoice from "./pages/Invoice";
 import ForgotPass from "./pages/ForgotPass";
 import ResetPass from "./pages/ResetPass";
 import Notifs from "./pages/Notifs";
+import NotFound from "./pages/NotFound";
 
 const App = () => {
   const { customer } = useAuthContext();
@@ -110,6 +111,8 @@ const App = () => {
             <Route path="/management/editmovie/:id" element={<EditMovie />} />
             <Route path="/management/manageorders" element={<OrdersManage />} />
           </Route>
+
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </div>
     </Router>
