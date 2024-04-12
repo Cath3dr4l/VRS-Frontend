@@ -46,7 +46,7 @@ const Manager = () => {
             <NavButton label="Add Movie" path="/management/addmovie" />
           </div>
           <div className="py-20">
-            <StaffSearchList videosArray={movies} />
+            {movies && <StaffSearchList videosArray={movies} />}
           </div>
         </div>
       )}

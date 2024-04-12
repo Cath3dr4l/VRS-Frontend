@@ -26,8 +26,23 @@ export const AuthContextProvider = ({ children }) => {
 
   useEffect(() => {
     const customer = JSON.parse(localStorage.getItem("customer"));
+
+    const checkAuth = async () => {
+      const response = await fetch(`/api/customers/auth`, {
+        headers: {
+          Authorization: `Bearer ${customer.token}`,
+        },
+      });
+      const data = await response.json();
+      if (data.error) {
+        dispatch({ type: "LOGOUT" });
+      } else {
+        dispatch({ type: "LOGIN", payload: customer });
+      }
+    };
+
     if (customer) {
-      dispatch({ type: "LOGIN", payload: customer });
+      checkAuth();
     }
   }, []);
 

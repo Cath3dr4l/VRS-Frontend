@@ -76,7 +76,7 @@ const Staff = () => {
             )}
           </div>
           <div className="pt-20">
-            <StaffSearchList videosArray={movies} />
+            {movies && <StaffSearchList videosArray={movies} />}
           </div>
         </div>
       )}
