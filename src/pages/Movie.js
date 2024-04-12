@@ -8,6 +8,7 @@ import {
   faExternalLinkAlt,
   faMoneyBillWave,
   faHandHoldingUsd,
+  faTrashAlt,
 } from "@fortawesome/free-solid-svg-icons";
 
 const Movie = () => {
@@ -70,12 +71,14 @@ const Movie = () => {
                 <p className="font-semibold text-lg mt-7">
                   IMDB rating: {movie.rating}
                   {movie.ImdbId && (
-                    <Link
-                      to={`https://www.imdb.com/title/${movie.ImdbId}`}
+                    <a
+                      href={`https://www.imdb.com/title/${movie.ImdbId}`}
                       style={{ marginLeft: "10px" }}
+                      target="_blank"
+                      rel="noopener noreferrer"
                     >
                       <FontAwesomeIcon icon={faExternalLinkAlt} />
-                    </Link>
+                    </a>
                   )}
                 </p>
                 <Rating
@@ -92,7 +95,7 @@ const Movie = () => {
                     <Link
                       key={g}
                       to={`/category/${g}`}
-                      className="px-2 py-1 bg-gray-500 text-white rounded"
+                      className="px-2 py-1 bg-gray-500 text-white rounded hover:bg-gray-600"
                     >
                       {g.charAt(0).toUpperCase() + g.slice(1)}
                     </Link>
@@ -104,12 +107,15 @@ const Movie = () => {
                   <p className="font-semibold text-lg mt-4">Cast:</p>
                   <div className="flex flex-wrap space-x-2">
                     {movie.cast.map((actor) => (
-                      <p
+                      <button
                         key={actor}
-                        className="px-2 py-1 bg-red-700 text-white rounded"
+                        className="px-2 py-1 bg-red-600 text-white rounded hover:bg-red-800"
+                        onClick={() => {
+                          navigate("/", { state: { searchQuery: actor } });
+                        }}
                       >
                         {actor}
-                      </p>
+                      </button>
                     ))}
                   </div>
                 </>
@@ -117,9 +123,14 @@ const Movie = () => {
               {movie.director && (
                 <>
                   <p className="font-semibold text-lg mt-4">Director:</p>
-                  <p className="px-2 py-1 bg-red-700 text-white rounded inline-block">
+                  <button
+                    className="px-2 py-1 bg-red-600 text-white rounded inline-block hover:bg-red-800"
+                    onClick={() => {
+                      navigate("/", { state: { searchQuery: movie.director } });
+                    }}
+                  >
                     {movie.director}
-                  </p>
+                  </button>
                 </>
               )}
               <>
@@ -178,11 +189,9 @@ const Movie = () => {
                       >
                         +
                       </button>
-                    </div>
-                    <div className="flex items-center">
                       <label
                         htmlFor="rentDuration"
-                        className="mr-2 text-white text-lg"
+                        className="mr-2 text-white text-lg ml-4"
                       >
                         Rent Duration:
                       </label>
@@ -200,29 +209,24 @@ const Movie = () => {
                         <option value="4">4 Weeks</option>
                         <option value="100">Buy Movie</option>
                       </select>
+                      <button
+                        className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-3 rounded ml-4"
+                        onClick={() => {
+                          removeItem(id);
+                        }}
+                      >
+                        <FontAwesomeIcon icon={faTrashAlt} />
+                      </button>
                     </div>
 
-                    <button
-                      className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-                      onClick={() => {
-                        removeItem(id);
-                      }}
-                    >
-                      Remove
-                    </button>
                     <Link to="/cart">
-                      <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+                      <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mt-4">
                         Go To Cart
                       </button>
                     </Link>
                   </div>
                 )}
               </div>
-              <p className="text-gray-300 fixed bottom-5 left-5">
-                <Link to="/" className="hover:text-red-500">
-                  Go back to the Homepage
-                </Link>
-              </p>
             </div>
           </div>
         )}

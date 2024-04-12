@@ -1,34 +1,48 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import InfiniteListComponent from "./infiniteList";
 import CardComponent from "./cardComponent";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 
-const SearchBar = ({ videosPath }) => {
+const SearchBar = ({ videosArray, initialQuery = "" }) => {
   const [videos, setVideos] = useState([]);
   const [isSearching, setIsSearching] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [canLoadMore, setCanLoadMore] = useState({ right: true });
   const [data, setData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
+  const inputRef = useRef();
 
   useEffect(() => {
-    const fetchVideos = async () => {
-      const response = await fetch(videosPath, { method: "GET" });
-      const json = await response.json();
-      setVideos(json.filter((video) => video.disabled === false));
-      setFilteredData(json.filter((video) => video.disabled === false));
-      setData(json.filter((video) => video.disabled === false).slice(0, 25)); // Store the first 25 videos in data
+    const fetchVideos = () => {
+      const filteredVideos = videosArray.filter(
+        (video) => video.disabled === false
+      );
+      setVideos(filteredVideos);
+      setFilteredData(search(filteredVideos, initialQuery));
+      setData(search(filteredVideos, initialQuery).slice(0, 25)); // Store the first 25 videos in data
     };
-    fetchVideos();
-  }, []);
+
+    if (videosArray) {
+      fetchVideos();
+    }
+  }, [initialQuery, videosArray]);
+
+  useEffect(() => {
+    inputRef.current.value = initialQuery;
+    if (initialQuery.length !== 0) {
+      setIsSearching(true);
+    }
+    if (initialQuery.length === 0) {
+      setIsSearching(false);
+    }
+    setFilteredData(search(videos, initialQuery));
+  }, [initialQuery, videos]);
 
   const keys = ["name", "director", "cast"];
   // search through data['cast'] which is an array as well
 
-
   const search = (data, query) => {
-
     return data.filter((video) => {
       return keys.some((key) => {
         if (Array.isArray(video[key])) {
@@ -75,6 +89,7 @@ const SearchBar = ({ videosPath }) => {
     <div>
       <div className="relative mx-5">
         <input
+          ref={inputRef}
           type="text"
           placeholder="Search..."
           className="w-full rounded border-none bg-gray-800 px-3 py-2 pl-10 text-lg text-white focus:outline-none focus:ring-2 focus:ring-red-600 focus:ring-opacity-50"

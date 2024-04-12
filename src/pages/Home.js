@@ -5,11 +5,13 @@ import { useEffect, useState } from "react";
 import Loader from "../components/Loader";
 import DataComponent from "../components/dataComponent";
 import { useAuthContext } from "../hooks/useAuthContext";
+import { useLocation } from "react-router-dom";
 
 const Home = () => {
   const [isFetching, setIsFetching] = useState(true);
   const [movies, setMovies] = useState(null);
   const { customer } = useAuthContext();
+  const location = useLocation();
 
   useEffect(() => {
     const fetchMovies = async () => {
@@ -41,7 +43,10 @@ const Home = () => {
         <Loader />
       ) : (
         <div className="py-20">
-          <SearchBar videosPath="api/movies" />
+          <SearchBar
+            videosArray={movies}
+            initialQuery={location.state?.searchQuery}
+          />
 
           <DataComponent />
 
