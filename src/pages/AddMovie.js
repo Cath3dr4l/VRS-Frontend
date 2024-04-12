@@ -68,6 +68,8 @@ const AddMovie = () => {
       setStock("");
       setBuyPrice("");
       setRentPrice("");
+      setDirector("");
+      setCast([]);
     }
   };
 
@@ -82,7 +84,7 @@ const AddMovie = () => {
 
   return (
     <div className="fixed w-full px-4 py-24 z-[50]">
-      <div className="max-w-[800px] h-[600px] mx-auto bg-black/25 text-white rounded-md">
+      <div className="max-w-[800px] text-lg mx-auto bg-black/25 text-white rounded-md">
         <div className="max-w-[700px] mx-auto py-4">
           <form className="w-full flex flex-col" onSubmit={handleSubmit}>
             <h1 className="text-2xl font-semibold text-center my-4">
@@ -157,11 +159,7 @@ const AddMovie = () => {
                   value={description}
                   placeholder="Description"
                   required
-                  onChange={(e) =>
-                    setDescription(
-                      e.target.value.split(",").map((item) => item.trim())
-                    )
-                  }
+                  onChange={(e) => setDescription(e.target.value)}
                 />
               </div>
 
@@ -179,17 +177,27 @@ const AddMovie = () => {
                 <p>Genres:</p>
                 <div className="grid grid-cols-3 gap-2">
                   {genreList.map((genre) => (
-                    <div key={genre} className="flex items-center mt-2">
+                    <label
+                      key={genre}
+                      className="flex items-center mt-2 cursor-pointer"
+                    >
                       <input
                         type="checkbox"
+                        id={genre}
                         value={genre}
                         onChange={handleGenreChange}
                         checked={genres.includes(genre)}
+                        className="hidden"
                       />
-                      <label htmlFor={genre} className="ml-2 block text-sm">
+                      <div
+                        className={`w-4 h-4 inline-block mr-2 rounded-sm border border-gray-400 ${
+                          genres.includes(genre) ? "bg-red-500" : "bg-white"
+                        }`}
+                      ></div>
+                      <span className="ml-2 block text-sm">
                         {genre.charAt(0).toUpperCase() + genre.slice(1)}
-                      </label>
-                    </div>
+                      </span>
+                    </label>
                   ))}
                 </div>
               </div>
@@ -200,7 +208,11 @@ const AddMovie = () => {
                   value={cast}
                   placeholder="Cast (comma separated)"
                   required
-                  onChange={(e) => setCast(e.target.value)}
+                  onChange={(e) =>
+                    setCast(
+                      e.target.value.split(",").map((item) => item.trim())
+                    )
+                  }
                 />
               </div>
             </div>
@@ -211,7 +223,7 @@ const AddMovie = () => {
               type="submit"
               disabled={isLoading}
             >
-              Add
+              {isLoading ? "Processing.." : "Add"}
             </button>
             {error && <div className="error">{error}</div>}
           </form>

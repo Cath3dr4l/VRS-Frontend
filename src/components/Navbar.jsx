@@ -7,6 +7,7 @@ import { useManagerContext } from "../hooks/useManagerContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 import { FaAngleDown } from "react-icons/fa";
+import NavLogo from "./NavLogo";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -36,9 +37,7 @@ const Navbar = () => {
     return (
       <div className="bg-background/80 w-screen items-center justify-between flow-root p-4">
         <Link to="/management">
-          <h1 className="font-poppins cursor-pointer float-left text-3xl font-bold text-white">
-            VIDEODOG
-          </h1>
+          <NavLogo />
         </Link>
         {(staff || manager) && (
           <button
@@ -58,9 +57,7 @@ const Navbar = () => {
   return (
     <div className="bg-background/80 w-screen items-center justify-between flow-root p-4">
       <Link to="/">
-        <h1 className="font-poppins cursor-pointer float-left text-3xl font-bold text-white">
-          VIDEODOG
-        </h1>
+        <NavLogo />
       </Link>
       <div className="group inline-block relative ml-10 m-1">
         <button

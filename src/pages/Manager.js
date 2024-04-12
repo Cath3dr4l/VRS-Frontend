@@ -40,7 +40,7 @@ const Manager = () => {
         <Loader />
       ) : (
         <div>
-          <div className="z-[100] fixed ml-[200px] m-5 flex gap-4">
+          <div className="z-[100] fixed ml-[250px] m-5 flex gap-4">
             <NavButton label="All Orders" path="/management/manageorders" />
             <NavButton label="Recruit Staff" path="/management/recruit" />
             <NavButton label="Add Movie" path="/management/addmovie" />
