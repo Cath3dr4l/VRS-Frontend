@@ -32,6 +32,8 @@ import ForgotPass from "./pages/ForgotPass";
 import ResetPass from "./pages/ResetPass";
 import Notifs from "./pages/Notifs";
 import NotFound from "./pages/NotFound";
+import ListCustomers from "./pages/ListCustomers";
+import ListStaffs from "./pages/LIstStaff";
 
 const App = () => {
   const { customer } = useAuthContext();
@@ -110,6 +112,8 @@ const App = () => {
             />
             <Route path="/management/editmovie/:id" element={<EditMovie />} />
             <Route path="/management/manageorders" element={<OrdersManage />} />
+            <Route path="/management/customers" element={<ListCustomers />} />
+            <Route path="/management/employees" element={<ListStaffs />} />
           </Route>
 
           <Route path="*" element={<NotFound />} />

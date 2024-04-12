@@ -44,6 +44,8 @@ const Manager = () => {
             <NavButton label="All Orders" path="/management/manageorders" />
             <NavButton label="Recruit Staff" path="/management/recruit" />
             <NavButton label="Add Movie" path="/management/addmovie" />
+            <NavButton label="Customers" path="/management/customers" />
+            <NavButton label="Staff" path="/management/employees" />
           </div>
           <div className="py-20">
             {movies && <StaffSearchList videosArray={movies} />}
