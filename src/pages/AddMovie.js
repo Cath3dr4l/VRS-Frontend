@@ -156,10 +156,14 @@ const AddMovie = () => {
                 <input
                   className="p-2 rounded w-full bg-gray-700"
                   type="text"
-                  value={description}
-                  placeholder="Description"
+                  value={cast}
+                  placeholder="Cast (comma separated)"
                   required
-                  onChange={(e) => setDescription(e.target.value)}
+                  onChange={(e) =>
+                    setCast(
+                      e.target.value.split(",").map((item) => item.trim())
+                    )
+                  }
                 />
               </div>
 
@@ -202,17 +206,13 @@ const AddMovie = () => {
                 </div>
               </div>
               <div>
-                <input
+                <textarea
                   className="p-2 rounded h-full w-full bg-gray-700"
                   type="text"
-                  value={cast}
-                  placeholder="Cast (comma separated)"
+                  value={description}
+                  placeholder="Description"
                   required
-                  onChange={(e) =>
-                    setCast(
-                      e.target.value.split(",").map((item) => item.trim())
-                    )
-                  }
+                  onChange={(e) => setDescription(e.target.value)}
                 />
               </div>
             </div>
