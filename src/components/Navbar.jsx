@@ -4,13 +4,16 @@ import { useLogout } from "../hooks/useLogout";
 import { useAuthContext } from "../hooks/useAuthContext";
 import { useStaffContext } from "../hooks/useStaffContext";
 import { useManagerContext } from "../hooks/useManagerContext";
+import { useCartContext } from "../hooks/useCartContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 import { FaAngleDown } from "react-icons/fa";
+import NavLogo from "./NavLogo";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { customer } = useAuthContext();
+  const { cartItems } = useCartContext();
   const { staff } = useStaffContext();
   const { manager } = useManagerContext();
   const location = useLocation();
@@ -36,9 +39,7 @@ const Navbar = () => {
     return (
       <div className="bg-background/80 w-screen items-center justify-between flow-root p-4">
         <Link to="/management">
-          <h1 className="font-poppins cursor-pointer float-left text-3xl font-bold text-white">
-            VIDEODOG
-          </h1>
+          <NavLogo />
         </Link>
         {(staff || manager) && (
           <button
@@ -58,9 +59,7 @@ const Navbar = () => {
   return (
     <div className="bg-background/80 w-screen items-center justify-between flow-root p-4">
       <Link to="/">
-        <h1 className="font-poppins cursor-pointer float-left text-3xl font-bold text-white">
-          VIDEODOG
-        </h1>
+        <NavLogo />
       </Link>
       <div className="group inline-block relative ml-10 m-1">
         <button
@@ -96,10 +95,13 @@ const Navbar = () => {
         </div>
       </div>
       {customer ? (
-        <div className="float-right mx-2">
+        <div className="float-right mx-2 text-lg">
           <Link to="/cart">
-            <button className="cursor-pointer pr-4 text-white">
+            <button className="relative cursor-pointer pr-4 text-white">
               <FontAwesomeIcon icon={faShoppingCart} />
+              {cartItems.length > 0 && (
+                <span className="absolute top-0 right-2 h-2 w-2 bg-red-500 rounded-full"></span>
+              )}
             </button>
           </Link>
           <Link to="/profile">

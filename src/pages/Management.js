@@ -29,11 +29,11 @@ const Management = () => {
 
   return (
     <div className="fixed w-full my-24 px-4 py-24 z-[50]">
-      <div className="w-[450px] h-[360px] align-middle mx-auto my-auto bg-black/25 text-white rounded-md">
+      <div className="w-[450px] align-middle mx-auto my-auto bg-black/25 text-white rounded-md py-5">
         <div className="max-w-[320px] mx-auto py-4">
           <form className="w-full flex flex-col">
             <h1 className="text-2xl font-semibold text-center my-4">Log In</h1>
-            <p>
+            <p className="mb-4">
               <input
                 className="p-2 rounded w-full bg-gray-700"
                 type="text"
@@ -43,8 +43,7 @@ const Management = () => {
                 onChange={(e) => setUsername(e.target.value)}
               />
             </p>
-            <br />
-            <div className="relative">
+            <div className="relative mb-4">
               <input
                 className="p-2 rounded w-full bg-gray-700"
                 type={showPassword ? "text" : "password"}
@@ -60,7 +59,6 @@ const Management = () => {
                 onClick={() => setShowPassword(!showPassword)}
               />
             </div>
-            <br />
             <div className="flow-root">
               <button
                 className="bg-primary float-right w-[48%] py-3 my-2 font-semibold "

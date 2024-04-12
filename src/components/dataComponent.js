@@ -15,8 +15,8 @@ const DataComponent = () => {
       try {
         const promises = orders.map((order) =>
           axios.get(
-            `/api/movies/recommend/${encodeURIComponent(order.movieID.name)}`,
-          ),
+            `/api/movies/recommend/${encodeURIComponent(order.movieID.name)}`
+          )
         );
         const responses = await Promise.all(promises);
         const recommendationsMap = {};
@@ -58,7 +58,7 @@ const DataComponent = () => {
           data
             .filter((order) => order.movieID)
             .reverse()
-            .slice(0, 5),
+            .slice(0, 5)
         );
         setError(null);
       }
@@ -70,7 +70,7 @@ const DataComponent = () => {
 
   return (
     <>
-      {customer && (
+      {customer && orders.length > 0 && (
         <>
           {isFetching ? (
             <div className="z-[100] flex h-[250px] w-screen items-center justify-center">

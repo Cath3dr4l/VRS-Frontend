@@ -26,8 +26,23 @@ export const ManagerContextProvider = ({ children }) => {
 
   useEffect(() => {
     const manager = JSON.parse(localStorage.getItem("manager"));
+
+    const checkAuth = async () => {
+      const response = await fetch(`/api/managers/auth`, {
+        headers: {
+          Authorization: `Bearer ${manager.token}`,
+        },
+      });
+      const data = await response.json();
+      if (data.error) {
+        dispatch({ type: "LOGOUT" });
+      } else {
+        dispatch({ type: "LOGIN", payload: manager });
+      }
+    };
+
     if (manager) {
-      dispatch({ type: "LOGIN", payload: manager });
+      checkAuth();
     }
   }, []);
 

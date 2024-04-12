@@ -26,8 +26,23 @@ export const StaffContextProvider = ({ children }) => {
 
   useEffect(() => {
     const staff = JSON.parse(localStorage.getItem("staff"));
+
+    const checkAuth = async () => {
+      const response = await fetch(`/api/staffs/auth`, {
+        headers: {
+          Authorization: `Bearer ${staff.token}`,
+        },
+      });
+      const data = await response.json();
+      if (data.error) {
+        dispatch({ type: "LOGOUT" });
+      } else {
+        dispatch({ type: "LOGIN", payload: staff });
+      }
+    };
+
     if (staff) {
-      dispatch({ type: "LOGIN", payload: staff });
+      checkAuth();
     }
   }, []);
 

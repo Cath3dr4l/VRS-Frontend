@@ -5,8 +5,8 @@ import { useStaffContext } from "../hooks/useStaffContext";
 
 const OverdueNotif = ({ order }) => {
   const { staff } = useStaffContext();
-  const [orders, setOrders] = useState([]);
   const [error, setError] = useState(null);
+  const [isReturned, setIsReturned] = useState(false);
 
   const handleReturn = async (orderID) => {
     const response = await fetch(`/api/staffs/orders/${orderID}`, {
@@ -22,11 +22,7 @@ const OverdueNotif = ({ order }) => {
       setError(data.error);
     }
     if (response.ok) {
-      setOrders((prevOrders) =>
-        prevOrders.map((order) =>
-          order._id === orderID ? { ...order, status: "returned" } : order
-        )
-      );
+      setIsReturned(true);
       setError(null);
     }
   };
@@ -57,9 +53,10 @@ const OverdueNotif = ({ order }) => {
         </p>
         <button
           onClick={() => handleReturn(order._id)}
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded disabled:bg-gray-500 disabled:cursor-not-allowed"
+          disabled={isReturned}
         >
-          Mark as Returned
+          {isReturned ? "Returned" : "Mark as Returned"}
         </button>
       </div>
     </div>

@@ -12,6 +12,8 @@ const AddMovie = () => {
   const [stock, setStock] = useState("");
   const [buyPrice, setBuyPrice] = useState("");
   const [rentPrice, setRentPrice] = useState("");
+  const [director, setDirector] = useState("");
+  const [cast, setCast] = useState([]);
   const genreList = [
     "action",
     "comedy",
@@ -46,6 +48,8 @@ const AddMovie = () => {
         stock: parseInt(stock),
         buy_price: parseFloat(buyPrice),
         rent_price: parseFloat(rentPrice),
+        director: director,
+        cast: cast,
       }),
     });
 
@@ -64,6 +68,8 @@ const AddMovie = () => {
       setStock("");
       setBuyPrice("");
       setRentPrice("");
+      setDirector("");
+      setCast([]);
     }
   };
 
@@ -78,105 +84,136 @@ const AddMovie = () => {
 
   return (
     <div className="fixed w-full px-4 py-24 z-[50]">
-      <div className="max-w-[450px] h-[600px] mx-auto bg-black/25 text-white rounded-md">
-        <div className="max-w-[320px] mx-auto py-4">
+      <div className="max-w-[800px] text-lg mx-auto bg-black/25 text-white rounded-md">
+        <div className="max-w-[700px] mx-auto py-4">
           <form className="w-full flex flex-col" onSubmit={handleSubmit}>
             <h1 className="text-2xl font-semibold text-center my-4">
               New Movie
             </h1>
-            <p>
-              <input
-                className="p-2 rounded w-full bg-gray-700"
-                type="text"
-                value={name}
-                placeholder="Title"
-                required
-                onChange={(e) => setName(e.target.value)}
-              />
-            </p>
-            <br />
-            <p>
-              <input
-                className="p-2 rounded w-full bg-gray-700"
-                type="url"
-                value={poster}
-                placeholder="Paste Poster URL"
-                required
-                onChange={(e) => setPoster(e.target.value)}
-              />
-            </p>
-            <br />
-            <p>
-              <input
-                className="p-2 rounded w-full bg-gray-700"
-                type="number"
-                value={stock}
-                placeholder="Stock"
-                required
-                onChange={(e) => setStock(e.target.value)}
-              />
-            </p>
-            <br />
-            <p>
-              <input
-                className="p-2 rounded w-full bg-gray-700"
-                type="number"
-                value={buyPrice}
-                placeholder="Buy Price"
-                required
-                onChange={(e) => setBuyPrice(e.target.value)}
-              />
-            </p>
-            <br />
-            <p>
-              <input
-                className="p-2 rounded w-full bg-gray-700"
-                type="number"
-                value={rentPrice}
-                required
-                placeholder="Rent Price"
-                onChange={(e) => setRentPrice(e.target.value)}
-              />
-            </p>
-            <br />
-            <p>
-              <input
-                className="p-2 rounded w-full bg-gray-700"
-                type="number"
-                value={rating}
-                placeholder="IMDB Rating"
-                required
-                onChange={(e) => setRating(e.target.value)}
-              />
-            </p>
-            <br />
-            <p>
-              <input
-                className="p-2 rounded w-full bg-gray-700"
-                type="text"
-                value={description}
-                placeholder="Description"
-                required
-                onChange={(e) => setDescription(e.target.value)}
-              />
-            </p>
-            <br />
-            <div className="p-2 rounded w-full bg-gray-700">
-              <p>Genres:</p>
-              <div className="grid grid-cols-3 gap-2">
-                {genreList.map((genre) => (
-                  <div key={genre} className="flex items-center mt-2">
-                    <input
-                      type="checkbox"
-                      value={genre}
-                      onChange={handleGenreChange}
-                      checked={genres.includes(genre)}
-                    />
-                    <label htmlFor={genre} className="ml-2 block text-sm">
-                      {genre.charAt(0).toUpperCase() + genre.slice(1)}
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <input
+                  className="p-2 rounded w-full bg-gray-700"
+                  type="text"
+                  value={name}
+                  placeholder="Title"
+                  required
+                  onChange={(e) => setName(e.target.value)}
+                />
+              </div>
+              <div>
+                <input
+                  className="p-2 rounded w-full  bg-gray-700"
+                  type="url"
+                  value={poster}
+                  placeholder="Paste Poster URL"
+                  required
+                  onChange={(e) => setPoster(e.target.value)}
+                />
+              </div>
+              <div>
+                <input
+                  className="p-2 rounded w-full bg-gray-700"
+                  type="number"
+                  value={stock}
+                  placeholder="Stock"
+                  required
+                  onChange={(e) => setStock(e.target.value)}
+                />
+              </div>
+              <div>
+                <input
+                  className="p-2 rounded w-full bg-gray-700"
+                  type="number"
+                  value={buyPrice}
+                  placeholder="Buy Price"
+                  required
+                  onChange={(e) => setBuyPrice(e.target.value)}
+                />
+              </div>
+              <div>
+                <input
+                  className="p-2 rounded w-full bg-gray-700"
+                  type="number"
+                  value={rentPrice}
+                  required
+                  placeholder="Rent Price"
+                  onChange={(e) => setRentPrice(e.target.value)}
+                />
+              </div>
+              <div>
+                <input
+                  className="p-2 rounded w-full bg-gray-700"
+                  type="number"
+                  value={rating}
+                  placeholder="IMDB Rating"
+                  required
+                  onChange={(e) => setRating(e.target.value)}
+                />
+              </div>
+
+              <div>
+                <input
+                  className="p-2 rounded w-full bg-gray-700"
+                  type="text"
+                  value={description}
+                  placeholder="Description"
+                  required
+                  onChange={(e) => setDescription(e.target.value)}
+                />
+              </div>
+
+              <div>
+                <input
+                  className="p-2 rounded w-full bg-gray-700"
+                  type="text"
+                  value={director}
+                  placeholder="Director"
+                  required
+                  onChange={(e) => setDirector(e.target.value)}
+                />
+              </div>
+              <div className="p-2 rounded w-full bg-gray-700">
+                <p>Genres:</p>
+                <div className="grid grid-cols-3 gap-2">
+                  {genreList.map((genre) => (
+                    <label
+                      key={genre}
+                      className="flex items-center mt-2 cursor-pointer"
+                    >
+                      <input
+                        type="checkbox"
+                        id={genre}
+                        value={genre}
+                        onChange={handleGenreChange}
+                        checked={genres.includes(genre)}
+                        className="hidden"
+                      />
+                      <div
+                        className={`w-4 h-4 inline-block mr-2 rounded-sm border border-gray-400 ${
+                          genres.includes(genre) ? "bg-red-500" : "bg-white"
+                        }`}
+                      ></div>
+                      <span className="ml-2 block text-sm">
+                        {genre.charAt(0).toUpperCase() + genre.slice(1)}
+                      </span>
                     </label>
-                  </div>
-                ))}
+                  ))}
+                </div>
+              </div>
+              <div>
+                <input
+                  className="p-2 rounded h-full w-full bg-gray-700"
+                  type="text"
+                  value={cast}
+                  placeholder="Cast (comma separated)"
+                  required
+                  onChange={(e) =>
+                    setCast(
+                      e.target.value.split(",").map((item) => item.trim())
+                    )
+                  }
+                />
               </div>
             </div>
             <br />
@@ -186,7 +223,7 @@ const AddMovie = () => {
               type="submit"
               disabled={isLoading}
             >
-              Add
+              {isLoading ? "Processing.." : "Add"}
             </button>
             {error && <div className="error">{error}</div>}
           </form>

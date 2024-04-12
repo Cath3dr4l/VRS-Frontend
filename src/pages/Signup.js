@@ -34,11 +34,11 @@ const Signup = () => {
   };
   return (
     <div className="fixed w-full px-4 py-24 z-[50]">
-      <div className="max-w-[450px] h-[600px] mx-auto bg-black/25 text-white rounded-md">
-        <div className="max-w-[320px] mx-auto py-4">
+      <div className="max-w-[450px] mx-auto bg-black/25 text-white rounded-md">
+        <div className="max-w-[320px] mx-auto py-4 text-lg">
           <form className="w-full flex flex-col" onSubmit={handleSubmit}>
             <h1 className="text-2xl font-semibold text-center my-4">Sign Up</h1>
-            <p>
+            <p className="mb-5">
               <input
                 className="p-2 rounded w-full bg-gray-700"
                 type="text"
@@ -48,8 +48,7 @@ const Signup = () => {
                 onChange={(e) => setUsername(e.target.value)}
               />
             </p>
-            <br />
-            <div className="relative">
+            <div className="relative mb-5">
               <input
                 className="p-2 rounded w-full bg-gray-700"
                 type={showPassword ? "text" : "password"}
@@ -65,8 +64,7 @@ const Signup = () => {
                 onClick={() => setShowPassword(!showPassword)}
               />
             </div>
-            <br />
-            <p>
+            <p className="mb-5">
               <input
                 className="p-2 rounded w-full bg-gray-700"
                 type="text"
@@ -76,8 +74,7 @@ const Signup = () => {
                 onChange={(e) => setName(e.target.value)}
               />
             </p>
-            <br />
-            <p>
+            <p className="mb-5">
               <input
                 className="p-2 rounded w-full bg-gray-700"
                 type="email"
@@ -87,8 +84,7 @@ const Signup = () => {
                 onChange={(e) => setEmail(e.target.value)}
               />
             </p>
-            <br />
-            <p>
+            <p className="mb-5">
               <input
                 className="p-2 rounded w-full bg-gray-700"
                 type="text"
@@ -98,8 +94,7 @@ const Signup = () => {
                 onChange={(e) => setPhone(e.target.value)}
               />
             </p>
-            <br />
-            <p>
+            <p className="mb-5">
               <input
                 className="p-2 rounded w-full bg-gray-700"
                 type="text"
@@ -108,7 +103,6 @@ const Signup = () => {
                 onChange={(e) => setAddress(e.target.value)}
               />
             </p>
-            <br />
             <button
               className="bg-primary w-full py-3 my-3 font-semibold"
               id="sub_btn"
@@ -120,7 +114,10 @@ const Signup = () => {
             {error && <div className="error">{error}</div>}
             <p className="py-3">
               <span className=" text-gray-600"> Already have an account? </span>{" "}
-              <Link to="/login">Log in</Link>.
+              <Link to="/login" className="ml-2 hover:text-red-500">
+                Log in
+              </Link>
+              .
             </p>
           </form>
         </div>

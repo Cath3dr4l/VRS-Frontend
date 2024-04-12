@@ -39,6 +39,9 @@ const Notifs = () => {
             {notifs.lowStockMovies.map((movie) => (
               <StockNotif movie={movie} />
             ))}
+            {notifs.lowStockMovies.length === 0 && (
+              <div className="text-white ">No low stock movies</div>
+            )}
           </div>
           <div className="w-[50%] float-right">
             <h1 className="m-4 text-2xl text-white font-semibold">
@@ -47,6 +50,9 @@ const Notifs = () => {
             {notifs.pastDueOrders.map((order) => (
               <OverdueNotif order={order} />
             ))}
+            {notifs.pastDueOrders.length === 0 && (
+              <div className="text-white ">No overdue orders</div>
+            )}
           </div>
         </>
       )}
