@@ -23,12 +23,22 @@ const SearchBar = ({ videosPath }) => {
     fetchVideos();
   }, []);
 
-  const keys = ["name"];
+  const keys = ["name", "director", "cast"];
+  // search through data['cast'] which is an array as well
+
 
   const search = (data, query) => {
-    return data.filter((row) =>
-      keys.some((key) => row[key].toLowerCase().includes(query.toLowerCase())),
-    );
+
+    return data.filter((video) => {
+      return keys.some((key) => {
+        if (Array.isArray(video[key])) {
+          return video[key].some((item) =>
+            item.toLowerCase().includes(query.toLowerCase())
+          );
+        }
+        return video[key].toLowerCase().includes(query.toLowerCase());
+      });
+    });
   };
 
   const fetchMoreVideos = async (last, length = 25) => {
