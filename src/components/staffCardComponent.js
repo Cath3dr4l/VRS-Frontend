@@ -5,6 +5,7 @@ import { useStaffContext } from "../hooks/useStaffContext";
 import { useManagerContext } from "../hooks/useManagerContext";
 import { confirmAlert } from "react-confirm-alert";
 import "react-confirm-alert/src/react-confirm-alert.css";
+import "../styles/customConfirmAlertStyles.css";
 
 const StaffCardComponent = ({ item }) => {
   const { staff } = useStaffContext();
