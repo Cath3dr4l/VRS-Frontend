@@ -24,11 +24,11 @@ const Login = () => {
 
   return (
     <div className="fixed w-full my-24 px-4 py-24 z-[50]">
-      <div className="w-[450px] h-[360px] align-middle mx-auto my-auto bg-black/25 text-white rounded-md">
+      <div className="w-[450px] align-middle mx-auto my-auto bg-black/25 text-white rounded-md text-lg">
         <div className="max-w-[320px] mx-auto py-4">
           <form className="w-full flex flex-col" onSubmit={handleSubmit}>
             <h1 className="text-2xl font-semibold text-center my-4">Log In</h1>
-            <p>
+            <p className="mb-5">
               <input
                 className="p-2 rounded w-full bg-gray-700"
                 type="text"
@@ -38,8 +38,7 @@ const Login = () => {
                 onChange={(e) => setUsername(e.target.value)}
               />
             </p>
-            <br />
-            <div className="relative">
+            <div className="relative mb-5">
               <input
                 className="p-2 rounded w-full bg-gray-700"
                 type={showPassword ? "text" : "password"}
@@ -55,7 +54,6 @@ const Login = () => {
                 onClick={() => setShowPassword(!showPassword)}
               />
             </div>
-            <br />
             <button
               className="bg-primary w-full py-3 my-3 font-semibold"
               id="sub_btn"
@@ -67,10 +65,14 @@ const Login = () => {
             {error && <div className="error">{error}</div>}
             <p className="py-3">
               <span className=" text-gray-600"> Don't have an account? </span>{" "}
-              <Link to="/signup">Sign up</Link>.
+              <Link to="/signup" className="ml-2 hover:text-red-500">
+                Sign up
+              </Link>
             </p>
             <p>
-              <Link to="/forgot">Forgot password?</Link>
+              <Link to="/forgot" className=" text-gray-600 hover:text-red-500">
+                Forgot password?
+              </Link>
             </p>
           </form>
         </div>
