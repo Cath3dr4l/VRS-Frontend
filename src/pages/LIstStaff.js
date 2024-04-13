@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useManagerContext } from "../hooks/useManagerContext";
-import ProfileCard from "../components/ProfileCard";
+import StaffProfileCard from "../components/StaffProfileCard";
 import Loader from "../components/Loader";
 
 const ListStaffs = () => {
@@ -48,7 +48,7 @@ const ListStaffs = () => {
           <div className="grid grid-cols-4 gap-4">
             {staffs &&
               staffs.map((staff) => (
-                <ProfileCard key={staff._id} user={staff} role="staff" />
+                <StaffProfileCard key={staff._id} user={staff} />
               ))}
           </div>
           {error && <div className="text-red-500 text-center">{error}</div>}

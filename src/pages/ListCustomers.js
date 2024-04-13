@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useManagerContext } from "../hooks/useManagerContext";
-import ProfileCard from "../components/ProfileCard";
+import CustomerProfileCard from "../components/CustomerProfileCard";
 import Loader from "../components/Loader";
 
 const ListCustomers = () => {
@@ -43,16 +43,12 @@ const ListCustomers = () => {
       ) : (
         <div className="pt-20">
           <div className="text-text text-3xl font-bold text-center mb-5">
-            Employees
+            Customers
           </div>
-          <div className="grid grid-cols-4 gap-4">
+          <div className="grid grid-cols-3 gap-4">
             {customers &&
               customers.map((customer) => (
-                <ProfileCard
-                  key={customer._id}
-                  user={customer}
-                  role="customer"
-                />
+                <CustomerProfileCard key={customer._id} user={customer} />
               ))}
           </div>
           {error && <div className="text-red-500 text-center">{error}</div>}

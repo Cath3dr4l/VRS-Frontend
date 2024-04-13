@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPhone, faEnvelope, faHome } from "@fortawesome/free-solid-svg-icons";
+import { faPhone, faEnvelope } from "@fortawesome/free-solid-svg-icons";
 
-const ProfileCard = ({ user, role }) => {
+const StaffProfileCard = ({ user }) => {
   return (
     <div className="p-6 w-80 mx-auto bg-gray-800 text-white rounded-xl shadow-md flex items-center space-x-4">
       <div className="space-y-2">
@@ -14,15 +14,9 @@ const ProfileCard = ({ user, role }) => {
           <FontAwesomeIcon icon={faEnvelope} className="mr-2" />
           {user.email}
         </p>
-        {role === "customer" && (
-          <p className="text-gray-300 flex items-center">
-            <FontAwesomeIcon icon={faHome} className="mr-2" />
-            {user.address ? user.address : "No address provided"}
-          </p>
-        )}
       </div>
     </div>
   );
 };
 
-export default ProfileCard;
+export default StaffProfileCard;

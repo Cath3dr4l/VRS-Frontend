@@ -48,13 +48,13 @@ const Recruit = () => {
 
   return (
     <div className="fixed w-full px-4 py-24 z-[50]">
-      <div className="max-w-[450px] h-[600px] mx-auto bg-black/25 text-white rounded-md">
+      <div className="max-w-[450px] mx-auto bg-black/25 text-white rounded-md text-lg">
         <div className="max-w-[320px] mx-auto py-4">
           <form className="w-full flex flex-col" onSubmit={handleSubmit}>
             <h1 className="text-2xl font-semibold text-center my-4">
               Recruit Staff
             </h1>
-            <p>
+            <p className="mb-4">
               <input
                 className="p-2 rounded w-full bg-gray-700"
                 type="text"
@@ -64,8 +64,7 @@ const Recruit = () => {
                 onChange={(e) => setUsername(e.target.value)}
               />
             </p>
-            <br />
-            <div className="relative">
+            <div className="relative mb-4">
               <input
                 className="p-2 rounded w-full bg-gray-700"
                 type={showPassword ? "text" : "password"}
@@ -81,8 +80,7 @@ const Recruit = () => {
                 onClick={() => setShowPassword(!showPassword)}
               />
             </div>
-            <br />
-            <p>
+            <p className="mb-4">
               <input
                 className="p-2 rounded w-full bg-gray-700"
                 type="text"
@@ -92,8 +90,7 @@ const Recruit = () => {
                 onChange={(e) => setName(e.target.value)}
               />
             </p>
-            <br />
-            <p>
+            <p className="mb-4">
               <input
                 className="p-2 rounded w-full bg-gray-700"
                 type="email"
@@ -103,8 +100,7 @@ const Recruit = () => {
                 onChange={(e) => setEmail(e.target.value)}
               />
             </p>
-            <br />
-            <p>
+            <p className="mb-4">
               <input
                 className="p-2 rounded w-full bg-gray-700"
                 type="text"
@@ -114,7 +110,6 @@ const Recruit = () => {
                 onChange={(e) => setPhone(e.target.value)}
               />
             </p>
-            <br />
             <button
               className="bg-primary w-full py-3 my-3 font-semibold"
               id="sub_btn"
