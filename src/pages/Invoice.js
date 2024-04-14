@@ -6,10 +6,28 @@ import {
   Document,
   StyleSheet,
   PDFViewer,
+  Font,
 } from "@react-pdf/renderer";
 import { Fragment } from "react";
 import { useLocation } from "react-router-dom";
 import { format } from "date-fns";
+import { useEffect, useState } from "react";
+import font from "../fonts/brandon-grotesque-black-58a8a3e824392.otf";
+
+Font.register({
+  family: "Brandon-Grotesque-Black",
+  src: font,
+});
+
+Font.register({
+  family: "Raleway-Bold",
+  src: "https://fonts.gstatic.com/s/raleway/v22/1Ptrg8zYS_SKggPNwIYqWqhPAMif.ttf",
+});
+
+Font.register({
+  family: "Poppins",
+  src: "https://fonts.gstatic.com/s/poppins/v15/pxiByp8kv8JHgFVrLCz7Z1xlFd2JQEk.woff2",
+});
 
 const styles = StyleSheet.create({
   page: {
@@ -26,31 +44,37 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    color: "#3E3E3E",
+    // marginBottom: 24,
+  },
+
+  reportTitle: {
+    paddingTop: 20,
+    fontSize: 30,
+    textAlign: "right",
+    // fontFamily: "Brandon-Grotesque-Black",
   },
 
   titleContainer: { flexDirection: "row", marginTop: 24 },
 
-  logo: { width: 90 },
-
-  reportTitle: { fontSize: 16, textAlign: "center" },
-
-  addressTitle: { fontSize: 11, fontStyle: "bold" },
+  addressTitle: {
+    fontSize: 12,
+    fontWeight: "bold",
+  },
 
   invoice: { fontWeight: "bold", fontSize: 20 },
 
   invoiceNumber: { fontSize: 11, fontWeight: "bold" },
 
-  address: { fontWeight: 400, fontSize: 10 },
+  address: { fontWeight: 400, fontSize: 11 },
 
   theader: {
     marginTop: 20,
-    fontSize: 10,
+    fontSize: 12,
     fontStyle: "bold",
     paddingTop: 4,
     paddingLeft: 7,
     flex: 1,
-    height: 20,
+    height: 24,
     color: "white",
     backgroundColor: "#aa132f",
     borderColor: "whitesmoke",
@@ -61,7 +85,7 @@ const styles = StyleSheet.create({
   theader2: { flex: 2, borderRightWidth: 0, borderBottomWidth: 1 },
 
   tbody: {
-    fontSize: 9,
+    fontSize: 10,
     paddingTop: 4,
     paddingLeft: 7,
     flex: 1,
@@ -71,7 +95,7 @@ const styles = StyleSheet.create({
   },
 
   total: {
-    fontSize: 9,
+    fontSize: 10,
     paddingTop: 4,
     paddingLeft: 7,
     flex: 1.5,
@@ -79,14 +103,14 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
   },
 
-  tbody2: { flex: 2, borderRightWidth: 1 },
+  tbody2: { fontSize: 11, fontStyle: "bold", flex: 2, borderRightWidth: 1 },
 });
 
 const InvoiceTitle = () => (
   <View style={styles.titleContainer}>
     <View style={styles.spaceBetween}>
-      {/* <Image style={styles.logo} src={logo} /> */}
-      <Text style={styles.reportTitle}>VideoDog</Text>
+      <Image style={{ width: 200 }} src={"logo_videodog.png"} />
+      <Text style={styles.reportTitle}>INVOICE</Text>
     </View>
   </View>
 );
@@ -95,29 +119,28 @@ const Address = () => (
   <View style={styles.titleContainer}>
     <View style={styles.spaceBetween}>
       <View>
-        <Text style={styles.invoice}>Invoice </Text>
-        {/* <Text style={styles.invoiceNumber}>
-          Invoice number: {"random number"}
-        </Text> */}
-      </View>
-      <View>
-        <Text style={styles.addressTitle}>DataDog HQ </Text>
+        <Text style={styles.addressTitle}>DataDog HQ, </Text>
         <Text style={styles.addressTitle}>IIT Kharagpur</Text>
       </View>
     </View>
   </View>
 );
 
-const UserAddress = ({ address }) => (
+const UserAddress = ({ address, name }) => (
   <View style={styles.titleContainer}>
     <View style={styles.spaceBetween}>
       <View style={{ maxWidth: 200 }}>
-        <Text style={styles.addressTitle}>Billing Address </Text>
+        <Text style={styles.addressTitle}>INVOICE TO:</Text>
+        <Text style={styles.address}>{name}</Text>
+        <Text style={styles.addressTitle}>BILLING ADDRESS: </Text>
         <Text style={styles.address}>{address}</Text>
       </View>
-      <Text style={styles.addressTitle}>
-        {format(new Date(), "dd/MM/yyyy")}
-      </Text>
+      <View style={{ maxWidth: 250 }}>
+        <Text style={styles.addressTitle}>INVOICE DATE:</Text>
+        <Text style={styles.addressTitle}>
+          {format(new Date(), "dd/MM/yyyy")}
+        </Text>
+      </View>
     </View>
   </View>
 );
@@ -190,21 +213,28 @@ const TableBody = ({ order, movies }) => {
 };
 
 const TableTotal = ({ total }) => (
-  <View style={{ width: "100%", flexDirection: "row" }}>
+  <View
+    style={{
+      width: "100%",
+      flexDirection: "row",
+      fontSize: 12,
+      fontStyle: "bold",
+    }}
+  >
     <View style={styles.total}>
       <Text></Text>
     </View>
     <View style={styles.total}>
       <Text> </Text>
     </View>
-    <View style={styles.tbody}>
-      <Text>Total</Text>
+    <View style={{ paddingRight: 70, paddingTop: 4 }}>
+      <Text>TOTAL:</Text>
     </View>
     <View style={styles.total}>
       <Text> </Text>
     </View>
-    <View style={styles.tbody}>
-      <Text>{total}</Text>
+    <View style={{ paddingRight: 40, paddingTop: 4 }}>
+      <Text> Rs. {total}</Text>
     </View>
   </View>
 );
@@ -213,7 +243,23 @@ const TableTotal = ({ total }) => (
 
 const Invoice = () => {
   const location = useLocation();
-  const { order, movies, profile, total } = location.state;
+  const [order, setOrder] = useState([]);
+  const [movies, setMovies] = useState([]);
+  const [profile, setProfile] = useState({});
+  const [total, setTotal] = useState(0);
+
+  useEffect(() => {
+    console.log(location);
+    if (!location.state) {
+      window.location.replace("/cart");
+    } else {
+      setOrder(location.state.order);
+      setMovies(location.state.movies);
+      setProfile(location.state.profile);
+      setTotal(location.state.total);
+    }
+  }, [location.state]);
+
   return (
     <PDFViewer className="w-screen h-screen fixed top-0 z-[100]">
       <Document>
@@ -222,6 +268,7 @@ const Invoice = () => {
           <Address />
           <UserAddress
             address={profile.address ? profile.address : "Not Provided"}
+            name={profile.name}
           />
           <TableHead />
           <TableBody order={order} movies={movies} />
