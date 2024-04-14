@@ -60,8 +60,7 @@ const Staff = () => {
         <Loader />
       ) : (
         <div>
-          <div className="fixed z-[100] m-5 ml-[250px] flex gap-8]">
-            <NavButton label="All Orders" path="/management/allorders" />
+          <div className="fixed z-[100] m-5 right-[150px] flex">
             {notifs &&
             (notifs.lowStockMovies.length > 0 ||
               notifs.pastDueOrders.length > 0) ? (

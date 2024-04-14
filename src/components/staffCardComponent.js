@@ -99,7 +99,12 @@ const StaffCardComponent = ({ item }) => {
       >
         <div className="float-left mx-2 py-2 w-[200px]">
           <Card.Img
-            className="my-[5px] mx-auto h-[190px] w-[150px] object-cover overflow-hidden"
+            className="my-[5px] mx-auto h-[190px] w-[150px] object-cover overflow-hidden rounded"
+            style={{
+              boxShadow:
+                "0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)",
+              filter: "drop-shadow(0 0 0.75rem black)",
+            }}
             variant="top"
             src={item.poster_url}
             alt="Poster"

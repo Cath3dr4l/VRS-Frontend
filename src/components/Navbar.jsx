@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 import { FaAngleDown } from "react-icons/fa";
 import NavLogo from "./NavLogo";
+import NavButton from "./NavButton";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -41,6 +42,20 @@ const Navbar = () => {
         <Link to="/management">
           <NavLogo />
         </Link>
+        {manager && (
+          <div className="flex gap-4 px-10 h-0">
+            <NavButton label="All Orders" path="/management/manageorders" />
+            <NavButton label="Recruit Staff" path="/management/recruit" />
+            <NavButton label="Add Movie" path="/management/addmovie" />
+            <NavButton label="Customers" path="/management/customers" />
+            <NavButton label="Staff" path="/management/employees" />
+          </div>
+        )}
+        {staff && (
+          <div className="flex gap-4 px-10 h-0">
+            <NavButton label="All Orders" path="/management/allorders" />
+          </div>
+        )}
         {(staff || manager) && (
           <button
             className="bg-primary cursor-pointer float-right rounded px-6 py-2 mr-2 text-white"

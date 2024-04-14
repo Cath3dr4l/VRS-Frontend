@@ -1,6 +1,7 @@
 import { Link, useParams, useNavigate, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useManagerContext } from "../hooks/useManagerContext";
+import { format } from "date-fns";
 
 const MovieManage = () => {
   const { id } = useParams();
@@ -113,9 +114,9 @@ const MovieManage = () => {
                   >
                     <p>Revenue: ₹{order.price}</p>
                     <p>
-                      Status:{" "}
                       {order.status.charAt(0).toUpperCase() +
-                        order.status.slice(1)}
+                        order.status.slice(1)}{" "}
+                      on {format(new Date(order.updatedAt), "dd/MM/yyyy")}
                     </p>
                   </li>
                 ))}

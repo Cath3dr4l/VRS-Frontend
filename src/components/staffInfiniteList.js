@@ -27,7 +27,9 @@ const StaffInfiniteListComponent = ({
         }}
       >
         {items.map((item) => renderComponent(item))}
-        {isLoading && <div>Loading...</div>}
+        {isLoading && (
+          <div className="text-text text-lg font-semibold">Loading...</div>
+        )}
       </div>
     </div>
   );
