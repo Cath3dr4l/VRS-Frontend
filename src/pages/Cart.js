@@ -217,7 +217,7 @@ const Cart = () => {
       {isFetching ? (
         <Loader />
       ) : (
-        <div className="container mx-auto px-6 pt-16 py-4">
+        <div className="container mx-auto px-6 pt-20 py-4">
           {profile && (
             <h2 className="text-3xl font-bold text-center text-white">
               {profile.name}'s Cart
@@ -255,19 +255,19 @@ const Cart = () => {
                       <div className="flex justify-between">
                         <button
                           onClick={() => decreaseItemQuantity(item.id)}
-                          className="rounded bg-blue-500 w-8 h-8 mx-2 flex items-center justify-center text-base font-bold text-white hover:bg-blue-700"
+                          className="rounded bg-white/50 w-8 h-8 mx-2 flex items-center justify-center text-base font-bold text-white hover:bg-red-700"
                         >
                           -
                         </button>
                         <p className="text-white">Quantity: {item.quantity}</p>
                         <button
                           onClick={() => increaseItemQuantity(item.id)}
-                          className="rounded bg-blue-500 w-8 h-8  mx-2 flex items-center justify-center text-base font-bold text-white hover:bg-blue-700"
+                          className="rounded bg-white/50 w-8 h-8  mx-2 flex items-center justify-center text-base font-bold text-white hover:bg-green-700"
                         >
                           +
                         </button>
                       </div>
-                      <div className="flex items-center">
+                      <div className="flex items-center mt-4">
                         <label
                           htmlFor="rentDuration"
                           className="mr-2 text-white"
@@ -280,7 +280,7 @@ const Cart = () => {
                             setDuration(item.id, Number(e.target.value))
                           }
                           defaultValue={item.duration}
-                          className="mt-1 block rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                          className="mt-1 block rounded-md border text-center focus:text-center border-gray-300 px-3 py-2 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                         >
                           <option value="1">1 Week</option>
                           <option value="2">2 Weeks</option>
@@ -293,7 +293,7 @@ const Cart = () => {
                     <div className="flex justify-end">
                       <button
                         onClick={() => removeItem(item.id)}
-                        className="rounded bg-red-600 px-2 py-1 font-bold text-white hover:bg-red-700"
+                        className="rounded bg-red-700 px-2 py-1 font-bold text-white hover:bg-red-600"
                       >
                         <FontAwesomeIcon icon={faTrash} />
                       </button>
@@ -315,7 +315,7 @@ const Cart = () => {
               </div>
               <button
                 onClick={handleClick}
-                className="rounded bg-green-500 px-4 py-2 font-bold text-white hover:bg-green-700"
+                className="rounded bg-green-700 px-4 py-2 font-bold text-white hover:bg-green-600"
               >
                 Order
               </button>

@@ -59,8 +59,8 @@ const Movie = () => {
                 alt="Poster"
               />
             </div>
-            <div className="w-[50%] float-left my-20 px-4 flow-root">
-              <h1 className="font-semibold text-7xl"> {movie.name} </h1>
+            <div className="w-[50%] float-left mt-20 px-4 flow-root">
+              <h1 className="font-semibold text-6xl"> {movie.name} </h1>
               <p className="mt-7 text-lg">{movie.summary_text}</p>
               {movie.runtime && (
                 <p className="font-semibold text-md">
@@ -143,11 +143,11 @@ const Movie = () => {
                   {movie.rent_price}
                 </p>
               </>
-              <div className="mt-4">
+              <div className="mt-8">
                 {quantity === 0 ? (
                   <div className="flex justify-center">
                     <button
-                      className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+                      className="bg-white/50 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
                       onClick={() => {
                         if (!customer) {
                           navigate("/login", {
@@ -171,7 +171,7 @@ const Movie = () => {
                       style={{ gap: ".5rem" }}
                     >
                       <button
-                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                        className="bg-white/50 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
                         onClick={() => {
                           decreaseItemQuantity(id);
                         }}
@@ -182,7 +182,7 @@ const Movie = () => {
                         <span className="text-2xl">{quantity}</span> in cart
                       </div>
                       <button
-                        className="bg-blue-500 hover:bg-blue-700 text-white text-lg font-bold py-2 px-4 rounded"
+                        className="bg-white/50 hover:bg-green-700 text-white text-lg font-bold py-2 px-4 rounded"
                         onClick={() => {
                           increaseItemQuantity(id);
                         }}
@@ -210,7 +210,7 @@ const Movie = () => {
                         <option value="100">Buy Movie</option>
                       </select>
                       <button
-                        className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-3 rounded ml-4"
+                        className="bg-red-700 hover:bg-red-600 text-white font-bold py-2 px-3 rounded ml-4"
                         onClick={() => {
                           removeItem(id);
                         }}
@@ -220,7 +220,7 @@ const Movie = () => {
                     </div>
 
                     <Link to="/cart">
-                      <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mt-4">
+                      <button className="bg-green-700 hover:bg-green-600 text-white font-bold py-2 px-4 rounded mt-4">
                         Go To Cart
                       </button>
                     </Link>

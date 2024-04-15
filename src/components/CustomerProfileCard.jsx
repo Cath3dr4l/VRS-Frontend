@@ -56,6 +56,9 @@ const CustomerProfileCard = ({ user }) => {
             </div>
           </div>
         </div>
+        <div className="absolute bottom-2 right-2 text-gray-500">
+          Click to view orders
+        </div>
       </div>
     </div>
   );
