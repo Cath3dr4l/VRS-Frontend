@@ -9,7 +9,6 @@ import {
   Font,
 } from "@react-pdf/renderer";
 import { Fragment } from "react";
-import { useLocation } from "react-router-dom";
 import { format } from "date-fns";
 import { useEffect, useState } from "react";
 import font from "../fonts/brandon-grotesque-black-58a8a3e824392.otf";
@@ -306,23 +305,22 @@ const TableTotal = ({ total }) => (
 // Name, Quantity, Rent Duration/Buy, Unit Price, Total Price
 
 const Invoice = () => {
-  const location = useLocation();
   const [order, setOrder] = useState([]);
   const [movies, setMovies] = useState([]);
   const [profile, setProfile] = useState({});
   const [total, setTotal] = useState(0);
+  const orderData = JSON.parse(localStorage.getItem("orderData"));
 
   useEffect(() => {
-    console.log(location);
-    if (!location.state) {
+    if (!orderData) {
       window.location.replace("/cart");
     } else {
-      setOrder(location.state.order);
-      setMovies(location.state.movies);
-      setProfile(location.state.profile);
-      setTotal(location.state.total);
+      setOrder(orderData.order);
+      setMovies(orderData.movies);
+      setProfile(orderData.profile);
+      setTotal(orderData.total);
     }
-  }, [location.state]);
+  }, [orderData]);
 
   return (
     <PDFViewer className="w-screen h-screen fixed top-0 z-[100]">

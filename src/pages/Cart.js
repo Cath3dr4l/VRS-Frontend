@@ -75,15 +75,18 @@ const Cart = () => {
   };
 
   const createInvoice = async () => {
-    // console.log(cartItems);
-    navigate("/invoice", {
-      state: {
-        order: cartItems,
-        movies: movies,
-        profile: profile,
-        total: totalCartPrice(),
-      },
-    });
+    const orderData = {
+      order: cartItems,
+      movies: movies,
+      profile: profile,
+      total: totalCartPrice(),
+    };
+
+    // Store the data in the local storage
+    localStorage.setItem("orderData", JSON.stringify(orderData));
+
+    // Open a new tab
+    window.open("/invoice", "_blank");
   };
 
   const totalCartPrice = () => {
@@ -116,7 +119,7 @@ const Cart = () => {
       currency: data.payment.currency,
       name: "VideoDog",
       description: "Test Transaction",
-      image: "https://example.com/your_logo",
+      image: "../../public/favicon.ico",
       order_id: data.payment.id,
       callback_url: "/api/payment/verify",
       prefill: {
