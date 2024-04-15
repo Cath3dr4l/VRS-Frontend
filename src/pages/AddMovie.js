@@ -159,11 +159,7 @@ const AddMovie = () => {
                   value={cast}
                   placeholder="Cast (comma separated)"
                   required
-                  onChange={(e) =>
-                    setCast(
-                      e.target.value.split(",").map((item) => item.trim())
-                    )
-                  }
+                  onChange={(e) => setCast(e.target.value.split(","))}
                 />
               </div>
 
