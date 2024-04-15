@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useAuthContext } from "../hooks/useAuthContext";
 import RowComponent from "./RowComponent";
-import { PacmanLoader } from "react-spinners";
+import { PropagateLoader } from "react-spinners";
 
 const DataComponent = () => {
   const { customer } = useAuthContext();
@@ -75,7 +75,7 @@ const DataComponent = () => {
           {isFetching ? (
             <div className="z-[100] flex h-[250px] w-screen items-center justify-center">
               <div className="flex flex-col items-center justify-center">
-                <PacmanLoader color="#fff" size={60} />
+                <PropagateLoader color="#fff" size={30} />
                 <div className="mt-10 font-poppins text-2xl text-text">
                   Loading Recommendations
                 </div>

@@ -167,7 +167,7 @@ const Address = () => (
         <View
           style={{ flexDirection: "row", alignItems: "center", gap: "5px" }}
         >
-          <IconPhone /> <Text style={styles.address}> 9606990317</Text>
+          <IconPhone /> <Text style={styles.address}> +91 9606890317</Text>
         </View>
         <View
           style={{ flexDirection: "row", alignItems: "center", gap: "5px" }}

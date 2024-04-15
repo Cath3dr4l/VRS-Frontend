@@ -26,7 +26,9 @@ After setting up the development server, you need to create a `.env` file in the
 
 1. Create a new file named `.env` in the root directory of the project.
 2. Add the following line to the `.env` file:
-   - REACT_APP_RZP_KEY_ID=your_razorpay_api_key_id (Replace `your_razorpay_api_key_id` with your actual Razorpay API Key ID.)
+   ```env
+   REACT_APP_RZP_KEY_ID=your_razorpay_api_key_id (Replace `your_razorpay_api_key_id` with your actual Razorpay API Key ID.)
+   ```
 
 ### Proxy
 
