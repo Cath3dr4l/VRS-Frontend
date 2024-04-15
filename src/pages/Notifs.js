@@ -19,6 +19,10 @@ const Notifs = () => {
       if (!response.ok) {
         console.log(data.error);
       } else {
+        data.pastDueOrders = data.pastDueOrders.filter(
+          (order) => order.movieID && order.customerID
+        );
+        data.lowStockMovies = data.lowStockMovies.filter((movie) => movie._id);
         setNotifs(data);
       }
     };
