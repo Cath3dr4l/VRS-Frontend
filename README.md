@@ -1,4 +1,4 @@
-# Video Rental Syatem (VRS) Frontend
+# Video Rental System (VRS) Frontend
 
 ## Getting Started
 
